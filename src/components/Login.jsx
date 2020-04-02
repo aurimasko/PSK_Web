@@ -3,10 +3,58 @@ import React from 'react';
 
 class Login extends React.Component {
 	
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			email: "",
+			password: ""
+		}
+		
+		this.handleEmailChange = this.handleEmailChange.bind(this);
+		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+	
 	render() {
 		return (
-			"Login page"
+			<div className="flex-spacer flex-down">
+				<div className="flex-spacer" />
+				<div className="container wide">
+					<h1 className="margin-bottom-8">Prisijungimas</h1>
+					
+					<form className="flex-down" onSubmit={this.handleSubmit}>
+						<label>
+							Elektroninio pašto adresas
+							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
+						</label>
+						<label>
+							Slaptažodis
+							<input required type="password" value={this.state.password} onChange={this.handlePasswordChange} />
+						</label>
+						
+						<hr />
+						
+						<input className="primary" type="submit" value="Prisijungti"/>
+					</form>
+				</div>
+				<div className="flex-spacer" />
+			</div>
 		);
+	}
+	
+	handleEmailChange(event) {
+		this.setState({email: event.target.value});
+	}
+	
+	handlePasswordChange(event) {
+		this.setState({password: event.target.value});
+	}
+	
+	handleSubmit(event) {
+		// auth.login(this.state.email, this.state.password);
+		this.props.history.push("/");
+		event.preventDefault();
 	}
 }
 

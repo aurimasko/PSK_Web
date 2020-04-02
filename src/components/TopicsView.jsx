@@ -1,5 +1,6 @@
 import React from 'react';
 import Graph from 'vis-react';
+import Layout from "./Layout";
 
 
 class TopicsView extends React.Component {
@@ -7,6 +8,8 @@ class TopicsView extends React.Component {
 	constructor(props) {
 		
 		super(props);
+		
+		let style = window.getComputedStyle(document.documentElement);
 		
 		this.state = {
 			graph: {
@@ -26,8 +29,8 @@ class TopicsView extends React.Component {
 			},
 			options: {
 				autoResize: true,
-				height: '600',
-				width: '600',
+				height: "100%",
+				width: "100%",
 				
 				layout: {
 					hierarchical: false
@@ -39,14 +42,14 @@ class TopicsView extends React.Component {
 					},
 					borderWidth: 0,
 					color: {
-						background: "#00FF00",
-						hover: "#FFFF00",
-						highlight: "#00FFFF",
+						background: style.getPropertyValue("--color-bg-empty"),
+						hover: style.getPropertyValue("--color-bg-surface-hover"),
+						highlight: style.getPropertyValue("--color-bg-surface-active"),
 					},
 					labelHighlightBold: false,
 				},
 				edges: {
-					color: '#FF0000'
+					color: style.getPropertyValue("--color-fg-regular")
 				},
 				interaction: {
 					hover: true,
@@ -63,11 +66,17 @@ class TopicsView extends React.Component {
 	
 	render() {
 		return (
-			<Graph
-				graph={this.state.graph}
-				options={this.state.options}
-				events={this.state.events}
-			/>
+			<Layout>
+				
+				<div className="container wide graph-container">
+					<Graph
+						graph={this.state.graph}
+						options={this.state.options}
+						events={this.state.events}
+					/>
+				</div>
+				
+			</Layout>
 		);
 	}
 	

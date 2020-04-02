@@ -1,15 +1,16 @@
 import React from 'react';
+import Layout from "./Layout";
 
 
 class Topic extends React.Component {
 	
-	constructor(props) {
-		super(props);
-	}
-	
 	render() {
 		return (
-			<>This is topic <b>#{this.props.match.params.id}</b></>
+			<Layout>
+				<>
+					This is topic<b>#{this.props.match.params.id}</b>
+				</>
+			</Layout>
 		);
 	}
 }
