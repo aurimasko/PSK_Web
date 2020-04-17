@@ -1,19 +1,49 @@
 import React from 'react';
 import "../global.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faTimes, faHome, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
 
 class Header extends React.Component {
 	
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			hamburgerActive: false
+		}
+		
+		this.handleClick = this.handleClick.bind(this);
+		this.handleUseOther = this.handleUseOther.bind(this);
+	}
+	
 	render() {
 		return (
 			<header>
-				<Link className="primary" to="/home">PSK_Web</Link>
+				<Link className="button primary" to="/home"><FontAwesomeIcon icon={faHome} /> Pradžia</Link>
 				<div className="flex-spacer"></div>
-				<Link className="primary" to="/topics">Temos</Link>
-				<Link className="primary" to="/login">Atsijungti</Link>
+				
+				<button className="primary collapse-menu" onClick={this.handleClick}>
+					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
+				</button>
+				
+				<Link className={this.state.hamburgerActive ? "button primary collapse uncollapse" : "button primary collapse"} to="/user/1" onClick={this.handleUseOther}><FontAwesomeIcon icon={faUser} /> Mano paskyra</Link>
+				<Link className={this.state.hamburgerActive ? "button danger collapse uncollapse" : "button danger collapse"} to="/login" onClick={this.handleUseOther}><FontAwesomeIcon icon={faSignOutAlt} /> Atsijungti</Link>
+				
+				
+				
 			</header>
 		);
+	}
+	
+	handleClick(event) {
+		this.setState({hamburgerActive: !this.state.hamburgerActive});
+		event.preventDefault();
+	}
+	
+	handleUseOther(event) {
+		this.setState({hamburgerActive: false});
 	}
 }
 

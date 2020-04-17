@@ -7,6 +7,10 @@ import {
 } from "react-router-dom";
 
 import Home from "./components/Home";
+import User from "./components/User";
+import Team from "./components/Team";
+import Role from "./components/Role";
+import RolesList from "./components/RolesList";
 import Topic from "./components/Topic";
 import TopicsView from "./components/TopicsView";
 import Login from "./components/Login";
@@ -18,6 +22,10 @@ function App() {
 		<Router>
 			<Switch>
 				<Route path="/home" component={Home} />
+				<Route path="/user/:id" component={User} />
+				<Route path="/team/:id" component={Team} />
+				<Route path="/roles" component={RolesList} />
+				<Route path="/role/:id" component={Role} />
 				<Route path="/topics" component={TopicsView} />
 				<Route path="/topic/:id" component={Topic} />
 				
