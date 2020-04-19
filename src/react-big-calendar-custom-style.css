@@ -1,0 +1,211 @@
+/*----------------------------------------------------------------------------*/
+
+/* Days: */
+
+
+.rbc-day-bg {
+	background-color: var(--color-bg-empty);
+	
+	margin: 4px;
+	flex: 1 0 0%;
+	cursor: pointer;
+	
+	box-sizing: border-box;
+}
+
+.rbc-day-bg:hover {
+	background-color: var(--color-bg-surface-hover);
+}
+
+.rbc-day-bg:active {
+	background-color: var(--color-bg-surface-active);
+}
+
+.rbc-today {
+	background-color: var(--color-bg-danger);
+}
+
+.rbc-today:hover {
+	background-color: var(--color-bg-danger-hover);
+}
+.rbc-today:active {
+	background-color: var(--color-bg-danger-active);
+}
+
+
+/* off range */
+
+.rbc-off-range-bg {
+	background-color: var(--color-fg-faint);
+}
+
+.rbc-off-range-bg:hover {
+	background-color: var(--color-fg-regular);
+}
+
+
+/* custom classes */
+
+.rbc-day-bg.not-empty {
+	background-image: linear-gradient(55deg, var(--color-bg-primary) 49%, rgba(0, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.not-empty.selected:hover {
+	background-image: linear-gradient(55deg, var(--color-bg-primary-hover) 49%, rgba(0, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.not-empty.selected:active {
+	background-image: linear-gradient(55deg, var(--color-bg-primary-active) 49%, rgba(0, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.not-empty.rbc-off-range-bg.selected:hover {
+	background-image: linear-gradient(55deg, #EE8800 49%, rgba(255, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.not-empty.rbc-off-range-bg.selected:active {
+	background-image: linear-gradient(55deg, #FF9900 49%, rgba(255, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.rbc-off-range-bg.not-empty {
+	background-image: linear-gradient(55deg, #EE7700 49%, rgba(255, 0, 0, 0) 50%);
+}
+
+.rbc-day-bg.selected {
+	background-color: #F7F7F7;
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary);
+}
+
+.rbc-day-bg.selected:hover {
+	background-color: #FAFAFA;
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-hover);
+}
+
+.rbc-day-bg.selected:active {
+	background-color: #FCFCFC;
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-active);
+}
+
+.rbc-day-bg.rbc-today.selected {
+	background-color: var(--color-bg-danger);
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary);
+}
+
+.rbc-day-bg.rbc-today.selected:hover {
+	background-color: var(--color-bg-danger-hover);
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-hover);
+}
+
+.rbc-day-bg.rbc-today.selected:active {
+	background-color: var(--color-bg-danger-active);
+	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-active);
+}
+
+.rbc-day-bg.rbc-off-range-bg.selected {
+	background-color: #252525;
+	box-shadow: inset 0px 0px 0px 6px #EE7700;
+}
+
+.rbc-day-bg.rbc-off-range-bg.selected:hover {
+	background-color: #303030;
+	box-shadow: inset 0px 0px 0px 6px #EE8800;
+}
+
+.rbc-day-bg.rbc-off-range-bg.selected:active {
+	background-color: #404040;
+	box-shadow: inset 0px 0px 0px 6px #FF9900;
+}
+
+
+/* day numbers */
+
+.rbc-date-cell > a {
+	color: var(--color-fg-regular);
+}
+
+.rbc-date-cell.rbc-off-range > a {
+	color: var(--color-fg-primary);
+}
+
+.rbc-date-cell.rbc-now a {
+	color: var(--color-fg-primary);
+	
+	/*text-decoration-line: underline;
+	text-decoration-style: solid;
+	text-decoration-thickness: 2px;*/
+}
+
+
+.rbc-row-content {
+	pointer-events: none
+}
+
+.rbc-date-cell > a, .rbc-date-cell > a:active, .rbc-date-cell > a:visited {
+	padding: 2px 8px;
+	margin: 12px 6px 0px 0px;
+	
+	background-color: transparent;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+
+/* Toolbar: */
+
+
+.rbc-toolbar-label {
+	font-size: 24px;
+}
+
+.rbc-toolbar .rbc-btn-group button {
+	border: none;
+	border-radius: 0;
+	
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary);
+	
+	margin: 6px;
+}
+
+.rbc-toolbar .rbc-btn-group button:hover {
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary-hover);
+}
+
+.rbc-toolbar .rbc-btn-group button:active, .rbc-btn-group button.rbc-active {
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary-active);
+	
+	box-shadow: none;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+
+/* No borders: */
+
+
+.rbc-day-bg + .rbc-day-bg {
+	border: none;
+}
+
+.rbc-rtl .rbc-day-bg + .rbc-day-bg {
+	border: none;
+}
+
+.rbc-month-row + .rbc-month-row {
+	border: none;
+}
+
+.rbc-month-view {
+	border: none;
+}
+
+.rbc-header {
+	border: none;
+}
+
+.rbc-header + .rbc-header {
+	border: none;
+}

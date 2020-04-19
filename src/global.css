@@ -13,7 +13,7 @@
 	--color-fg-faint: #777777;
 	
 	--color-fg-topbar: #E0E0E0;
-	--color-bg-topbar: #101010;
+	--color-bg-topbar: #252525;
 	
 	--color-fg-primary: #FAFAFA;
 	--color-bg-primary: #FF9900;
@@ -169,6 +169,8 @@ header {
 	flex-direction: row;
 	align-items: stretch;
 	flex-wrap: wrap;
+	
+	z-index: 100;
 }
 
 header a.button {
