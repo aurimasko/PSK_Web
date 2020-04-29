@@ -12,9 +12,9 @@ class Layout extends React.Component {
 	render() {
 		return (
 			<>
-				<Header />
+				<Header noScroll={this.props.noScroll} />
 				
-				<div className="flex-spacer flex-down header-margin">
+				<div className={this.props.noScroll ? "no-scroll flex-spacer flex-down header-margin" : "flex-spacer flex-down header-margin"}>
 					{this.props.children}
 				</div>
 				

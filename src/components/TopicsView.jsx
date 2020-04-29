@@ -66,9 +66,9 @@ class TopicsView extends React.Component {
 	
 	render() {
 		return (
-			<Layout>
+			<Layout noScroll={true}>
 				
-				<div className="container wide graph-container">
+				<div className="graph-container">
 					<Graph
 						graph={this.state.graph}
 						options={this.state.options}

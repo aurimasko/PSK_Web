@@ -20,7 +20,7 @@ class Header extends React.Component {
 	
 	render() {
 		return (
-			<header>
+			<header className={this.props.noScroll ? "no-scroll" : ""}>
 				<Link className="button primary" to="/home"><FontAwesomeIcon icon={faHome} /> Pradžia</Link>
 				<div className="flex-spacer"></div>
 				
