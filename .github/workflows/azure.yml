@@ -41,7 +41,7 @@ jobs:
         npm run build --if-present
         npm run test --if-present
       env: 
-        CI: ""
+        CI: false
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
