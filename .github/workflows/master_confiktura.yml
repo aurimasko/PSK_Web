@@ -35,4 +35,4 @@ jobs:
         app-name: 'confiktura'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_72b97ce9c30c4df593c46ddc6208a25f }}
-        package: .
+        package: ./build
