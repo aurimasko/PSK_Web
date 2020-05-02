@@ -55,7 +55,6 @@ class Login extends React.Component {
 	handleSubmit(event) {
 		auth.login(this.state.email, this.state.password)
 		.then(() => {
-			console.log("going in");
 			this.props.history.push("/");
 		});
 		

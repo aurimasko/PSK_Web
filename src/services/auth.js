@@ -6,7 +6,6 @@ export const auth = {
 	user: null,
 	
 	async login(email, password) {
-		console.log("login: " + email + " " + password);
 		
 		let data = new URLSearchParams();
 		data.append('grant_type', 'password');
