@@ -6,6 +6,7 @@ import {
 	Redirect
 } from "react-router-dom";
 
+import AuthRoute from "./components/AuthRoute";
 import Home from "./components/Home";
 import User from "./components/User";
 import Team from "./components/Team";
@@ -22,21 +23,21 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route path="/home" component={Home} />
-				<Route path="/user/:id" component={User} />
-				<Route path="/team/:id" component={Team} />
-				<Route path="/calendar" component={CalendarView} />
-				<Route path="/roles" component={RolesList} />
-				<Route path="/role/:id" component={Role} />
-				<Route path="/topics" component={TopicsView} />
-				<Route path="/topic/:id" component={Topic} />
+				<AuthRoute path="/home" component={Home} />
+				<AuthRoute path="/user/:id" component={User} />
+				<AuthRoute path="/team/:id" component={Team} />
+				<AuthRoute path="/calendar" component={CalendarView} />
+				<AuthRoute path="/roles" component={RolesList} />
+				<AuthRoute path="/role/:id" component={Role} />
+				<AuthRoute path="/topics" component={TopicsView} />
+				<AuthRoute path="/topic/:id" component={Topic} />
 				
 				<Route path="/login" component={Login} />
 				
 				<Route exact path="/">
 					<Redirect to="/home" />
 				</Route>
-				<Route path="*" component={NotFound} />
+				<AuthRoute path="*" component={NotFound} />
 			</Switch>
 		</Router>
 	);

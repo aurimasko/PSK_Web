@@ -1,4 +1,5 @@
 import React from 'react';
+import { auth } from "../services/auth.js";
 
 
 class Login extends React.Component {
@@ -52,8 +53,12 @@ class Login extends React.Component {
 	}
 	
 	handleSubmit(event) {
-		// auth.login(this.state.email, this.state.password);
-		this.props.history.push("/");
+		auth.login(this.state.email, this.state.password)
+		.then(() => {
+			console.log("going in");
+			this.props.history.push("/");
+		});
+		
 		event.preventDefault();
 	}
 }
