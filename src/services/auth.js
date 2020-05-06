@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
-
+import { userService } from "../services/userService.js";
+import endPoints from "../endPoints.js"
 
 export const auth = {
 	
@@ -16,7 +17,7 @@ export const auth = {
 		data.append('password', password);
 		
 		await fetch(
-			"https://confikturaidentity.azurewebsites.net/connect/token",
+			endPoints.identityAPITokenEndPoint,
 			{
 				method: 'post',
 				body: data
@@ -38,17 +39,7 @@ export const auth = {
 	},
 	
 	async fetchUser() {
-		
-		await fetch(
-			"https://confikturaservice.azurewebsites.net/Users?username=" + Cookies.getJSON("email"),
-			{
-				method: 'get',
-				headers: new Headers({
-					"Authorization": "Bearer " + Cookies.getJSON("session").access_token
-				}),
-			}
-		)
-		.then(response => response.json())
+		await userService.fetchUser()
 		.then(data => {
 			this.user = data.content[0];
 		});
@@ -70,4 +61,12 @@ export const auth = {
 	async isLoggedIn() {
 		return await this.getUser() ? true : false;
 	},
+
+	getAccessToken() {
+		return Cookies.getJSON("session").access_token;
+	},
+
+	getUsername() {
+		return Cookies.getJSON("email");
+    }
 }
