@@ -41,7 +41,7 @@ class Header extends React.Component {
 							"button primary collapse uncollapse" :
 							"button primary collapse"
 					}
-					to="/user/1"
+					to={"/user/" + auth.user.id}
 					onClick={this.handleUseOther}
 				>
 				

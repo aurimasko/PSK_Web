@@ -3,96 +3,117 @@ import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUsers, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import { teamService } from "../services/teamService.js";
+import { userService } from "../services/userService.js";
+import { auth } from "../services/auth.js";
 
 
 class Team extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
-			managerId: "1",
-			teamMembers: [
-				{
-					id: "1",
-					firstName: "Antanas",
-					lastName: "Antanaitis"
-				},
-				{
-					id: "2",
-					firstName: "Ona",
-					lastName: "Onaitė"
-				},
-				{
-					id: "3",
-					firstName: "Elena",
-					lastName: "Elenaitė"
-				},
-				{
-					id: "4",
-					firstName: "Petras",
-					lastName: "Petraitis"
-				}
-			],
-			
+			leader: null,
+			teamMembers: null,
 			listItems: null
 		};
 	}
 	
 	
-	componentDidMount() {
+	async componentDidMount() {
+		var id = this.props.match.params.id;
+		if (id === auth.user.id) {
+			this.setState({
+				leader: auth.user
+			});
+		} else {
+			var result = await userService.fetchUserById(id);
+			if (result.isSuccess === true) {
+				this.setState({
+					leader: result.content[0]
+				});
+			} else {
+				console.log(JSON.stringify(result));
+			}
+        }
+
+		var result = null;
+		if (id == auth.user.id) {
+			result = await teamService.fetchCurrentUserTeam();
+		} else {
+			await teamService.fetchTeamByLeaderId(id);
+		}
+
+		if (result.isSuccess === true) {
+			this.setState({
+				teamMembers: result.content.members
+			});
+		} else {
+			console.log(JSON.stringify(result));
+		}
+
 		this.setState({
 			listItems: this.state.teamMembers.map((member) => 
 				<li key={member.id}>
 					<Link to={"/user/" + member.id}>
 						
-						{member.id === this.state.managerId? 
+						{member.id === this.state.leader.id? 
 							<FontAwesomeIcon icon={faStar} listItem />:
 							<FontAwesomeIcon icon={faUser} listItem />
 						}
 						
-						{member.firstName} {member.lastName}
+						{member.firstName} {member.lastName} ({member.username})
 					</Link>
 				</li>
-			)
-			
+			)	
 		})
 	}
 	
-	
 	render() {
-		return (
-			<Layout>
-			<div className="container wide">
-				
-				<div className="flex-right">
-					
-					<div className="flex-down margin-right-16 margin-left-8">
-						<div className="flex-spacer"></div>
-						<FontAwesomeIcon icon={faUsers} size="3x" />
-						<div className="flex-spacer"></div>
+		if (this.state.leader == null || this.state.listItems == null || this.state.teamMembers == null) {
+			return <Loading />;
+		} else {
+			return (
+				<Layout>
+					<div className="container wide">
+
+						<div className="flex-right">
+
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<FontAwesomeIcon icon={faUsers} size="3x" />
+								<div className="flex-spacer"></div>
+							</div>
+
+							<div>
+								<h1>
+									Komanda
+							</h1>
+								<h4>
+									Vadovas: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
+								</h4>
+							</div>
+
+						</div>
+
+						<h3 className="margin-top-24">Komandos nariai:</h3>
+
+						<ul className="fa-ul">
+							{this.state.listItems}
+						</ul>
+
+						<Link className="button" to={"team/add"}>
+							<button>
+								Pridėti naują komandos narį
+						</button>
+						</Link>
+
 					</div>
-					
-					<div>
-						<h1>
-							Komanda
-						</h1>
-						<h4>
-							Vadovas: <Link to="/user/1">{this.state.teamMembers[0].firstName} {this.state.teamMembers[0].firstName}</Link>
-						</h4>
-					</div>
-					
-				</div>
-				
-				<h3 className="margin-top-24">Komandos nariai:</h3>
-				
-				<ul className="fa-ul">
-					{this.state.listItems}
-				</ul>
-				
-			</div>
-			</Layout>
-		);
+				</Layout>
+			);
+		}
 	}
 }
 

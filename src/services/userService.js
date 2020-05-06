@@ -11,8 +11,39 @@ export const userService = {
 				method: 'get',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken()
-				}),
+				})
 			}
 		).then(response => { return response.json(); });
-	}
+	},
+	async fetchUserById(id) {
+
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + "?id=" + id,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken()
+				})
+			}
+		).then(response => { return response.json(); });
+	},
+	async createUser(emailAddress, firstName, lastName) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint,
+			{
+				method: 'post',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(
+					{
+						username: emailAddress,
+						firstName: firstName,
+						lastName: lastName
+					}
+				)
+			}
+		).then(response => { return response.json(); });
+    }
 }
