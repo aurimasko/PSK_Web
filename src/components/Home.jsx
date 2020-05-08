@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCalendarAlt, faUsers, faTags, faClipboardList } from '@fortawesome/free-solid-svg-icons'
-
+import { auth } from "../services/auth.js";
 
 
 class Home extends React.Component {
@@ -31,8 +31,8 @@ class Home extends React.Component {
 						</div>
 							Temos
 						</Link>
-						
-						<Link className="button" to="/team/1">
+
+						<Link className="button" to={"/user/" + auth.user.id + "/team"}>
 							<div className="w100 margin-vertical-16">
 								<FontAwesomeIcon icon={faUsers} size="4x" />
 							</div>

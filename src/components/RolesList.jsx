@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags, faTag } from '@fortawesome/free-solid-svg-icons'
-
+import { roleService } from "../services/roleService.js";
 
 
 class RolesList extends React.Component {
@@ -12,34 +12,29 @@ class RolesList extends React.Component {
 		super(props);
 		
 		this.state = {
-			roles: [
-				{
-					id: "1",
-					name: "Junior developer",
-				},
-				{
-					id: "2",
-					name: "Senior developer",
-				}
-			],
-			
 			listItems: null
 		};
 	}
 	
 	
-	componentDidMount() {
-		this.setState({
-			listItems: this.state.roles.map((role) => 
-				<li key={role.id}>
-					<Link to={"/role/" + role.id}>
-						<FontAwesomeIcon icon={faTag} listItem />
-						{role.name}
-					</Link>
-				</li>
-			)
-			
-		})
+	async componentDidMount() {
+		var result = await roleService.fetchRoles();
+		if (result.isSuccess === true) {
+			var roles = result.content;
+			this.setState({
+				listItems: roles.map((role) =>
+					<li key={role.id}>
+						<Link to={"/role/" + role.id}>
+							<FontAwesomeIcon icon={faTag} listItem />
+							{role.name}
+						</Link>
+					</li>
+				)
+
+			})
+		} else {
+			console.log(JSON.stringify(result));
+		}
 	}
 	
 	

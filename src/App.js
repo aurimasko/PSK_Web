@@ -17,15 +17,16 @@ import Topic from "./components/Topic";
 import TopicsView from "./components/TopicsView";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
-
+import AddTeamMember from "./components/AddTeamMember";
 
 function App() {
 	return (
 		<Router>
 			<Switch>
 				<AuthRoute path="/home" component={Home} />
+				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
+				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id" component={User} />
-				<AuthRoute path="/team/:id" component={Team} />
 				<AuthRoute path="/calendar" component={CalendarView} />
 				<AuthRoute path="/roles" component={RolesList} />
 				<AuthRoute path="/role/:id" component={Role} />

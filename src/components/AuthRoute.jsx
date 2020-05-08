@@ -4,13 +4,13 @@ import {
 	Redirect
 } from "react-router-dom";
 import { auth } from "../services/auth.js";
+import Loading from "../components/Loading";
 
 
 class AuthRoute extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		
 		this.state = {
 			loggedIn: null
 		}
@@ -24,14 +24,13 @@ class AuthRoute extends React.Component {
 	render() {
 		
 		if (this.state.loggedIn === null) {
-			return "Loading...";
+			return <Loading/>;
 		}
-		
+
 		return (
 			this.state.loggedIn === true ? 
-				<Route component={this.props.component}></Route>:
-				<Redirect to="/login" />
-			
+				<Route component={this.props.component} path={this.props.path}></Route>:
+				<Redirect to="/login" />		
 		);
 	}
 	

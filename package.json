@@ -15,6 +15,7 @@
     "react": "^16.13.1",
     "react-big-calendar": "^0.24.3",
     "react-dom": "^16.13.1",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "vis-react": "^0.5.1"
