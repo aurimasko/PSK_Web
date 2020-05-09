@@ -235,7 +235,7 @@ p {
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 	padding: 16px;
 }
 
@@ -279,7 +279,7 @@ header a.button {
 	display: none;
 }
 
-@media (max-width:600px) {
+@media (max-width:1000px) {
 	
 	.collapse {
 		display: none !important;

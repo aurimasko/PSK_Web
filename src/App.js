@@ -19,15 +19,22 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AddTeamMember from "./components/AddTeamMember";
 
+import { auth } from "./services/auth.js";
+
 function App() {
 	return (
 		<Router>
 			<Switch>
-				<AuthRoute path="/home" component={Home} />
+				{
+					//<AuthRoute path="/home" component={Home} />
+				}
+				<AuthRoute path="/user/:id/calendar" component={CalendarView} />
+				<AuthRoute path="/user/:id/topics" component={TopicsView} />
+				<AuthRoute path="/user/:id/team/calendar" component={CalendarView} />
+				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
 				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id" component={User} />
-				<AuthRoute path="/calendar" component={CalendarView} />
 				<AuthRoute path="/roles" component={RolesList} />
 				<AuthRoute path="/role/:id" component={Role} />
 				<AuthRoute path="/topics" component={TopicsView} />
@@ -36,7 +43,7 @@ function App() {
 				<Route path="/login" component={Login} />
 				
 				<Route exact path="/">
-					<Redirect to="/home" />
+					<Redirect to={"/user/me/calendar"} />
 				</Route>
 				<AuthRoute path="*" component={NotFound} />
 			</Switch>

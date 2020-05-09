@@ -1,7 +1,7 @@
 import React from 'react';
 import "../global.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes, faHome, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes, faHome, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 
@@ -27,7 +27,14 @@ class Header extends React.Component {
 	render() {
 		return (
 			<header className={this.props.noScroll ? "no-scroll" : ""}>
-				<Link className="button primary" to="/home"><FontAwesomeIcon icon={faHome} /> Pradžia</Link>
+				<Link
+					className="button primary"
+					to={"/user/" + auth.user.id}
+					onClick={this.handleUseOther}
+				>
+					<FontAwesomeIcon icon={faUser} /> Mano paskyra	
+				</Link>
+				
 				<div className="flex-spacer"></div>
 				
 				<button className="primary collapse-menu" onClick={this.handleClick}>
@@ -41,12 +48,37 @@ class Header extends React.Component {
 							"button primary collapse uncollapse" :
 							"button primary collapse"
 					}
-					to={"/user/" + auth.user.id}
+					to={"/user/" + auth.user.id + "/calendar"}
 					onClick={this.handleUseOther}
 				>
+					<FontAwesomeIcon icon={faCalendarAlt} /> Mano kalendorius
+				</Link>
 				
-					<FontAwesomeIcon icon={faUser} /> Mano paskyra
-					
+				
+				
+				
+				<Link
+					className={
+						this.state.hamburgerActive ?
+							"button primary collapse uncollapse" :
+							"button primary collapse"
+					}
+					to={"/topics"}
+					onClick={this.handleUseOther}
+				>
+					<FontAwesomeIcon icon={faClipboardList} /> Visos temos
+				</Link>
+				
+				<Link
+					className={
+						this.state.hamburgerActive ?
+							"button primary collapse uncollapse" :
+							"button primary collapse"
+					}
+					to={"/roles"}
+					onClick={this.handleUseOther}
+				>
+					<FontAwesomeIcon icon={faTags} /> Rolės	
 				</Link>
 				
 				
@@ -59,9 +91,7 @@ class Header extends React.Component {
 					to="/login"
 					onClick={this.handleUseLogout}
 				>
-					
 					<FontAwesomeIcon icon={faSignOutAlt} /> Atsijungti
-				
 				</Link>
 				
 				
