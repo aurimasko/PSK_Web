@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faStar, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faStar, faUser, faCalendarAlt, faClipboardList } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { teamService } from "../services/teamService.js";
@@ -111,6 +111,27 @@ class Team extends React.Component {
 						</Link>
 
 					</div>
+					
+					<div className="wide width-container">
+						
+						<div className="grid gaps">
+							<Link className="button" to={"/user/" + this.state.leader.id + "/team/calendar"}>
+								<div className="w100 margin-vertical-16">
+									<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
+								</div>
+								Kalendorius
+							</Link>
+							
+							<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faClipboardList} size="4x" />
+							</div>
+								Išmoktos temos
+							</Link>
+							
+						</div>
+					</div>
+					
 				</Layout>
 			);
 		}
