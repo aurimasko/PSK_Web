@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags, faTag } from '@fortawesome/free-solid-svg-icons'
 import { roleService } from "../services/roleService.js";
-
+import Loading from "../components/Loading";
 
 class RolesList extends React.Component {
 	
@@ -18,6 +18,16 @@ class RolesList extends React.Component {
 	
 	
 	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
 		var result = await roleService.fetchRoles();
 		if (result.isSuccess === true) {
 			var roles = result.content;
@@ -35,36 +45,40 @@ class RolesList extends React.Component {
 		} else {
 			console.log(JSON.stringify(result));
 		}
-	}
+    }
 	
 	
 	render() {
-		return (
-			<Layout>
-				<div className="container wide">
-					
-					<div className="flex-right">
-						
-						<div className="flex-down margin-right-16 margin-left-8">
-							<div className="flex-spacer"></div>
-							<FontAwesomeIcon icon={faTags} size="3x" />
-							<div className="flex-spacer"></div>
-						</div>
-						
-						
-						<h1>
-							Visos rolės
+		if (this.state.listItems === null) {
+			return <Loading/>;
+		} else {
+			return (
+				<Layout>
+					<div className="container wide">
+
+						<div className="flex-right">
+
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<FontAwesomeIcon icon={faTags} size="3x" />
+								<div className="flex-spacer"></div>
+							</div>
+
+
+							<h1>
+								Visos rolės
 						</h1>
+						</div>
+
+						<h3 className="margin-top-24">Visų rolių sąrašas:</h3>
+
+						<ul className="fa-ul">
+							{this.state.listItems}
+						</ul>
 					</div>
-					
-					<h3 className="margin-top-24">Visų rolių sąrašas:</h3>
-					
-					<ul className="fa-ul">
-						{this.state.listItems}
-					</ul>
-				</div>
-			</Layout>
-		);
+				</Layout>
+			);
+		}
 	}
 }
 

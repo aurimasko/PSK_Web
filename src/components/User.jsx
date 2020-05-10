@@ -30,25 +30,30 @@ class User extends React.Component {
 	}
 	
 	async getData() {
-		var id = this.props.match.params.id === "me" ? auth.user.id: this.props.match.params.id;
-		
+		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		if (id === auth.user.id) {
 			this.setState({
 				user: auth.user
 			});
+
+			this.getRole(auth.user.roleId);
 		} else {
 			var result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
 				this.setState({
 					user: result.content[0]
 				});
+
+				this.getRole(result.content[0].roleId);
 			} else {
 				console.log(JSON.stringify(result));
 			}
 		}
-		
-		if (auth.user.roleId) {
-			var result = await roleService.fetchRole(auth.user.roleId);
+	}
+
+	async getRole(roleId) {
+		if (roleId) {
+			var result = await roleService.fetchRole(roleId);
 			if (result.isSuccess === true) {
 				this.setState({
 					role: result.content[0]
@@ -57,7 +62,7 @@ class User extends React.Component {
 				console.log(JSON.stringify(result));
 			}
 		}
-	}
+    }
 	
 	renderRole() {
 		if (this.state.role) {
@@ -134,11 +139,6 @@ class User extends React.Component {
 						<button>Keisti slaptažodį</button>
 						
 					</div>
-					
-					
-					
-					
-					
 				</Layout>
 			);
 		}
