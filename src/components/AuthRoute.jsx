@@ -33,7 +33,7 @@ class AuthRoute extends React.Component {
 	render() {
 		
 		if (this.state.loggedIn === null || (this.state.loggedIn && this.state.user === null)) {
-			return <Loading/>;
+			return <Loading showText={true}/>;
 		}
 		
 		if (!this.state.loggedIn) {

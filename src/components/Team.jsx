@@ -83,7 +83,11 @@ class Team extends React.Component {
 	
 	render() {
 		if (this.state.leader == null || this.state.listItems == null || this.state.teamMembers == null) {
-			return <Loading />;
+			return (
+				<Layout>
+					<Loading showText={true}/>
+				</Layout>
+			);
 		} else {
 			return (
 				<Layout>

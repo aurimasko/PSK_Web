@@ -50,7 +50,11 @@ class RolesList extends React.Component {
 	
 	render() {
 		if (this.state.listItems === null) {
-			return <Loading/>;
+			return (
+				<Layout>
+					<Loading showText={true} />
+				</Layout>
+			);
 		} else {
 			return (
 				<Layout>

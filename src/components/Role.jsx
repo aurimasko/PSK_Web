@@ -71,14 +71,18 @@ class Role extends React.Component {
 				</div>
 			);
 		} else {
-			return "";
+			return <Loading width={50} height={50} type={"balls"}/>;
 		}
 	}
 	
 	
 	render() {
 		if (this.state.role == null) {
-			return <Loading />;
+			return (
+				<Layout>
+					<Loading showText={true} />
+				</Layout>
+			);
 		} else {
 			return (
 				<Layout>

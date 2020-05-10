@@ -77,7 +77,11 @@ class User extends React.Component {
 	
 	render() {
 		if (this.state.user == null) {
-			return <Loading />;
+			return (
+				<Layout>
+					<Loading showText={true}/>
+				</Layout>
+			);
 		} else {
 			
 			return (
