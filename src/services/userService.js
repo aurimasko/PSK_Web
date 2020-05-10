@@ -16,7 +16,6 @@ export const userService = {
 		).then(response => { return response.json(); });
 	},
 	async fetchUserById(id) {
-
 		return await fetch(
 			endPoints.usersAPIBaseEndPoint + "?id=" + id,
 			{
@@ -43,6 +42,17 @@ export const userService = {
 						lastName: lastName
 					}
 				)
+			}
+		).then(response => { return response.json(); });
+	},
+	async fetchUsersByRole(roleId) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + "?roleId=" + roleId,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken()
+				})
 			}
 		).then(response => { return response.json(); });
     }

@@ -24,5 +24,5 @@ export const roleService = {
 				}),
 			}
 		).then(response => { return response.json(); });
-    }
+	}
 }

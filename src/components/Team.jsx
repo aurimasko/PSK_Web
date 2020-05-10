@@ -23,7 +23,17 @@ class Team extends React.Component {
 	
 	
 	async componentDidMount() {
-		var id = this.props.match.params.id;
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		if (id === auth.user.id) {
 			this.setState({
 				leader: auth.user
@@ -37,13 +47,13 @@ class Team extends React.Component {
 			} else {
 				console.log(JSON.stringify(result));
 			}
-        }
+		}
 
 		var result = null;
 		if (id == auth.user.id) {
 			result = await teamService.fetchCurrentUserTeam();
 		} else {
-			await teamService.fetchTeamByLeaderId(id);
+			result = await teamService.fetchTeamByLeaderId(id);
 		}
 
 		if (result.isSuccess === true) {
@@ -55,20 +65,20 @@ class Team extends React.Component {
 		}
 
 		this.setState({
-			listItems: this.state.teamMembers.map((member) => 
+			listItems: this.state.teamMembers.map((member) =>
 				<li key={member.id}>
 					<Link to={"/user/" + member.id}>
-						
-						{member.id === this.state.leader.id? 
-							<FontAwesomeIcon icon={faStar} listItem />:
+
+						{member.id === this.state.leader.id ?
+							<FontAwesomeIcon icon={faStar} listItem /> :
 							<FontAwesomeIcon icon={faUser} listItem />
 						}
-						
+
 						{member.firstName} {member.lastName} ({member.username})
 					</Link>
 				</li>
-			)	
-		})
+			)
+		});
 	}
 	
 	render() {
@@ -105,9 +115,7 @@ class Team extends React.Component {
 						</ul>
 
 						<Link className="button" to={"team/add"}>
-							<button>
-								Pridėti naują komandos narį
-						</button>
+							Pridėti naują komandos narį
 						</Link>
 
 					</div>
