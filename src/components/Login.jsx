@@ -1,6 +1,8 @@
 import React from 'react';
 import { auth } from "../services/auth.js";
 
+import Notifications from "./Notifications";
+
 
 class Login extends React.Component {
 	
@@ -12,6 +14,8 @@ class Login extends React.Component {
 			password: ""
 		}
 		
+		this.notifRef = React.createRef();
+		
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,6 +24,9 @@ class Login extends React.Component {
 	render() {
 		return (
 			<div className="flex-spacer flex-down">
+				
+				<Notifications ref={this.notifRef} noScroll={true} />
+				
 				<div className="flex-spacer" />
 				<div className="container wide">
 					<h1 className="margin-bottom-8">Prisijungimas</h1>
@@ -53,12 +60,17 @@ class Login extends React.Component {
 	}
 	
 	handleSubmit(event) {
+		event.preventDefault();
+		
+		if (this.state.password.length < 8) {
+			this.notifRef.current.addNotification("Example notification");
+			return;
+		}
+		
 		auth.login(this.state.email, this.state.password)
 		.then(() => {
 			this.props.history.push("/");
 		});
-		
-		event.preventDefault();
 	}
 }
 

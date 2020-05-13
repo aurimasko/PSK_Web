@@ -17,6 +17,8 @@ class User extends React.Component {
 			role: null,
 			user: null
 		};
+		
+		this.notifRef = React.createRef();
 	}
 	
 	async componentDidMount() {
@@ -81,7 +83,7 @@ class User extends React.Component {
 		} else {
 			
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 						<div className="flex-right">
 						
@@ -135,7 +137,7 @@ class User extends React.Component {
 							<strong>Registracijos data: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm:ss')}
 						</div>
 						
-						<button>Redaguoti</button>
+						<button onClick={() => {this.notifRef.current.addNotification("not implemented")}}>Redaguoti</button>
 						<button>Keisti slaptažodį</button>
 						
 					</div>
