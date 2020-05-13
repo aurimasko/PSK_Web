@@ -247,6 +247,10 @@ p {
 	padding: 2px 8px;
 }
 
+.small-btn-noborder {
+	border: none;
+}
+
 
 
 /*----------------------------------------------------------------------------*/
@@ -454,6 +458,21 @@ button.danger, input[type=submit].danger, a.button.danger {
 label {
 	display: block;
 	padding: 8px 0px;
+}
+
+textarea {
+	color: var(--color-fg-regular);
+	background-color: #00000000;
+	border: 2px solid var(--color-fg-regular);
+	
+	display: block;
+	width: 100%;
+	resize: vertical;
+}
+
+select {
+	display: block;
+	width: 100%;
 }
 
 
