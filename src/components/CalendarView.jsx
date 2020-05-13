@@ -41,7 +41,9 @@ class CalendarView extends React.Component {
 		this.state = {
 			day: today,
 			events: null,
-			learningDays: null
+			learningDays: null,
+			startDate: moment(today).startOf('month').subtract(7, 'days'),
+			endDate: moment(today).endOf('month').add(7, 'days')
 		};
 		
 		this.handleDaySelect = this.handleDaySelect.bind(this);
@@ -50,19 +52,12 @@ class CalendarView extends React.Component {
 	
 	
 	async componentDidMount() {
-		this.getData();
+		this.getData(this.state.startDate, this.state.endDate);
 	}
 
-	async componentDidUpdate(prevProps) {
-		if (prevProps.match.params.id !== this.props.match.params.id) {
-			this.getData();
-		}
-	}
-
-	async getData() {
+	async getData(startDate, endDate) {
 		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
-		//TODO: add parameters start and end date
-		var result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id);
+		var result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
 			this.setState({
 				learningDays: result.content,
@@ -109,7 +104,9 @@ class CalendarView extends React.Component {
 								dayPropGetter={(date) => this.setDayStyle(date)}
 
 								selectable='ignoreEvents'
+								//selectable='true'
 								onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
+								onRangeChange={(range) => this.handleDateRangeChange(range)}
 							/>
 
 						</div>
@@ -193,6 +190,14 @@ class CalendarView extends React.Component {
 	handleDaySelect(slotInfo) {
 		this.setState({day: slotInfo.start});
 	}
+
+	handleDateRangeChange(range) {
+		this.setState({
+			startDate: range.start,
+			endDate: range.end
+		});
+		this.getData(range.start, range.end);
+    }
 }
 
 export default CalendarView;
