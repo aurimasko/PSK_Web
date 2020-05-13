@@ -3,7 +3,6 @@ import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
-import { Redirect } from "react-router-dom";
 
 class ChangePassword extends React.Component {
 

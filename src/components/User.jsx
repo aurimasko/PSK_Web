@@ -88,10 +88,12 @@ class User extends React.Component {
 		if (auth.user.isAdmin) {
 			return (
 				<div>
-					<Link className="button" to={"user/" + this.state.user.id + "/edit"}>
+					<Link className="button" to={"/user/" + this.state.user.id + "/edit"}>
 						<button>Edit</button>
 					</Link>
-					<button>Change role</button>
+					<Link className="button" to={"/user/" + this.state.user.id + "/changerole"}>
+						<button>Change role</button>
+					</Link>
 					<button>Change password</button>
 					<button>Change supervisor</button>
 				</div>
@@ -112,15 +114,17 @@ class User extends React.Component {
 				//if supervisor, can update only role
 			} else if (this.state.user.superVisorId == auth.user.id) {
 				return (
-					<div>
+					<Link className="button" to={"/user/" + this.state.user.id + "/changerole"}>
 						<button>Change role</button>
-					</div>
+					</Link>
 				);
 				//if any higher in heirarchy, can update role and change supervisor
 			} else {
 				return (
 					<div>
-						<button>Change role</button>
+						<Link className="button" to={"/user/" + this.state.user.id + "/changerole"}>
+							<button>Change role</button>
+						</Link>
 						<button>Change supervisor</button>
 					</div>
 				);

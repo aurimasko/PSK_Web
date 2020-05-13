@@ -74,7 +74,7 @@ class RolesList extends React.Component {
 							</h1>
 						</div>
 
-						<h3 className="margin-top-24">Visų rolių sąrašas:</h3>
+						<h3 className="margin-top-24">Users in role:</h3>
 
 						<ul className="fa-ul">
 							{this.state.listItems}
