@@ -124,7 +124,7 @@ class CalendarView extends React.Component {
 								{formatDate(this.state.day)}
 							</h1>
 
-							<h3>Mokymosi dienos temos:</h3>
+							<h3>Learning day topics:</h3>
 
 							<ul className="fa-ul margin-top-16 scroll">
 								<li className="margin-top-8 margin-right-24">
@@ -152,7 +152,7 @@ class CalendarView extends React.Component {
 								</li>
 							</ul>
 
-							<h3 className="margin-top-16">Mokymosi dienos komentaras:</h3>
+							<h3 className="margin-top-16">Learning day comment:</h3>
 
 							<p className="">
 								<i>no comments</i>
@@ -160,7 +160,7 @@ class CalendarView extends React.Component {
 
 
 							<div className="flex-spacer" />
-							<button className="primary margin-top-24">Keisti</button>
+							<button className="primary margin-top-24">Edit</button>
 
 						</div>
 
