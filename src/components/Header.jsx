@@ -32,7 +32,7 @@ class Header extends React.Component {
 					to={"/user/me"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faUser} /> My profile	
+					<FontAwesomeIcon icon={faUser} /> {auth.user.firstName} {auth.user.lastName}
 				</Link>
 				
 				<div className="flex-spacer"></div>

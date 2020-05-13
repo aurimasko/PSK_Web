@@ -68,5 +68,24 @@ export const userService = {
 				body: JSON.stringify(user)
 			}
 		).then(response => { return response.json(); });
+	},
+	async changePassword(currentPassword, newPassword, newPasswordRepeated) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + "/ChangePassword",
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(
+					{
+						currentPassword: currentPassword,
+						newPassword: newPassword,
+						newPasswordRepeated: newPasswordRepeated
+					}
+				)
+			}
+		).then(response => { return response.json(); });
     }
 }

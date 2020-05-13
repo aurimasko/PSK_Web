@@ -104,7 +104,9 @@ class User extends React.Component {
 						<Link className="button" to={"/user/" + this.state.user.id + "/edit"}>
 							<button>Edit</button>
 						</Link>
-						<button>Change password</button>
+						<Link className="button" to={"/user/me/changepassword"}>
+							<button>Change password</button>
+						</Link>
 					</div>
 				);
 				//if supervisor, can update only role
