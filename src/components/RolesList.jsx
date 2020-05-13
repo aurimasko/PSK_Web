@@ -45,7 +45,7 @@ class RolesList extends React.Component {
 		} else {
 			console.log(JSON.stringify(result));
 		}
-    }
+	}
 	
 	
 	render() {

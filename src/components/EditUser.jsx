@@ -63,8 +63,8 @@ class EditUser extends React.Component {
 			);
 		} else {
 			return <Loading width={50} height={50} type={"balls"} />;
-        }
-    }
+		}
+	}
 
 	render() {
 		if (this.state.user == null) {
@@ -144,7 +144,7 @@ class EditUser extends React.Component {
 					this.props.history.push("/user/" + userReturned.id + "/edit");
 				} else {
 					console.log(JSON.stringify(data));
-                }
+				}
 			});
 
 		event.preventDefault();

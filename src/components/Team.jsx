@@ -90,13 +90,13 @@ class Team extends React.Component {
 			);
 		} else {
 			return "";
-        }
+		}
 	}
 
 	renderTeamMembers() {
 		if (this.state.listItems == null) {
 			return <Loading width={50} height={50} type={"balls"} />;
-        }else if (this.state.listItems.length > 0) {
+		}else if (this.state.listItems.length > 0) {
 			return (
 				<div>
 					<h3 className="margin-top-24">Members:</h3>
@@ -108,8 +108,8 @@ class Team extends React.Component {
 			);
 		} else {
 			return "";
-        }
-    }
+		}
+	}
 
 	render() {
 		if (this.state.leader == null) {

@@ -67,8 +67,8 @@ class User extends React.Component {
 			this.setState({
 				role: {}
 			});
-        }
-    }
+		}
+	}
 	
 	renderRole() {
 		if (this.state.role == null) {
@@ -81,7 +81,7 @@ class User extends React.Component {
 					</h4>);
 			} else {
 				return "";
-            }
+			}
 		}
 	}
 
@@ -132,7 +132,7 @@ class User extends React.Component {
 				);
 			}
 		}
-    }
+	}
 
 	render() {
 		if (this.state.user == null) {

@@ -81,7 +81,7 @@ class CalendarView extends React.Component {
 		calendarButtons[0].innerHTML = "Today";
 		calendarButtons[1].innerHTML = "<";
 		calendarButtons[2].innerHTML = ">";
-    }
+	}
 	
 	
 	render() {
@@ -203,7 +203,7 @@ class CalendarView extends React.Component {
 			endDate: range.end
 		});
 		this.getData(range.start, range.end);
-    }
+	}
 }
 
 export default CalendarView;
