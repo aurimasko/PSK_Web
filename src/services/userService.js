@@ -55,5 +55,18 @@ export const userService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async updateUser(user) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint,
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(user)
+			}
+		).then(response => { return response.json(); });
     }
 }

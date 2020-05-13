@@ -88,7 +88,9 @@ class User extends React.Component {
 		if (auth.user.isAdmin) {
 			return (
 				<div>
-					<button>Edit</button>
+					<Link className="button" to={"user/" + this.state.user.id + "/edit"}>
+						<button>Edit</button>
+					</Link>
 					<button>Change role</button>
 					<button>Change password</button>
 					<button>Change supervisor</button>
@@ -99,7 +101,9 @@ class User extends React.Component {
 			if (this.state.user.id == auth.user.id) {
 				return (
 					<div>
-						<button>Edit</button>
+						<Link className="button" to={"/user/" + this.state.user.id + "/edit"}>
+							<button>Edit</button>
+						</Link>
 						<button>Change password</button>
 					</div>
 				);

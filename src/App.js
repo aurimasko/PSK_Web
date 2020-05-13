@@ -18,6 +18,7 @@ import TopicsView from "./components/TopicsView";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AddTeamMember from "./components/AddTeamMember";
+import EditUser from "./components/EditUser";
 
 import { auth } from "./services/auth.js";
 
@@ -34,6 +35,7 @@ function App() {
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
 				<AuthRoute path="/user/:id/team" component={Team} />
+				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id" component={User} />
 				<AuthRoute path="/roles" component={RolesList} />
 				<AuthRoute path="/role/:id" component={Role} />
