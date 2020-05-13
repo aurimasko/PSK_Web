@@ -144,7 +144,7 @@ class User extends React.Component {
 						</div>
 						
 						<div>
-							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm:ss')}
+							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm')}
 						</div>
 						
 						<button>Edit</button>

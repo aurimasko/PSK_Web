@@ -66,7 +66,7 @@ class CalendarView extends React.Component {
 		if (result.isSuccess === true) {
 			this.setState({
 				learningDays: result.content,
-				events: result.content.map(function (value) { return value.Date })
+				events: result.content.map(function (value) { return value.date })
 			});
 			this.initUI();
 		} else {
