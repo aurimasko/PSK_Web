@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import { roleService } from "../services/roleService.js";
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class ChangeRole extends React.Component {
 
@@ -19,6 +20,8 @@ class ChangeRole extends React.Component {
 
 		this.handleRoleChange = this.handleRoleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 
 	async componentDidMount() {
@@ -32,8 +35,8 @@ class ChangeRole extends React.Component {
 	}
 
 	async getData() {
-		var id = this.props.match.params.id;
-		var result = await userService.fetchUserById(id);
+		let id = this.props.match.params.id;
+		let result = await userService.fetchUserById(id);
 		if (result.isSuccess === true) {
 			this.setState({
 				user: result.content[0]
@@ -41,29 +44,32 @@ class ChangeRole extends React.Component {
 
 			this.getRole(result.content[0].roleId);
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			return;
 		}
 
-		var rolesResult = await roleService.fetchRoles();
+		let rolesResult = await roleService.fetchRoles();
 		if (rolesResult.isSuccess === true) {
 			this.setState({
 				roles: rolesResult.content
 			});
 		} else {
-			console.log(JSON.stringify(rolesResult));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(rolesResult) });
+			return;
+
 		}
 	}
 
 	async getRole(roleId) {
 		if (roleId) {
-			var result = await roleService.fetchRole(roleId);
+			let result = await roleService.fetchRole(roleId);
 			if (result.isSuccess === true) {
 				this.setState({
 					userRole: result.content[0],
 					newRoleId: result.content[0].id
 				});
 			} else {
-				console.log(JSON.stringify(result));
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 			}
 		} else {
 			this.setState({
@@ -87,13 +93,13 @@ class ChangeRole extends React.Component {
 	render() {
 		if (this.state.user == null || this.state.userRole == null || this.state.roles == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
 						<h1 className="margin-bottom-8">Change {this.state.user.firstName} {this.state.user.lastName} role</h1>
@@ -131,8 +137,8 @@ class ChangeRole extends React.Component {
 			isChangeButtonEnabled: false
 		});
 
-		var newRoleId = this.state.newRoleId;
-		var userToUpdate = this.state.user;
+		let newRoleId = this.state.newRoleId;
+		let userToUpdate = this.state.user;
 
 		if (newRoleId === "")
 			newRoleId = null;
@@ -143,9 +149,15 @@ class ChangeRole extends React.Component {
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.props.history.push("/user/" + this.state.user.id);
+					this.notifRef.current.addNotification({ text: "Role changed successfully.", isSuccess: true });
+					let thisUp = this;
+
+					//Give some time to read message
+					setTimeout(function () {
+						thisUp.props.history.push("/user/" + thisUp.state.user.id);
+					}, 1000);
 				} else {
-					console.log(JSON.stringify(data));
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
 
 				this.setState({

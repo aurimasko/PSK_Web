@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import { teamService } from "../services/teamService.js";
 import { userService } from "../services/userService.js";
 import { auth } from "../services/auth.js";
-
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class Team extends React.Component {
 	
@@ -19,6 +19,8 @@ class Team extends React.Component {
 			teamMembers: null,
 			listItems: null
 		};
+
+		this.notifRef = React.createRef();
 	}
 	
 	
@@ -33,7 +35,7 @@ class Team extends React.Component {
 	}
 
 	async getData() {
-		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		if (id === auth.user.id) {
 			this.setState({
 				leader: auth.user
@@ -45,7 +47,7 @@ class Team extends React.Component {
 					leader: result.content[0]
 				});
 			} else {
-				console.log(JSON.stringify(result));
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 			}
 		}
 
@@ -61,7 +63,7 @@ class Team extends React.Component {
 				teamMembers: result.content.members
 			});
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 
 		this.setState({
@@ -114,13 +116,13 @@ class Team extends React.Component {
 	render() {
 		if (this.state.leader == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true}/>
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
 						<div className="flex-right">

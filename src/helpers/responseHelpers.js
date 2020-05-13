@@ -1,5 +1,5 @@
 export const responseHelpers = {
-	convertErrorArrayToString(array) {
-		return array.join("\n");
+	convertErrorArrayToString(data) {
+		return data.errorMessages.join(" <br/> ");
 	}
 }

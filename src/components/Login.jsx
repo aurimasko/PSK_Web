@@ -79,11 +79,11 @@ class Login extends React.Component {
 					this.props.history.push("/");
 				} else {
 					if (response === "NotFound") {
-						this.notifRef.current.addNotification("User was not found.");
+						this.notifRef.current.addNotification({ text: "User was not found." });
 					} else if (response === "UsernameOrPasswordIsIncorrect") {
-						this.notifRef.current.addNotification("Incorrect password.");
+						this.notifRef.current.addNotification({ text: "Incorrect password." });
 					} else {
-						this.notifRef.current.addNotification(response);
+						this.notifRef.current.addNotification({ text: response });
 					}
 				}
 				this.setState({ isLoginButtonEnabled: true });

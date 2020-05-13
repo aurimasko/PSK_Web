@@ -2,6 +2,7 @@
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class AddTeamMember extends React.Component {
 
@@ -19,6 +20,8 @@ class AddTeamMember extends React.Component {
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 
 	renderAddButton() {
@@ -33,7 +36,7 @@ class AddTeamMember extends React.Component {
 
 	render() {
 		return (
-			<Layout>
+			<Layout ref={this.notifRef}>
 				<div className="container wide">
 
 					<h1 className="margin-bottom-8">Add new team member</h1>
@@ -79,9 +82,18 @@ class AddTeamMember extends React.Component {
 
 		userService.createUser(this.state.email, this.state.firstName, this.state.lastName)
 			.then((data) => {
-				alert(JSON.stringify(data));
-				if (data.isSuccess)
-					alert("Success");
+				if (data.isSuccess) {
+					this.notifRef.current.addNotification({ text: "Team member added successfully", isSuccess: true });
+
+					//clear fields
+					this.setState({
+						email: "",
+						firstName: "",
+						lastName: ""
+					});
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
 
 				this.setState({
 					isAddButtonEnabled: true

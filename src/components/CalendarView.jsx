@@ -10,6 +10,7 @@ import "../react-big-calendar-custom-style.css";
 import { learningDayService } from "../services/learningDayService.js";
 import { auth } from "../services/auth.js";
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 moment.locale('en');
 const localizer = momentLocalizer(moment);
@@ -71,7 +72,7 @@ class CalendarView extends React.Component {
 			});
 			this.initUI();
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
@@ -87,13 +88,13 @@ class CalendarView extends React.Component {
 	render() {
 		if (this.state.events == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
 
