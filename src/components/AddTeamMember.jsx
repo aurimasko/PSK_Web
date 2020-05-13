@@ -2,6 +2,7 @@
 import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
+import Loading from "../components/Loading";
 
 class AddTeamMember extends React.Component {
 
@@ -11,7 +12,8 @@ class AddTeamMember extends React.Component {
 		this.state = {
 			email: "",
 			firstName: "",
-			lastName: ""
+			lastName: "",
+			isAddButtonEnabled: true
 		}
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -20,29 +22,39 @@ class AddTeamMember extends React.Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	renderAddButton() {
+		if (this.state.isAddButtonEnabled) {
+			return (
+				<input className="primary" type="submit" value="Add" />
+			);
+		} else {
+			return <Loading width={50} height={50} type={"balls"} />;
+		}
+	}
+
 	render() {
 		return (
 			<Layout>
 				<div className="container wide">
 
-					<h1 className="margin-bottom-8">Sukurti vartotoją</h1>
+					<h1 className="margin-bottom-8">Add new team member</h1>
 
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
-							Elektroninio pašto adresas
+							Email address
 							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
-							Vardas
+							First name
 							<input required type="text" value={this.state.firstName} onChange={this.handleFirstNameChange} />
 						</label>
 						<label>
-							Pavardė
+							Last name
 							<input required type="text" value={this.state.lastName} onChange={this.handleLastNameChange} />
 						</label>
 						<hr />
 
-						<input className="primary" type="submit" value="Sukurti" />
+						{this.renderAddButton()}
 					</form>
 				</div>
 			</Layout>
@@ -62,11 +74,19 @@ class AddTeamMember extends React.Component {
 	}
 
 	handleSubmit(event) {
+		this.setState({
+			isAddButtonEnabled: false
+		});
+
 		userService.createUser(this.state.email, this.state.firstName, this.state.lastName)
 			.then((data) => {
 				alert(JSON.stringify(data));
 				if (data.isSuccess)
 					alert("Success");
+
+				this.setState({
+					isAddButtonEnabled: true
+				});
 			});
 
 		event.preventDefault();

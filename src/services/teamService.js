@@ -17,7 +17,7 @@ export const teamService = {
 	async fetchTeamByLeaderId(id) {
 
 		return await fetch(
-			endPoints.teamAPIBaseEndPoint + "?leaderId=" + id,
+			endPoints.teamAPIBaseEndPoint + "?superVisorId=" + id,
 			{
 				method: 'get',
 				headers: new Headers({

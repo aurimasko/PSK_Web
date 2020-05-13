@@ -60,25 +60,33 @@ class Role extends React.Component {
 	}
 
 	renderRoleUsers() {
-		if (this.state.usersList && this.state.usersList.length > 0) {
-			return (
-				<div>
-					<h3 className="margin-top-24">Visų vartotojų sąrašas:</h3>
+		if (this.state.usersList) {
+			if (this.state.usersList.length > 0) {
+				return (
+					<div>
+						<h3 className="margin-top-24">Users in role:</h3>
 
-					<ul className="fa-ul">
-						{this.state.usersList}
-					</ul>
-				</div>
-			);
+						<ul className="fa-ul">
+							{this.state.usersList}
+						</ul>
+					</div>
+				);
+			} else {
+				return "";
+			}
 		} else {
-			return "";
+			return <Loading width={50} height={50} type={"balls"}/>;
 		}
 	}
 	
 	
 	render() {
 		if (this.state.role == null) {
-			return <Loading />;
+			return (
+				<Layout>
+					<Loading showText={true} />
+				</Layout>
+			);
 		} else {
 			return (
 				<Layout>
@@ -94,10 +102,10 @@ class Role extends React.Component {
 
 							<div>
 								<h1>
-									{this.state.role.name} rolė
+									{this.state.role.name} role
 								</h1>
 								<h5>
-									Sukūrimo data: {moment.utc(this.state.role.creationDate).format('YYYY-MM-DD hh:mm:ss')}
+									Creation date: {moment.utc(this.state.role.creationDate).format('YYYY-MM-DD hh:mm')}
 								</h5>
 								{this.renderRoleUsers()}
 							</div>
