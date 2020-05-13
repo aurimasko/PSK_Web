@@ -11,7 +11,7 @@ import { learningDayService } from "../services/learningDayService.js";
 import { auth } from "../services/auth.js";
 import Loading from "../components/Loading";
 
-moment.locale('lt');
+moment.locale('en');
 const localizer = momentLocalizer(moment);
 
 
