@@ -12,7 +12,8 @@ class Notifications extends React.Component {
 		super(props);
 		
 		this.state = {
-			notifications: []
+			notifications: [],
+			textColor: "black"
 		};
 	}
 	
@@ -25,7 +26,7 @@ class Notifications extends React.Component {
 			const notifications = this.state.notifications.map( (notifText, index) => {
 					if (notifText !== null) {
 						return <div key={index} className="flex-right container">
-							{notifText}
+							<p style={{color: this.state.textColor}}>{notifText}</p>
 							<div className="flex-spacer" />
 							<button className="notif-btn" onClick={() => {this.closeNotification(index)}}>
 								<FontAwesomeIcon icon={faTimes} />
@@ -48,11 +49,20 @@ class Notifications extends React.Component {
 		);
 	}
 	
-	addNotification(text) {
+	addNotification(text, isSuccess = false) {
+		this.clearNotifications();
 		let newNotifs = this.state.notifications
 		newNotifs.push(text);
-		
-		this.setState({ notifications: newNotifs});
+		if (!isSuccess) {
+			this.setState({
+				notifications: newNotifs,
+				textColor: "red"
+			});
+		}else {
+			this.setState({
+				notifications: newNotifs
+			});
+		}
 	}
 	
 	closeNotification(index) {
@@ -60,6 +70,10 @@ class Notifications extends React.Component {
 		newNotifs.splice(index, 1);
 		
 		this.setState({ notifications: newNotifs});
+	}
+
+	clearNotifications() {
+		this.setState({ notifications: [] });
 	}
 }
 
