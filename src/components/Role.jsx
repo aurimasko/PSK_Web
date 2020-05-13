@@ -64,7 +64,7 @@ class Role extends React.Component {
 			if (this.state.usersList.length > 0) {
 				return (
 					<div>
-						<h3 className="margin-top-24">Visų vartotojų sąrašas:</h3>
+						<h3 className="margin-top-24">Users in role:</h3>
 
 						<ul className="fa-ul">
 							{this.state.usersList}
