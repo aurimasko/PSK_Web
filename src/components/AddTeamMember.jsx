@@ -2,6 +2,7 @@
 import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
+import Loading from "../components/Loading";
 
 class AddTeamMember extends React.Component {
 
@@ -11,13 +12,24 @@ class AddTeamMember extends React.Component {
 		this.state = {
 			email: "",
 			firstName: "",
-			lastName: ""
+			lastName: "",
+			isUpdateButtonEnabled: true
 		}
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	renderAddButton() {
+		if (this.state.isUpdateButtonEnabled) {
+			return (
+				<input className="primary" type="submit" value="Add" />
+			);
+		} else {
+			return <Loading width={50} height={50} type={"balls"} />;
+		}
 	}
 
 	render() {
@@ -42,7 +54,7 @@ class AddTeamMember extends React.Component {
 						</label>
 						<hr />
 
-						<input className="primary" type="submit" value="Add" />
+						{this.renderAddButton()}
 					</form>
 				</div>
 			</Layout>
@@ -62,11 +74,19 @@ class AddTeamMember extends React.Component {
 	}
 
 	handleSubmit(event) {
+		this.setState({
+			isUpdateButtonEnabled: false
+		});
+
 		userService.createUser(this.state.email, this.state.firstName, this.state.lastName)
 			.then((data) => {
 				alert(JSON.stringify(data));
 				if (data.isSuccess)
 					alert("Success");
+
+				this.setState({
+					isUpdateButtonEnabled: true
+				});
 			});
 
 		event.preventDefault();
