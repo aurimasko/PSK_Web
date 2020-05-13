@@ -4,10 +4,12 @@ const apiBaseEndPoint = "https://confikturaservice.azurewebsites.net";
 const usersAPIBaseEndPoint = apiBaseEndPoint + "/Users";
 const rolesAPIBaseEndPoint = apiBaseEndPoint + "/Roles";
 const teamAPIBaseEndPoint = apiBaseEndPoint + "/Team";
+const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays"
 
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,
     usersAPIBaseEndPoint: usersAPIBaseEndPoint,
     rolesAPIBaseEndPoint: rolesAPIBaseEndPoint,
-    teamAPIBaseEndPoint: teamAPIBaseEndPoint
+    teamAPIBaseEndPoint: teamAPIBaseEndPoint,
+    learningDaysAPIBaseEndPoint: learningDaysAPIBaseEndPoint
 }

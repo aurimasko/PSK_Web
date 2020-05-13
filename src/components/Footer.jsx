@@ -8,8 +8,8 @@ class Footer extends React.Component {
 	render() {
 		return (
 			<footer>
-				<Link className="" to="/about">Apie sistemą</Link>
-				<Link className="" to="/help">Pagalba</Link>
+				<Link className="" to="/about">About</Link>
+				<Link className="" to="/help">Support</Link>
 			</footer>
 		);
 	}

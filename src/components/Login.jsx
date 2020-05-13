@@ -29,21 +29,21 @@ class Login extends React.Component {
 				
 				<div className="flex-spacer" />
 				<div className="container wide">
-					<h1 className="margin-bottom-8">Prisijungimas</h1>
+					<h1 className="margin-bottom-8">Login</h1>
 					
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
-							Elektroninio pašto adresas
+							Email address
 							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
-							Slaptažodis
+							Password
 							<input required type="password" value={this.state.password} onChange={this.handlePasswordChange} />
 						</label>
 						
 						<hr />
 						
-						<input className="primary" type="submit" value="Prisijungti"/>
+						<input className="primary" type="submit" value="Login"/>
 					</form>
 				</div>
 				<div className="flex-spacer" />
