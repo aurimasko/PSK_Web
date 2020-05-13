@@ -55,6 +55,12 @@ class CalendarView extends React.Component {
 		this.getData(this.state.startDate, this.state.endDate);
 	}
 
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData(this.state.startDate, this.state.endDate);
+		}
+	}
+
 	async getData(startDate, endDate) {
 		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		var result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);

@@ -22,7 +22,7 @@ class Login extends React.Component {
 			<div className="flex-spacer flex-down">
 				<div className="flex-spacer" />
 				<div className="container wide">
-					<h1 className="margin-bottom-8">Prisijungimas</h1>
+					<h1 className="margin-bottom-8">Login</h1>
 					
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>

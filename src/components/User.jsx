@@ -82,7 +82,46 @@ class User extends React.Component {
             }
 		}
 	}
-	
+
+	renderButtons() {
+		//Admin can do anything
+		if (auth.user.isAdmin) {
+			return (
+				<div>
+					<button>Edit</button>
+					<button>Change role</button>
+					<button>Change password</button>
+					<button>Change supervisor</button>
+				</div>
+			);
+		} else {
+			//if current user, can change password and update himself
+			if (this.state.user.id == auth.user.id) {
+				return (
+					<div>
+						<button>Edit</button>
+						<button>Change password</button>
+					</div>
+				);
+				//if supervisor, can update only role
+			} else if (this.state.user.superVisorId == auth.user.id) {
+				return (
+					<div>
+						<button>Change role</button>
+					</div>
+				);
+				//if any higher in heirarchy, can update role and change supervisor
+			} else {
+				return (
+					<div>
+						<button>Change role</button>
+						<button>Change supervisor</button>
+					</div>
+				);
+			}
+		}
+    }
+
 	render() {
 		if (this.state.user == null) {
 			return (
@@ -146,9 +185,11 @@ class User extends React.Component {
 						<div>
 							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm')}
 						</div>
-						
-						<button>Edit</button>
-						<button>Change password</button>
+						<div>
+							<strong>Learning day limit per quarter: </strong> {this.state.user.learningDayLimitPerQuarter}
+						</div>
+
+						{this.renderButtons()}
 						
 					</div>
 				</Layout>
