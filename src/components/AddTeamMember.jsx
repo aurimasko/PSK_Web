@@ -13,7 +13,7 @@ class AddTeamMember extends React.Component {
 			email: "",
 			firstName: "",
 			lastName: "",
-			isUpdateButtonEnabled: true
+			isAddButtonEnabled: true
 		}
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -23,7 +23,7 @@ class AddTeamMember extends React.Component {
 	}
 
 	renderAddButton() {
-		if (this.state.isUpdateButtonEnabled) {
+		if (this.state.isAddButtonEnabled) {
 			return (
 				<input className="primary" type="submit" value="Add" />
 			);
@@ -75,7 +75,7 @@ class AddTeamMember extends React.Component {
 
 	handleSubmit(event) {
 		this.setState({
-			isUpdateButtonEnabled: false
+			isAddButtonEnabled: false
 		});
 
 		userService.createUser(this.state.email, this.state.firstName, this.state.lastName)
@@ -85,7 +85,7 @@ class AddTeamMember extends React.Component {
 					alert("Success");
 
 				this.setState({
-					isUpdateButtonEnabled: true
+					isAddButtonEnabled: true
 				});
 			});
 
