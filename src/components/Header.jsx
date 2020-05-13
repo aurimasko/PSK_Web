@@ -1,7 +1,7 @@
 import React from 'react';
 import "../global.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes, faHome, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faTimes, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 

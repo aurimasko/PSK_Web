@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCalendarAlt, faUsers, faTags, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCalendarAlt, faUsers, faClipboardList } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 import { roleService } from "../services/roleService.js";
@@ -102,7 +102,7 @@ class User extends React.Component {
 			);
 		} else {
 			//if current user, can change password and update himself
-			if (this.state.user.id == auth.user.id) {
+			if (this.state.user.id === auth.user.id) {
 				return (
 					<div>
 						<Link className="button" to={"/user/" + this.state.user.id + "/edit"}>
@@ -114,7 +114,7 @@ class User extends React.Component {
 					</div>
 				);
 				//if supervisor, can update only role
-			} else if (this.state.user.superVisorId == auth.user.id) {
+			} else if (this.state.user.superVisorId === auth.user.id) {
 				return (
 					<Link className="button" to={"/user/" + this.state.user.id + "/changerole"}>
 						<button>Change role</button>

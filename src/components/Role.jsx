@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTag, faUserTag } from '@fortawesome/free-solid-svg-icons'
+import { faTag } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { roleService } from "../services/roleService.js";
 import { userService } from "../services/userService.js";

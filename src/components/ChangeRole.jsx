@@ -1,5 +1,4 @@
 import React from 'react';
-import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import { roleService } from "../services/roleService.js";
@@ -135,7 +134,7 @@ class ChangeRole extends React.Component {
 		var newRoleId = this.state.newRoleId;
 		var userToUpdate = this.state.user;
 
-		if (newRoleId == "")
+		if (newRoleId === "")
 			newRoleId = null;
 
 		userToUpdate.roleId = newRoleId;

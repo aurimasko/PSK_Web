@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import AuthRoute from "./components/AuthRoute";
-import Home from "./components/Home";
 import User from "./components/User";
 import Team from "./components/Team";
 import CalendarView from "./components/CalendarView";
@@ -22,7 +21,6 @@ import EditUser from "./components/EditUser";
 import ChangePassword from "./components/ChangePassword";
 import ChangeRole from "./components/ChangeRole";
 
-import { auth } from "./services/auth.js";
 
 function App() {
 	return (

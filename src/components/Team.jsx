@@ -39,7 +39,7 @@ class Team extends React.Component {
 				leader: auth.user
 			});
 		} else {
-			var result = await userService.fetchUserById(id);
+			let result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
 				this.setState({
 					leader: result.content[0]
@@ -49,8 +49,8 @@ class Team extends React.Component {
 			}
 		}
 
-		var result = null;
-		if (id == auth.user.id) {
+		let result = null;
+		if (id === auth.user.id) {
 			result = await teamService.fetchCurrentUserTeam();
 		} else {
 			result = await teamService.fetchTeamByLeaderId(id);
@@ -82,7 +82,7 @@ class Team extends React.Component {
 	}
 
 	renderAddNewTeamMemberButton() {
-		if (this.state.leader.id == auth.user.id) {
+		if (this.state.leader.id === auth.user.id) {
 			return (
 				<Link className="button" to={"team/add"}>
 					Add new member

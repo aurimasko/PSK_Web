@@ -3,7 +3,7 @@ import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
-import { Redirect } from "react-router-dom";
+
 
 class EditUser extends React.Component {
 
@@ -35,7 +35,7 @@ class EditUser extends React.Component {
 	}
 
 	async getData() {
-		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		//var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		//TODO: check if user to edit == current user, else permission denied.
 		//TODO: admin can edit anyone
 
@@ -132,7 +132,7 @@ class EditUser extends React.Component {
 				if (data.isSuccess) {
 					var userReturned = data.content;
 					//update current user
-					if (auth.user.id == userReturned.id) {
+					if (auth.user.id === userReturned.id) {
 						auth.user = userReturned;
 					}
 
