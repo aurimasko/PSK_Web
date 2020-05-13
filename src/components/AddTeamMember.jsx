@@ -25,24 +25,24 @@ class AddTeamMember extends React.Component {
 			<Layout>
 				<div className="container wide">
 
-					<h1 className="margin-bottom-8">Sukurti vartotoją</h1>
+					<h1 className="margin-bottom-8">Add new team member</h1>
 
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
-							Elektroninio pašto adresas
+							Email address
 							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
-							Vardas
+							First name
 							<input required type="text" value={this.state.firstName} onChange={this.handleFirstNameChange} />
 						</label>
 						<label>
-							Pavardė
+							Last name
 							<input required type="text" value={this.state.lastName} onChange={this.handleLastNameChange} />
 						</label>
 						<hr />
 
-						<input className="primary" type="submit" value="Sukurti" />
+						<input className="primary" type="submit" value="Add" />
 					</form>
 				</div>
 			</Layout>

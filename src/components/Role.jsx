@@ -98,10 +98,10 @@ class Role extends React.Component {
 
 							<div>
 								<h1>
-									{this.state.role.name} rolė
+									{this.state.role.name} role
 								</h1>
 								<h5>
-									Sukūrimo data: {moment.utc(this.state.role.creationDate).format('YYYY-MM-DD hh:mm:ss')}
+									Creation date: {moment.utc(this.state.role.creationDate).format('YYYY-MM-DD hh:mm:ss')}
 								</h5>
 								{this.renderRoleUsers()}
 							</div>

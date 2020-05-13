@@ -32,7 +32,7 @@ class Header extends React.Component {
 					to={"/user/me"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faUser} /> Mano paskyra	
+					<FontAwesomeIcon icon={faUser} /> My profile	
 				</Link>
 				
 				<div className="flex-spacer"></div>
@@ -51,7 +51,7 @@ class Header extends React.Component {
 					to={"/user/me/calendar"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faCalendarAlt} /> Mano kalendorius
+					<FontAwesomeIcon icon={faCalendarAlt} /> My calendar
 				</Link>
 				
 				
@@ -66,7 +66,7 @@ class Header extends React.Component {
 					to={"/topics"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faClipboardList} /> Visos temos
+					<FontAwesomeIcon icon={faClipboardList} /> Topics
 				</Link>
 				
 				<Link
@@ -78,7 +78,7 @@ class Header extends React.Component {
 					to={"/roles"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faTags} /> Rolės	
+					<FontAwesomeIcon icon={faTags} /> Roles	
 				</Link>
 				
 				
@@ -91,7 +91,7 @@ class Header extends React.Component {
 					to="/login"
 					onClick={this.handleUseLogout}
 				>
-					<FontAwesomeIcon icon={faSignOutAlt} /> Atsijungti
+					<FontAwesomeIcon icon={faSignOutAlt} /> Logout
 				</Link>
 				
 				

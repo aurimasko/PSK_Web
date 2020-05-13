@@ -77,7 +77,7 @@ class CalendarView extends React.Component {
 	initUI() {
 		var calendarButtons = document.getElementsByClassName("rbc-btn-group")[0].childNodes;
 
-		calendarButtons[0].innerHTML = "Rodyti šią dieną";
+		calendarButtons[0].innerHTML = "Today";
 		calendarButtons[1].innerHTML = "<";
 		calendarButtons[2].innerHTML = ">";
     }
@@ -152,7 +152,7 @@ class CalendarView extends React.Component {
 							<h3 className="margin-top-16">Mokymosi dienos komentaras:</h3>
 
 							<p className="">
-								<i>komentaro nėra</i>
+								<i>no comments</i>
 							</p>
 
 

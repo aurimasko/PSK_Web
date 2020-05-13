@@ -103,23 +103,23 @@ class Team extends React.Component {
 
 							<div>
 								<h1>
-									Komanda
+									Team
 							</h1>
 								<h4>
-									Vadovas: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
+									Leader: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
 								</h4>
 							</div>
 
 						</div>
 
-						<h3 className="margin-top-24">Komandos nariai:</h3>
+						<h3 className="margin-top-24">Members:</h3>
 
 						<ul className="fa-ul">
 							{this.state.listItems}
 						</ul>
 
 						<Link className="button" to={"team/add"}>
-							Pridėti naują komandos narį
+							Add new member
 						</Link>
 
 					</div>
@@ -131,14 +131,14 @@ class Team extends React.Component {
 								<div className="w100 margin-vertical-16">
 									<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
 								</div>
-								Kalendorius
+								Calendar
 							</Link>
 							
 							<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
 							<div className="w100 margin-vertical-16">
 								<FontAwesomeIcon icon={faClipboardList} size="4x" />
 							</div>
-								Išmoktos temos
+								Learned topics
 							</Link>
 							
 						</div>

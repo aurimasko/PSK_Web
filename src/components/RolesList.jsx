@@ -70,8 +70,8 @@ class RolesList extends React.Component {
 
 
 							<h1>
-								Visos rolės
-						</h1>
+								Roles
+							</h1>
 						</div>
 
 						<h3 className="margin-top-24">Visų rolių sąrašas:</h3>

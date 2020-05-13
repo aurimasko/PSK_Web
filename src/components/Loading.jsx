@@ -11,7 +11,7 @@ class Loading extends React.Component {
             color: this.props.color ? this.props.color : "orange",
             height: this.props.height ? this.props.height : 300,
             width: this.props.width ? this.props.width : 300,
-            text: this.props.text ? this.props.text : "Kraunasi...",
+            text: this.props.text ? this.props.text : "Loading...",
             fontSize: this.props.fontSize ? this.props.fontSize : 40,
             showText: this.props.showText ? this.props.showText : false
         };

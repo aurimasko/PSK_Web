@@ -61,17 +61,25 @@ class User extends React.Component {
 			} else {
 				console.log(JSON.stringify(result));
 			}
-		}
+		} else {
+			this.setState({
+				role: {}
+			});
+        }
     }
 	
 	renderRole() {
-		if (this.state.role) {
-			return (
-				<h4>
-					Darbuotojo rolė: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
-				</h4>);
+		if (this.state.role == null) {
+			return <Loading width={50} height={50} type={"balls"} />;
 		} else {
-			return "";
+			if (this.state.role.id) {
+				return (
+					<h4>
+						Role: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
+					</h4>);
+			} else {
+				return "";
+            }
 		}
 	}
 	
@@ -111,36 +119,36 @@ class User extends React.Component {
 									<div className="w100 margin-vertical-16">
 										<FontAwesomeIcon icon={faCalendarAlt} size="3x" />
 									</div>
-									Kalendorius
+									Calendar
 								</Link>
 								
 								<Link className="button" to={"/user/" + this.state.user.id + "/topics"}>
 								<div className="w100 margin-vertical-16">
 									<FontAwesomeIcon icon={faClipboardList} size="3x" />
 								</div>
-									Išmoktos temos
+									Learned topics
 								</Link>
 								
 								<Link className="button" to={"/user/" + this.state.user.id + "/team"}>
 									<div className="w100 margin-vertical-16">
 										<FontAwesomeIcon icon={faUsers} size="3x" />
 									</div>
-									Komanda
+									Team
 								</Link>
 								
 							</div>
 						</div>
 						
 						<div className="margin-top-16">
-							<strong>El.Pašto adresas: </strong> {this.state.user.username}
+							<strong>Email address: </strong> {this.state.user.username}
 						</div>
 						
 						<div>
-							<strong>Registracijos data: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm:ss')}
+							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm:ss')}
 						</div>
 						
-						<button>Redaguoti</button>
-						<button>Keisti slaptažodį</button>
+						<button>Edit</button>
+						<button>Change password</button>
 						
 					</div>
 				</Layout>
