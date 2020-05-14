@@ -16,5 +16,25 @@ export const learningDayService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async addLearningDay(date, topicIds, comments) {
+		var dateDate = moment(date).format("YYYY-MM-DD");
+		return await fetch(
+			endPoints.learningDaysAPIBaseEndPoint,
+			{
+				method: 'post',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(
+					{
+						date: dateDate,
+						comments: comments,
+						topicsId: topicIds
+					}
+				)
+			}
+		).then(response => { return response.json(); });
 	}
 }

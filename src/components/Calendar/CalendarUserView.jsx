@@ -146,14 +146,14 @@ class CalendarView extends React.Component {
 		if (this.state.isCreating) {
 			return (
 				<>
-					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode}/>
+					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day}/>
 				</>
 			);
 		}
 		if (this.dateNotEmpty(this.state.day)) {
 			return (
 				<>
-					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}/>
+					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id} notifRef={this.notifRef}/>
 					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
 				</>
 			);
@@ -205,7 +205,8 @@ class CalendarView extends React.Component {
 	}
 	
 	handleExitEditMode() {
-		this.setState({isCreating: false});
+		this.setState({ isCreating: false });
+		this.getData();
 	}
 	
 	handleDaySelect(slotInfo) {
