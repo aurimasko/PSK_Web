@@ -53,6 +53,8 @@ class CalendarView extends React.Component {
 		this.handleExitEditMode = this.handleExitEditMode.bind(this);
 		this.handleDaySelect = this.handleDaySelect.bind(this);
 		this.setDayStyle = this.setDayStyle.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 	
 	
@@ -76,7 +78,7 @@ class CalendarView extends React.Component {
 			});
 			this.initUI();
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
@@ -92,13 +94,13 @@ class CalendarView extends React.Component {
 	render() {
 		if (this.state.events == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
 
