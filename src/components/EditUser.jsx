@@ -143,6 +143,7 @@ class EditUser extends React.Component {
 					});
 
 					this.props.history.push("/user/" + userReturned.id + "/edit");
+					//Add proper handling of concurrency exception
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
