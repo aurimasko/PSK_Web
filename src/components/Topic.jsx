@@ -1,27 +1,105 @@
 import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
-
+import Loading from "../components/Loading";
+import { topicService } from "../services/topicService.js";
+import { responseHelpers } from "../helpers/responseHelpers.js";
+import moment from 'moment';
 
 class Topic extends React.Component {
-	
-	render() {
-		return (
-			<Layout>
-				<div className="container wide">
-					
-					<h1>Temos pavadinimas ({this.props.match.params.id})</h1>
+
+	constructor(props) {
+
+		super(props);
+
+		this.state = {
+			topic: null,
+			parentTopic: null
+		};
+
+		this.notifRef = React.createRef();
+	}
+
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		let id = this.props.match.params.id;
+		let result = await topicService.fetchTopic(id);
+		if (result.isSuccess === true) {
+			this.setState({
+				topic: result.content[0]
+			});
+			this.getParentTopic(result.content[0].parentId);
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+	async getParentTopic(id) {
+		if (id) {
+			let result = await topicService.fetchTopic(id);
+			if (result.isSuccess === true) {
+				this.setState({
+					parentTopic: result.content[0]
+				});
+			} else {
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			}
+		} else {
+			this.setState({
+				parentTopic: {}
+			});
+		}
+	}
+
+	renderTopicParent() {
+		if (this.state.parentTopic == null) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else if (this.state.parentTopic.id) {
+			return (
+				<div>
 					<h4>
-						Tėvinė tema: <Link className="" to="/topic/1">■■■■</Link>
+						Parent topic: <Link className="" to={"/topic/" + this.state.parentTopic.id}>{this.state.parentTopic.name}</Link>
 					</h4>
-					
-					<p className="margin-top-16">
-						 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pellentesque odio id tellus tempor suscipit. Morbi in maximus libero, vel consectetur justo. Nunc ac faucibus metus. Sed in finibus ex. Nam aliquam mauris rhoncus turpis accumsan, vel pulvinar ante auctor. Donec ut sagittis nunc. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque non neque nibh. Morbi a felis quis elit semper auctor et nec turpis. In hac habitasse platea dictumst. Nulla vel blandit ex. Nulla sit amet ipsum rutrum, sodales turpis et, viverra nunc. In sed enim massa. Curabitur non semper libero, at vehicula sapien.
-					</p>
-					
 				</div>
-			</Layout>
-		);
+			);
+		} else {
+			return "";
+		}
+	}
+
+	render() {
+		if (this.state.topic == null) {
+			return (
+				<Layout ref={this.notifRef}>
+					<Loading showText={true} />
+				</Layout>
+			);
+		} else {
+			return (
+				<Layout ref={this.notifRef}>
+					<div className="container wide">
+
+						<h1>Topic name: ({this.state.topic.name})</h1>
+						<h3>Created on: {moment.utc(this.state.topic.creationDate).format('YYYY-MM-DD hh:mm')}</h3>
+						{this.renderTopicParent()}
+
+						<p className="margin-top-16">
+							{this.state.topic.references}
+						</p>
+
+					</div>
+				</Layout>
+			);
+		}
 	}
 }
 

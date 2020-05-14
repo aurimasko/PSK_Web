@@ -13,5 +13,16 @@ export const topicService = {
 				}),
 			}
 		).then(response => { return response.json(); });
+	},
+	async fetchTopic(id) {
+		return await fetch(
+			endPoints.topicAPIBaseEndPoint + "?topicsId=" + id,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken()
+				}),
+			}
+		).then(response => { return response.json(); });
 	}
 }

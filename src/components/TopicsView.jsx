@@ -14,7 +14,7 @@ class TopicsView extends React.Component {
 		super(props);
 		
 		this.state = {
-			topicItems: null,
+			topicItems: null
 		};
 
 		this.notifRef = React.createRef();	
