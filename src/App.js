@@ -9,7 +9,8 @@ import {
 import AuthRoute from "./components/AuthRoute";
 import User from "./components/User";
 import Team from "./components/Team";
-import CalendarView from "./components/CalendarView";
+import CalendarUserView from "./components/Calendar/CalendarUserView";
+import CalendarTeamView from "./components/Calendar/CalendarTeamView";
 import Role from "./components/Role";
 import RolesList from "./components/RolesList";
 import Topic from "./components/Topic";
@@ -26,12 +27,9 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				{
-					//<AuthRoute path="/home" component={Home} />
-				}
-				<AuthRoute path="/user/:id/calendar" component={CalendarView} />
+				<AuthRoute path="/user/:id/calendar" component={CalendarUserView} />
 				<AuthRoute path="/user/:id/topics" component={TopicsView} />
-				<AuthRoute path="/user/:id/team/calendar" component={CalendarView} />
+				<AuthRoute path="/user/:id/team/calendar" component={CalendarTeamView} />
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
 				<AuthRoute path="/user/:id/team" component={Team} />
