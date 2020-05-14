@@ -139,7 +139,6 @@ class EditUser extends React.Component {
 					}
 
 					this.setState({
-						isUpdateButtonEnabled: true,
 						user: userReturned
 					});
 
@@ -147,6 +146,10 @@ class EditUser extends React.Component {
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
+
+				this.setState({
+					isUpdateButtonEnabled: true
+				});
 			});
 
 		event.preventDefault();
