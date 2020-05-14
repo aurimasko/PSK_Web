@@ -17,6 +17,7 @@ import Topic from "./components/Topic";
 import TopicsView from "./components/TopicsView";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
+import AccessDenied from "./components/AccessDenied";
 import AddTeamMember from "./components/AddTeamMember";
 import EditUser from "./components/EditUser";
 import ChangePassword from "./components/ChangePassword";
@@ -41,6 +42,7 @@ function App() {
 				<AuthRoute path="/role/:id" component={Role} />
 				<AuthRoute path="/topics" component={TopicsView} />
 				<AuthRoute path="/topic/:id" component={Topic} />
+				<AuthRoute exact path="/denied" component={AccessDenied} />
 				
 				<Route path="/login" component={Login} />
 				
