@@ -55,6 +55,9 @@ class TopicsView extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
+						<Link className="button" to={"/topic/add"}>
+							<button>Add</button>
+						</Link>
 						<h3 className="margin-top-24">Topics:</h3>
 						<ul className="fa-ul">
 							{this.state.topicItems}
