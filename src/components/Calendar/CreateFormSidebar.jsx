@@ -62,7 +62,7 @@ class DayContentSidebar extends React.Component {
 	}
 
 	render() {
-		if (this.state.topics == null) {
+		if (this.state.topics === null) {
 			return (
 				<Loading showText={true} />
 			);

@@ -25,6 +25,22 @@ export const topicService = {
 			}
 		).then(response => { return response.json(); });
 	},
+	async fetchTopicByIds(ids) {
+		let q = "?";
+		for (let i = 0; i < ids.length; i++) {
+			q += "topicsId=" + ids[i] + "&";
+		}
+
+		return await fetch(
+			endPoints.topicAPIBaseEndPoint + q,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken()
+				}),
+			}
+		).then(response => { return response.json(); });
+	},
 	async createTopic(name, references, parentId) {
 		return await fetch(
 			endPoints.topicAPIBaseEndPoint,

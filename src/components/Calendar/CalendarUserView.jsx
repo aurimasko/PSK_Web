@@ -47,7 +47,8 @@ class CalendarView extends React.Component {
 			learningDays: null,
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),
-			isCreating: false
+			isCreating: false,
+			currentLearningDayId: null
 		};
 		
 		this.handleEnterEditMode = this.handleEnterEditMode.bind(this);
@@ -73,9 +74,13 @@ class CalendarView extends React.Component {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
+
+			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") == moment(this.state.day).format("YYYY-MM-DD"));
+			console.log(currentLearningDay)
 			this.setState({
 				learningDays: result.content,
-				events: result.content.map(function (value) { return value.date })
+				events: result.content.map(function (value) { return value.date }),
+				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null
 			});
 			this.initUI();
 		} else {
@@ -93,7 +98,7 @@ class CalendarView extends React.Component {
 	
 	
 	render() {
-		if (this.state.events == null) {
+		if (this.state.events === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -153,7 +158,7 @@ class CalendarView extends React.Component {
 		if (this.dateNotEmpty(this.state.day)) {
 			return (
 				<>
-					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id} notifRef={this.notifRef}/>
+					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
 					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
 				</>
 			);
@@ -210,7 +215,8 @@ class CalendarView extends React.Component {
 	}
 	
 	handleDaySelect(slotInfo) {
-		this.setState({day: slotInfo.start, isCreating: false});
+		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(slotInfo.start).format("YYYY-MM-DD"));
+		this.setState({ day: slotInfo.start, isCreating: false, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null });
 	}
 
 	handleDateRangeChange(range) {
