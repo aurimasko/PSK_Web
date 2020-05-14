@@ -89,7 +89,7 @@ class Topic extends React.Component {
 					<div className="container wide">
 
 						<h1>Topic name: ({this.state.topic.name})</h1>
-						<h3>Created on: {moment.utc(this.state.topic.creationDate).format('YYYY-MM-DD hh:mm')}</h3>
+						<h3>Created on: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
 						{this.renderTopicParent()}
 
 						<p className="margin-top-16">

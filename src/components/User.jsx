@@ -195,7 +195,7 @@ class User extends React.Component {
 						</div>
 						
 						<div>
-							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm')}
+							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
 						</div>
 						<div>
 							<strong>Learning day limit per quarter: </strong> {this.state.user.learningDayLimitPerQuarter}
