@@ -102,7 +102,6 @@ class Team extends React.Component {
 			return (
 				<div>
 					<h3 className="margin-top-24">Members:</h3>
-
 					<ul className="fa-ul">
 						{this.state.listItems}
 					</ul>
