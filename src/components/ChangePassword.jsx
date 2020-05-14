@@ -2,6 +2,7 @@ import React from 'react';
 import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 import Loading from "../components/Loading";
 
 class ChangePassword extends React.Component {
@@ -20,6 +21,8 @@ class ChangePassword extends React.Component {
 		this.handleNewPasswordChange = this.handleNewPasswordChange.bind(this);
 		this.handleNewPasswordRepeatedChange = this.handleNewPasswordRepeatedChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 
 	renderUpdateButton() {
@@ -36,7 +39,7 @@ class ChangePassword extends React.Component {
 
 	render() {
 		return (
-			<Layout>
+			<Layout ref={this.notifRef}>
 				<div className="container wide">
 
 					<h1 className="margin-bottom-8">Change password</h1>
@@ -84,11 +87,15 @@ class ChangePassword extends React.Component {
 		userService.changePassword(this.state.currentPassword, this.state.newPassword, this.state.newPasswordRepeated)
 			.then((data) => {
 				if (data.isSuccess) {
-					auth.logout();
-					this.props.history.push("/login");
+					this.notifRef.current.addNotification({ text: "Password changed. You will be logged out.", isSuccess: true });
+					let thisUp = this;
+					//Give some time to read message
+					setTimeout(function () {
+						auth.logout();
+						thisUp.props.history.push("/login");
+					}, 2000);
 				} else {
-					alert(JSON.stringify(data));
-					console.log(JSON.stringify(data));
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
 
 				this.setState({

@@ -3,7 +3,7 @@ import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
-
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class EditUser extends React.Component {
 
@@ -22,6 +22,8 @@ class EditUser extends React.Component {
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 
 	async componentDidMount() {
@@ -35,7 +37,7 @@ class EditUser extends React.Component {
 	}
 
 	async getData() {
-		//var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		//let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		//TODO: check if user to edit == current user, else permission denied.
 		//TODO: admin can edit anyone
 
@@ -69,14 +71,14 @@ class EditUser extends React.Component {
 	render() {
 		if (this.state.user == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			//add message so that if email address is changed, the username will change
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
 						<h1 className="margin-bottom-8">Edit {this.state.user.firstName} {this.state.user.lastName}</h1>
@@ -118,7 +120,7 @@ class EditUser extends React.Component {
 	}
 
 	handleSubmit(event) {
-		var userToUpdate = this.state.user;
+		let userToUpdate = this.state.user;
 		userToUpdate.firstName = this.state.newFirstName;
 		userToUpdate.lastName = this.state.newLastName;
 		userToUpdate.username = this.state.newEmail;
@@ -130,8 +132,8 @@ class EditUser extends React.Component {
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					var userReturned = data.content;
-					//update current user
+					let userReturned = data.content;
+					//update current user (check if current user, admin can edit anyone)
 					if (auth.user.id === userReturned.id) {
 						auth.user = userReturned;
 					}
@@ -143,7 +145,7 @@ class EditUser extends React.Component {
 
 					this.props.history.push("/user/" + userReturned.id + "/edit");
 				} else {
-					console.log(JSON.stringify(data));
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
 			});
 

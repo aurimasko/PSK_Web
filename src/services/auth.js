@@ -16,20 +16,25 @@ export const auth = {
 		data.append('username', email);
 		data.append('password', password);
 		
-		await fetch(
+		var result = await fetch(
 			endPoints.identityAPITokenEndPoint,
 			{
 				method: 'post',
 				body: data
 			}
 		)
-		.then(response => response.json())
-		.then(data => {
-			Cookies.set("session", data);
-			Cookies.set("email", email);
-		});
-		
+		.then(response => { return response.json(); });
+
+		if (result.error) {
+			return result.error_description;
+		}
+
+		Cookies.set("session", result);
+		Cookies.set("email", email);
+
 		await this.fetchUser();
+
+		return true;
 	},
 	
 	logout() {

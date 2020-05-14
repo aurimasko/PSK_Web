@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTags, faTag } from '@fortawesome/free-solid-svg-icons'
 import { roleService } from "../services/roleService.js";
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class RolesList extends React.Component {
 	
@@ -14,6 +15,8 @@ class RolesList extends React.Component {
 		this.state = {
 			listItems: null
 		};
+
+		this.notifRef = React.createRef();
 	}
 	
 	
@@ -43,7 +46,7 @@ class RolesList extends React.Component {
 
 			})
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 	
@@ -51,13 +54,13 @@ class RolesList extends React.Component {
 	render() {
 		if (this.state.listItems === null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
 						<div className="flex-right">

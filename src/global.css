@@ -245,6 +245,8 @@ p {
 
 .notif-btn {
 	padding: 2px 8px;
+	margin-left: 8px;
+	height: 30px;
 }
 
 .small-btn-noborder {

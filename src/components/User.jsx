@@ -8,6 +8,7 @@ import { roleService } from "../services/roleService.js";
 import { userService } from "../services/userService.js";
 import moment from 'moment';
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class User extends React.Component {
 	
@@ -32,7 +33,7 @@ class User extends React.Component {
 	}
 	
 	async getData() {
-		var id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		if (id === auth.user.id) {
 			this.setState({
 				user: auth.user
@@ -40,7 +41,7 @@ class User extends React.Component {
 
 			this.getRole(auth.user.roleId);
 		} else {
-			var result = await userService.fetchUserById(id);
+			let result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
 				this.setState({
 					user: result.content[0]
@@ -48,20 +49,20 @@ class User extends React.Component {
 
 				this.getRole(result.content[0].roleId);
 			} else {
-				console.log(JSON.stringify(result));
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 			}
 		}
 	}
 
 	async getRole(roleId) {
 		if (roleId) {
-			var result = await roleService.fetchRole(roleId);
+			let result = await roleService.fetchRole(roleId);
 			if (result.isSuccess === true) {
 				this.setState({
 					role: result.content[0]
 				});
 			} else {
-				console.log(JSON.stringify(result));
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 			}
 		} else {
 			this.setState({
@@ -96,7 +97,6 @@ class User extends React.Component {
 					<Link className="button" to={"/user/" + this.state.user.id + "/changerole"}>
 						<button>Change role</button>
 					</Link>
-					<button>Change password</button>
 					<button>Change supervisor</button>
 				</div>
 			);
@@ -137,7 +137,7 @@ class User extends React.Component {
 	render() {
 		if (this.state.user == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true}/>
 				</Layout>
 			);

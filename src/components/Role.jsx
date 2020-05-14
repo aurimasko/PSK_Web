@@ -7,6 +7,7 @@ import { roleService } from "../services/roleService.js";
 import { userService } from "../services/userService.js";
 import moment from 'moment';
 import Loading from "../components/Loading";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class Role extends React.Component {
 	
@@ -18,6 +19,8 @@ class Role extends React.Component {
 			usersList: null,
 			creator: null
 		};
+
+		this.notifRef = React.createRef();
 	}
 
 	async componentDidMount() {
@@ -31,19 +34,19 @@ class Role extends React.Component {
 	}
 
 	async getData() {
-		var id = this.props.match.params.id;
-		var roleResult = await roleService.fetchRole(id);
+		let id = this.props.match.params.id;
+		let roleResult = await roleService.fetchRole(id);
 		if (roleResult.isSuccess === true) {
 			this.setState({
 				role: roleResult.content[0]
 			});
 		} else {
-			console.log(JSON.stringify(roleResult));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(roleResult) });
 		}
 
-		var usersResult = await userService.fetchUsersByRole(id);
+		let usersResult = await userService.fetchUsersByRole(id);
 		if (usersResult.isSuccess === true) {
-			var users = usersResult.content;
+			let users = usersResult.content;
 			this.setState({
 				usersList: users.map((user) =>
 					<li key={user.id}>
@@ -55,7 +58,7 @@ class Role extends React.Component {
 				)
 			});
 		} else {
-			console.log(JSON.stringify(usersResult));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(usersResult) });
 		}
 	}
 
@@ -83,13 +86,13 @@ class Role extends React.Component {
 	render() {
 		if (this.state.role == null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
 						<div className="flex-right">

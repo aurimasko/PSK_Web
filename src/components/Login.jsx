@@ -2,7 +2,7 @@ import React from 'react';
 import { auth } from "../services/auth.js";
 
 import Notifications from "./Notifications";
-
+import Loading from "../components/Loading";
 
 class Login extends React.Component {
 	
@@ -11,7 +11,8 @@ class Login extends React.Component {
 		
 		this.state = {
 			email: "",
-			password: ""
+			password: "",
+			isLoginButtonEnabled: true
 		}
 		
 		this.notifRef = React.createRef();
@@ -20,7 +21,15 @@ class Login extends React.Component {
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
-	
+
+	renderLoginButton() {
+		if (this.state.isLoginButtonEnabled) {
+			return <input className="primary" type="submit" value="Login" />;
+		} else {
+			return <Loading width={50} height={50} type={"balls"} />;
+		}
+	}
+
 	render() {
 		return (
 			<div className="flex-spacer flex-down">
@@ -42,8 +51,8 @@ class Login extends React.Component {
 						</label>
 						
 						<hr />
-						
-						<input className="primary" type="submit" value="Login"/>
+
+						{this.renderLoginButton()}
 					</form>
 				</div>
 				<div className="flex-spacer" />
@@ -61,16 +70,24 @@ class Login extends React.Component {
 	
 	handleSubmit(event) {
 		event.preventDefault();
-		
-		if (this.state.password.length < 8) {
-			this.notifRef.current.addNotification("Example notification");
-			return;
-		}
-		
+
+		this.setState({ isLoginButtonEnabled: false });
+
 		auth.login(this.state.email, this.state.password)
-		.then(() => {
-			this.props.history.push("/");
-		});
+			.then((response) => {
+				if (response === true) {
+					this.props.history.push("/");
+				} else {
+					if (response === "NotFound") {
+						this.notifRef.current.addNotification({ text: "User was not found." });
+					} else if (response === "UsernameOrPasswordIsIncorrect") {
+						this.notifRef.current.addNotification({ text: "Incorrect password." });
+					} else {
+						this.notifRef.current.addNotification({ text: response });
+					}
+				}
+				this.setState({ isLoginButtonEnabled: true });
+			});
 	}
 }
 
