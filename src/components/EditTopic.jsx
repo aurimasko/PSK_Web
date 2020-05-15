@@ -45,6 +45,12 @@ class EditTopic extends React.Component {
 			//remove current topic
 			let topicIndex = result.content.indexOf(topic);
 			result.content.splice(topicIndex, 1);
+			//remove children of current topic
+			let childrenOfTopic = result.content.filter(t => t.parentId === id);
+			for (let i = 0; i < childrenOfTopic.length; i++) {
+				let index = result.content.indexOf(childrenOfTopic[i]);
+				result.content.splice(index, 1);
+			}
 
 			this.setState({
 				topics: result.content,
