@@ -11,25 +11,27 @@ class DayContentSidebar extends React.Component {
 
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			learningDayId: props.currentLearningDayId,
 			topics: null,
-			learningDay: null
+			learningDay: null,
+			isTeam: props.isTeam
 		};
 
 		this.notifRef = props.notifRef;
 	}
 
 	async componentDidMount() {
-		this.getData(this.state.userId, this.state.date);
+		this.getData();
 	}
 
 	async componentDidUpdate(prevProps) {
-		if (prevProps.currentLearningDayId !== this.props.currentLearningDayId) {
+		if (prevProps.currentLearningDayId !== this.props.currentLearningDayId ||
+			prevProps.isTeam !== this.props.isTeam) {
 			this.setState({
 				learningDayId: this.props.currentLearningDayId,
-				topics: null
+				topics: null,
+				isTeam: this.props.isTeam
 			});
 			this.getData();
 		}
@@ -88,6 +90,28 @@ class DayContentSidebar extends React.Component {
 		}
 	}
 
+	renderComments() {
+		if (this.state.learningDay.comments) {
+			return (
+				<>
+					<h3 className="margin-top-16">Learning day comment:</h3>
+
+					<p className="">
+						<i>{this.state.learningDay.comments}</i>
+					</p>
+				</>);
+		} else {
+			return (
+				<>
+					<h3 className="margin-top-16">Learning day comments:</h3>
+
+					<p className="">
+						<i>no comments</i>
+					</p>
+				</>);
+		}
+	}
+
 	render() {
 		if (this.state.learningDay === null) {
 			return <Loading showText={true} />;
@@ -114,11 +138,7 @@ class DayContentSidebar extends React.Component {
 
 					{this.renderTopics()}
 
-					<h3 className="margin-top-16">Learning day comment:</h3>
-
-					<p className="">
-						<i>no comments</i>
-					</p>
+					{this.renderComments()}
 
 					<div className="flex-spacer" />
 				</>

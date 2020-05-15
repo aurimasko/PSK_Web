@@ -56,6 +56,23 @@ export const userService = {
 			}
 		).then(response => { return response.json(); });
 	},
+	async fetchUsersByIds(ids) {
+		let q = "?";
+		for (let i = 0; i < ids.length; i++) {
+			q += "userIds=" + ids[i];
+			if (i != ids.length - 1)
+				q += "&";
+		}
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + q,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken()
+				})
+			}
+		).then(response => { return response.json(); });
+	},
 	async updateUser(user) {
 		return await fetch(
 			endPoints.usersAPIBaseEndPoint,

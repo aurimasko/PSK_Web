@@ -88,7 +88,7 @@ class Topic extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
-						<h1>Topic name: ({this.state.topic.name})</h1>
+						<h1>{this.state.topic.name}</h1>
 						<h3>Created on: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
 						{this.renderTopicParent()}
 

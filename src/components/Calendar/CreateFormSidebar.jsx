@@ -132,6 +132,8 @@ class DayContentSidebar extends React.Component {
 	}
 	
 	handleTopicAdd(event) {
+		//TODO: restrict adding two of same topics
+		//TODO: restrict to 0-4 topics
 		event.preventDefault();
 		let newTopics = this.state.selectedTopics;
 		let topicObj = this.state.topics.filter(t => t.id == event.target.value)[0];

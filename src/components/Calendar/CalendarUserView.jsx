@@ -33,7 +33,7 @@ function formatDate(date) {
 }
 
 
-class CalendarView extends React.Component {
+class CalendarUserView extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -76,7 +76,6 @@ class CalendarView extends React.Component {
 		if (result.isSuccess === true) {
 
 			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") == moment(this.state.day).format("YYYY-MM-DD"));
-			console.log(currentLearningDay)
 			this.setState({
 				learningDays: result.content,
 				events: result.content.map(function (value) { return value.date }),
@@ -158,7 +157,7 @@ class CalendarView extends React.Component {
 		if (this.dateNotEmpty(this.state.day)) {
 			return (
 				<>
-					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+					<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
 					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
 				</>
 			);
@@ -228,4 +227,4 @@ class CalendarView extends React.Component {
 	}
 }
 
-export default CalendarView;
+export default CalendarUserView;

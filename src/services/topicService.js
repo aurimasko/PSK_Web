@@ -28,7 +28,9 @@ export const topicService = {
 	async fetchTopicByIds(ids) {
 		let q = "?";
 		for (let i = 0; i < ids.length; i++) {
-			q += "topicsId=" + ids[i] + "&";
+			q += "topicsId=" + ids[i];
+			if (i != ids.length - 1)
+				q += "&";
 		}
 
 		return await fetch(
