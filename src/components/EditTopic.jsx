@@ -45,13 +45,13 @@ class EditTopic extends React.Component {
 			//remove current topic
 			let topicIndex = result.content.indexOf(topic);
 			result.content.splice(topicIndex, 1);
-			
+
 			this.setState({
 				topics: result.content,
 				topic: topic,
 				newName: topic.name,
 				newReferences: topic.references,
-				newParentTopicId: topic.parentTopicId
+				newParentTopicId: topic.parentId
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
@@ -135,7 +135,7 @@ class EditTopic extends React.Component {
 		let topicToUpdate = this.state.topic;
 		topicToUpdate.name = this.state.newName;
 		topicToUpdate.references = this.state.newReferences;
-		topicToUpdate.parentTopicId = this.state.newParentTopicId;
+		topicToUpdate.parentId = this.state.newParentTopicId;
 
 		this.setState({
 			isUpdateButtonEnabled: false
