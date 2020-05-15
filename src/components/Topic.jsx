@@ -89,6 +89,9 @@ class Topic extends React.Component {
 					<div className="container wide">
 
 						<h1>{this.state.topic.name}</h1>
+						<Link className="button" to={"/topic/" + this.state.topic.id + "/edit"}>
+							<button>Edit</button>
+						</Link>
 						<h3>Created on: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
 						{this.renderTopicParent()}
 

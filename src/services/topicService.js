@@ -62,4 +62,17 @@ export const topicService = {
 			}
 		).then(response => { return response.json(); });
 	},
+	async updateTopic(topic) {
+		return await fetch(
+			endPoints.topicAPIBaseEndPoint,
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(topic)
+			}
+		).then(response => { return response.json(); });
+	}
 }

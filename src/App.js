@@ -22,6 +22,7 @@ import EditUser from "./components/EditUser";
 import ChangePassword from "./components/ChangePassword";
 import ChangeRole from "./components/ChangeRole";
 import AddTopic from "./components/AddTopic";
+import EditTopic from "./components/EditTopic";
 
 function App() {
 	return (
@@ -41,6 +42,7 @@ function App() {
 				<AuthRoute path="/role/:id" component={Role} />
 				<AuthRoute path="/topics" component={TopicsView} />
 				<AuthRoute path="/topic/add" component={AddTopic} />
+				<AuthRoute path="/topic/:id/edit" component={EditTopic} />
 				<AuthRoute path="/topic/:id" component={Topic} />
 				
 				<Route path="/login" component={Login} />
