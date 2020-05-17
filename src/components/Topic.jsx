@@ -40,14 +40,14 @@ class Topic extends React.Component {
 				topic: result.content[0]
 			});
 			this.getParentTopic(result.content[0].parentId);
-			this.getTopicChanges();
+			this.getTopicChanges(result.content[0].id);
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
-	async getTopicChanges() {
-		let result = await topicChangesService.fetchTopicChangesForTopic(this.state.topic.id);
+	async getTopicChanges(id) {
+		let result = await topicChangesService.fetchTopicChangesForTopic(id);
 		if (result.isSuccess === true) {
 			let topicChanges = result.content;
 			//sort by date

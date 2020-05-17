@@ -210,7 +210,7 @@ class CalendarUserView extends React.Component {
 	
 	handleExitEditMode() {
 		this.setState({ isCreating: false });
-		this.getData();
+		this.getData(this.state.startDate, this.state.endDate);
 	}
 	
 	handleDaySelect(slotInfo) {

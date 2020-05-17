@@ -22,7 +22,7 @@ class DayContentSidebar extends React.Component {
 	}
 
 	async componentDidMount() {
-		this.getData();
+		this.getData(this.state.learningDayId);
 	}
 
 	async componentDidUpdate(prevProps) {
@@ -33,12 +33,12 @@ class DayContentSidebar extends React.Component {
 				topics: null,
 				isTeam: this.props.isTeam
 			});
-			this.getData();
+			this.getData(this.props.currentLearningDayId);
 		}
 	}
 
-	async getData() {
-		const result = await learningDayService.fetchLearningDaysById(this.state.learningDayId);
+	async getData(id) {
+		const result = await learningDayService.fetchLearningDaysById(id);
 		if (result.isSuccess === true) {
 			this.setState({
 				learningDay: result.content[0]

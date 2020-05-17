@@ -21,7 +21,7 @@ class UserListSidebar extends React.Component {
 	}
 
 	async componentDidMount() {
-		this.getData();
+		this.getData(this.state.currentLearningDayUserIds);
 	}
 
 	async componentDidUpdate(prevProps) {
@@ -32,12 +32,12 @@ class UserListSidebar extends React.Component {
 				usersList: null
 			});
 
-			this.getData();
+			this.getData(this.props.currentLearningDayUserIds);
 		}
 	}
 
-	async getData() {
-		const result = await userService.fetchUsersByIds(this.state.currentLearningDayUserIds);
+	async getData(learningDayUserIds) {
+		const result = await userService.fetchUsersByIds(learningDayUserIds);
 		if (result.isSuccess === true) {
 			let users = result.content;
 
