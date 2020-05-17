@@ -1,12 +1,20 @@
 import React from 'react';
 import "../global.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faBars, faTimes, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 import { auth } from "../services/auth.js";
 
 
 class Header extends React.Component {
+	
+	static propTypes = {
+		match: PropTypes.object.isRequired,
+		location: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired
+	};
 	
 	constructor(props) {
 		super(props);
@@ -19,6 +27,7 @@ class Header extends React.Component {
 			hamburgerActive: false
 		}
 		
+		this.handleBackButton = this.handleBackButton.bind(this);
 		this.handleClick = this.handleClick.bind(this);
 		this.handleUseOther = this.handleUseOther.bind(this);
 		this.handleUseLogout = this.handleUseLogout.bind(this);
@@ -27,6 +36,17 @@ class Header extends React.Component {
 	render() {
 		return (
 			<header className={this.props.noScroll ? "no-scroll" : ""}>
+				
+				{this.renderBackButton()}
+				
+				<div className="flex-spacer"></div>
+				
+				<button className="primary collapse-menu" onClick={this.handleClick}>
+					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
+				</button>
+				
+				
+				
 				<Link
 					className="button primary"
 					to={"/user/me"}
@@ -34,12 +54,6 @@ class Header extends React.Component {
 				>
 					<FontAwesomeIcon icon={faUser} /> {auth.user.firstName} {auth.user.lastName}
 				</Link>
-				
-				<div className="flex-spacer"></div>
-				
-				<button className="primary collapse-menu" onClick={this.handleClick}>
-					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
-				</button>
 				
 				
 				<Link
@@ -53,8 +67,6 @@ class Header extends React.Component {
 				>
 					<FontAwesomeIcon icon={faCalendarAlt} /> My calendar
 				</Link>
-				
-				
 				
 				
 				<Link
@@ -99,6 +111,31 @@ class Header extends React.Component {
 		);
 	}
 	
+	renderBackButton() {
+		const { match, location, history } = this.props;
+		
+		if(location.pathname !== "/user/me/calendar" && history.length > 1) {
+			return (
+				<button
+					className="button primary"
+					to={"/user/me"}
+					onClick={this.handleBackButton}
+				>
+					<FontAwesomeIcon icon={faArrowLeft} /> Back
+				</button>
+			);
+		}
+		else {
+			return "";
+		}
+	}
+	
+	handleBackButton() {
+		const { match, location, history } = this.props;
+		this.setState({hamburgerActive: false});
+		history.goBack();
+	}
+	
 	handleClick(event) {
 		this.setState({hamburgerActive: !this.state.hamburgerActive});
 		event.preventDefault();
@@ -114,4 +151,6 @@ class Header extends React.Component {
 	}
 }
 
-export default Header;
+const HeaderWithRouter = withRouter(Header);
+
+export default HeaderWithRouter;
