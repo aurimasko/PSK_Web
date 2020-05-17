@@ -6,6 +6,7 @@ const rolesAPIBaseEndPoint = apiBaseEndPoint + "/Roles";
 const teamAPIBaseEndPoint = apiBaseEndPoint + "/Team";
 const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays"
 const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics"
+const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges"
 
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,
@@ -13,5 +14,6 @@ module.exports = {
     rolesAPIBaseEndPoint: rolesAPIBaseEndPoint,
     teamAPIBaseEndPoint: teamAPIBaseEndPoint,
     learningDaysAPIBaseEndPoint: learningDaysAPIBaseEndPoint,
-    topicAPIBaseEndPoint: topicAPIBaseEndPoint
+    topicAPIBaseEndPoint: topicAPIBaseEndPoint,
+    topicChangesAPIBaseEndPoint: topicChangesAPIBaseEndPoint
 }

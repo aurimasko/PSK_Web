@@ -8,6 +8,7 @@ import { teamService } from "../services/teamService.js";
 import { userService } from "../services/userService.js";
 import { auth } from "../services/auth.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { sortHelpers } from "../helpers/sortHelpers.js";
 
 class Team extends React.Component {
 	
@@ -59,8 +60,13 @@ class Team extends React.Component {
 		}
 
 		if (result.isSuccess === true) {
+			let teamMembers = result.content.members;
+
+			//sort by name
+			let sortedTeamMembers = sortHelpers.sortUsersByFirstNameAndLastName(teamMembers);
+
 			this.setState({
-				teamMembers: result.content.members
+				teamMembers: sortedTeamMembers
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });

@@ -8,6 +8,7 @@ import { userService } from "../services/userService.js";
 import moment from 'moment';
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { sortHelpers } from "../helpers/sortHelpers.js";
 
 class Role extends React.Component {
 	
@@ -47,8 +48,11 @@ class Role extends React.Component {
 		let usersResult = await userService.fetchUsersByRole(id);
 		if (usersResult.isSuccess === true) {
 			let users = usersResult.content;
+			//sort by name
+			let sortedUsers = sortHelpers.sortUsersByFirstNameAndLastName(users);
+
 			this.setState({
-				usersList: users.map((user) =>
+				usersList: sortedUsers.map((user) =>
 					<li key={user.id}>
 						<Link to={"/user/" + user.id}>
 							<FontAwesomeIcon icon={faTag} listItem />

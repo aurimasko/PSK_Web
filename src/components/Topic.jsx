@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
+import { topicChangesService } from "../services/topicChangesService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import moment from 'moment';
 
@@ -14,7 +15,8 @@ class Topic extends React.Component {
 
 		this.state = {
 			topic: null,
-			parentTopic: null
+			parentTopic: null,
+			topicChanges: null
 		};
 
 		this.notifRef = React.createRef();
@@ -38,6 +40,21 @@ class Topic extends React.Component {
 				topic: result.content[0]
 			});
 			this.getParentTopic(result.content[0].parentId);
+			this.getTopicChanges();
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+	async getTopicChanges() {
+		let result = await topicChangesService.fetchTopicChangesForTopic(this.state.topic.id);
+		if (result.isSuccess === true) {
+			let topicChanges = result.content;
+			//sort by date
+			let sortedTopicChanges = topicChanges.sort((a, b) => b.creationDate - a.creationDate);
+			this.setState({
+				topicChanges: sortedTopicChanges
+			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
@@ -76,6 +93,55 @@ class Topic extends React.Component {
 		}
 	}
 
+	renderTopicChanges() {
+		if (this.state.topicChanges == null) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			return (
+				<div>
+					<h4>
+						Changes journal
+					</h4>
+					<table id="topicChangesTable" width="100%">
+						<tbody>
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>User</th>
+									<th>Old name</th>
+									<th>New name</th>
+								</tr>
+							</thead>
+							<tbody>
+								{this.renderTopicChangesTableData()}
+							</tbody>
+						</tbody>
+					</table>
+				</div>
+			);
+		}
+	}
+
+	renderTopicChangesTableData() {
+		if (this.state.topicChanges.length > 0) {
+			return this.state.topicChanges.map((topicChange) => {
+				return (
+					<tr>
+						<td>{moment.utc(topicChange.creationDate).local().format('YYYY-MM-DD hh:mm')}</td>
+						<td>{topicChange.creator.firstName} {topicChange.creator.lastName}</td>
+						<td>{topicChange.oldName}</td>
+						<td>{topicChange.newName}</td>
+					</tr>
+				);
+			});
+		} else {
+			return (<tr>
+				<td colSpan="4">No changes</td>
+			</tr>);
+		}
+	}
+
+
 	render() {
 		if (this.state.topic == null) {
 			return (
@@ -97,6 +163,10 @@ class Topic extends React.Component {
 
 						<p className="margin-top-16">
 							{this.state.topic.references}
+						</p>
+
+						<p className="margin-top-16">
+							{this.renderTopicChanges()}
 						</p>
 
 					</div>

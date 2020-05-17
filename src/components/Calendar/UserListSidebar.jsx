@@ -4,6 +4,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { userService } from "../../services/userService.js";
 import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { sortHelpers } from "../../helpers/sortHelpers.js";
 
 class UserListSidebar extends React.Component {
 
@@ -38,9 +39,13 @@ class UserListSidebar extends React.Component {
 	async getData() {
 		const result = await userService.fetchUsersByIds(this.state.currentLearningDayUserIds);
 		if (result.isSuccess === true) {
+			let users = result.content;
+
+			let sortedUsers = sortHelpers.sortUsersByFirstNameAndLastName(users);
+
 			this.setState({
-				users: result.content,
-				usersList: result.content.map((user) =>
+				users: sortedUsers,
+				usersList: sortedUsers.map((user) =>
 					<li key={user.id}>
 						<a href="#" onClick={(e) => { this.props.handleSelectUser(user.id); e.preventDefault(); }}>
 							<FontAwesomeIcon icon={faUser} listItem />
