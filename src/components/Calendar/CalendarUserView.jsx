@@ -81,7 +81,7 @@ class CalendarUserView extends React.Component {
 				events: result.content.map(function (value) { return value.date }),
 				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null
 			});
-			this.initUI();
+			//this.initUI();
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
