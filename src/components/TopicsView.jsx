@@ -1,11 +1,9 @@
 import React from 'react';
-import Graph from 'vis-react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
-import moment from 'moment';
 
 class TopicsView extends React.Component {
 	

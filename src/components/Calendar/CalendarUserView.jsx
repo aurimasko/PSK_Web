@@ -75,7 +75,7 @@ class CalendarUserView extends React.Component {
 		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
 
-			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") == moment(this.state.day).format("YYYY-MM-DD"));
+			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			this.setState({
 				learningDays: result.content,
 				events: result.content.map(function (value) { return value.date }),

@@ -29,7 +29,7 @@ export const topicService = {
 		let q = "?";
 		for (let i = 0; i < ids.length; i++) {
 			q += "topicsId=" + ids[i];
-			if (i != ids.length - 1)
+			if (i !== ids.length - 1)
 				q += "&";
 		}
 

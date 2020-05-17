@@ -5,7 +5,6 @@ import Loading from "../../components/Loading";
 import { topicService } from "../../services/topicService.js";
 import { learningDayService } from "../../services/learningDayService.js";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
-import moment from 'moment';
 
 class DayContentSidebar extends React.Component {
 	
@@ -136,7 +135,7 @@ class DayContentSidebar extends React.Component {
 		//TODO: restrict to 0-4 topics
 		event.preventDefault();
 		let newTopics = this.state.selectedTopics;
-		let topicObj = this.state.topics.filter(t => t.id == event.target.value)[0];
+		let topicObj = this.state.topics.filter(t => t.id === event.target.value)[0];
 		newTopics.push(topicObj);
 		
 		this.setState({ selectedTopics: newTopics});

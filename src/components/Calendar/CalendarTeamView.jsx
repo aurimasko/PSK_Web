@@ -76,7 +76,7 @@ class CalendarTeamView extends React.Component {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		const result = await teamService.fetchLearningDaysByLeaderId(id, startDate, endDate);
 		if (result.isSuccess === true) {
-			let currentLearningDay = result.content.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") == moment(this.state.day).format("YYYY-MM-DD"));
+			let currentLearningDay = result.content.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 			this.setState({
 				team: result.content,

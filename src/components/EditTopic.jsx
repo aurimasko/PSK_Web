@@ -1,5 +1,4 @@
 import React from 'react';
-import { auth } from "../services/auth.js";
 import Layout from "./Layout";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";

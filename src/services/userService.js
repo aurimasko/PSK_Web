@@ -60,7 +60,7 @@ export const userService = {
 		let q = "?";
 		for (let i = 0; i < ids.length; i++) {
 			q += "userIds=" + ids[i];
-			if (i != ids.length - 1)
+			if (i !== ids.length - 1)
 				q += "&";
 		}
 		return await fetch(
