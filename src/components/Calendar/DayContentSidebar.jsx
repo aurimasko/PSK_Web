@@ -15,7 +15,8 @@ class DayContentSidebar extends React.Component {
 			learningDayId: props.currentLearningDayId,
 			topics: null,
 			learningDay: null,
-			isTeam: props.isTeam
+			isTeam: props.isTeam,
+			user: props.user
 		};
 
 		this.notifRef = props.notifRef;
@@ -27,11 +28,13 @@ class DayContentSidebar extends React.Component {
 
 	async componentDidUpdate(prevProps) {
 		if (prevProps.currentLearningDayId !== this.props.currentLearningDayId ||
-			prevProps.isTeam !== this.props.isTeam) {
+			prevProps.isTeam !== this.props.isTeam ||
+			prevProps.user !== this.props.user) {
 			this.setState({
 				learningDayId: this.props.currentLearningDayId,
 				topics: null,
-				isTeam: this.props.isTeam
+				isTeam: this.props.isTeam,
+				user: this.props.user
 			});
 			this.getData(this.props.currentLearningDayId);
 		}
@@ -127,7 +130,7 @@ class DayContentSidebar extends React.Component {
 									<FontAwesomeIcon icon={faArrowLeft} />
 								</button>
 
-								<h2 className="margin-bottom-16">FName Lname:</h2>
+								<h2 className="margin-bottom-16">{this.state.user.firstName} {this.state.user.lastName}:</h2>
 
 							</div>
 

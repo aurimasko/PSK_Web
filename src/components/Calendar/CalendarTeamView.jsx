@@ -153,7 +153,7 @@ class CalendarTeamView extends React.Component {
 		
 		if (this.state.sidebarSelectedUser !== null) {
 			return (
-				<DayContentSidebar date={this.state.day} userId={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose} currentLearningDayId={this.state.currentLearningDayId} notifRef={this.notifRef} isTeam={false}/>
+				<DayContentSidebar date={this.state.day} user={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose} currentLearningDayId={this.state.currentLearningDayId} notifRef={this.notifRef} isTeam={false}/>
 			);
 		}
 		else if (this.dateNotEmpty(this.state.day)) {
@@ -196,10 +196,10 @@ class CalendarTeamView extends React.Component {
 		return false;
 	}
 	
-	handleSelectUser(id) {
+	handleSelectUser(user) {
 		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD") &&
-			d.employeeId === id);
-		this.setState({ sidebarSelectedUser: id, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null});
+			d.employeeId === user.id);
+		this.setState({ sidebarSelectedUser: user, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null});
 	}
 	
 	handleUserClose() {
