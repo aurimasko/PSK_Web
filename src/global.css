@@ -229,6 +229,10 @@ p {
 	align-content: stretch;
 }
 
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
 .flex-spacer {
 	flex-grow: 1;
 }
@@ -437,7 +441,7 @@ input {
 button, input[type=submit] {
 	color: var(--color-fg-regular);
 	background-color: #00000000;
-	border: 2px solid var(--color-fg-regular);
+	border: none;
 	padding: 12px 24px;
 	text-align: center;
 	text-decoration: none;
@@ -445,16 +449,18 @@ button, input[type=submit] {
 	font-size: 20px;
 }
 
+button.border, input[type=submit].border, .button.border {
+	border: 2px solid var(--color-fg-regular);
+}
+
 button.primary, input[type=submit].primary, a.button.primary {
 	color: var(--color-fg-primary);
 	background-color: var(--color-bg-primary);
-	border: 0px;
 }
 
 button.danger, input[type=submit].danger, a.button.danger {
 	color: var(--color-fg-danger);
 	background-color: var(--color-bg-danger);
-	border: 0px;
 }
 
 label {
