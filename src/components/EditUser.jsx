@@ -120,7 +120,8 @@ class EditUser extends React.Component {
 	}
 
 	handleSubmit(event) {
-		let userToUpdate = this.state.user;
+		//create copy
+		let userToUpdate = Object.assign({}, this.state.user);
 		userToUpdate.firstName = this.state.newFirstName;
 		userToUpdate.lastName = this.state.newLastName;
 		userToUpdate.username = this.state.newEmail;
@@ -132,7 +133,7 @@ class EditUser extends React.Component {
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					let userReturned = data.content;
+					let userReturned = data.content[0];
 					//update current user (check if current user, admin can edit anyone)
 					if (auth.user.id === userReturned.id) {
 						auth.user = userReturned;
@@ -142,7 +143,8 @@ class EditUser extends React.Component {
 						user: userReturned
 					});
 
-					this.props.history.push("/user/" + userReturned.id + "/edit");
+					this.getData();
+					//this.props.history.push("/user/" + userReturned.id + "/edit");
 					//Add proper handling of concurrency exception
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
