@@ -139,14 +139,18 @@ class EditUser extends React.Component {
 					}
 
 					this.setState({
-						isUpdateButtonEnabled: true,
 						user: userReturned
 					});
 
 					this.props.history.push("/user/" + userReturned.id + "/edit");
+					//Add proper handling of concurrency exception
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
+
+				this.setState({
+					isUpdateButtonEnabled: true
+				});
 			});
 
 		event.preventDefault();

@@ -1,7 +1,9 @@
 import React from 'react';
-import Graph from 'vis-react';
 import Layout from "./Layout";
-
+import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import { topicService } from "../services/topicService.js";
+import { responseHelpers } from "../helpers/responseHelpers.js";
 
 class TopicsView extends React.Component {
 	
@@ -9,75 +11,59 @@ class TopicsView extends React.Component {
 		
 		super(props);
 		
-		let style = window.getComputedStyle(document.documentElement);
-		
 		this.state = {
-			graph: {
-				nodes: [
-					{ id: 1, label: 'Task 1' },
-					{ id: 2, label: 'Task 2' },
-					{ id: 3, label: 'Task 3' },
-					{ id: 4, label: 'Task 4' },
-					{ id: 5, label: 'Task 5' }
-				],
-				edges: [
-					{ from: 1, to: 2 },
-					{ from: 1, to: 3 },
-					{ from: 2, to: 4 },
-					{ from: 2, to: 5 }
-				]
-			},
-			options: {
-				autoResize: true,
-				height: "100%",
-				width: "100%",
-				
-				layout: {
-					hierarchical: false
-				},
-				nodes: {
-					shape: "box",
-					shapeProperties: {
-						borderRadius: 0
-					},
-					borderWidth: 0,
-					color: {
-						background: style.getPropertyValue("--color-bg-empty"),
-						hover: style.getPropertyValue("--color-bg-surface-hover"),
-						highlight: style.getPropertyValue("--color-bg-surface-active"),
-					},
-					labelHighlightBold: false,
-				},
-				edges: {
-					color: style.getPropertyValue("--color-fg-regular")
-				},
-				interaction: {
-					hover: true,
-					dragNodes: false,
-				}
-			},
-			events: {
-				selectNode: (event) => this.handleClick(event)
-			}
-		}
-		
+			topicItems: null
+		};
+
+		this.notifRef = React.createRef();	
 		this.handleClick = this.handleClick.bind(this);
+	}
+
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async getData() {
+		let result = await topicService.fetchTopics();
+		if (result.isSuccess === true) {
+			let content = result.content;
+			this.setState({
+				topicItems: content.map((topic) =>
+					<li key={topic.id}>
+						<Link to={"/topic/" + topic.id}>
+							{topic.name}
+						</Link>
+						<br />
+					</li>
+				)
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
 	}
 	
 	render() {
-		return (
-			<Layout noScroll={true}>
-				
-				<div className="graph-container">
-					<Graph
-						graph={this.state.graph}
-						options={this.state.options}
-						events={this.state.events}
-					/>
-				</div>
-				
-			</Layout>
-		);
+		if (this.state.topicItems == null) {
+			return (
+				<Layout ref={this.notifRef}>
+					<Loading showText={true} />
+				</Layout>
+			);
+		} else {
+			return (
+				<Layout ref={this.notifRef}>
+					<div className="container wide">
+						<Link className="button" to={"/topic/add"}>
+							<button>Add</button>
+						</Link>
+						<h3 className="margin-top-24">Topics:</h3>
+						<ul className="fa-ul">
+							{this.state.topicItems}
+						</ul>
+					</div>
+				</Layout>
+			);
+		}
 	}
 	
 	handleClick(event) {

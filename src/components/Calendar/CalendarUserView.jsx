@@ -11,6 +11,7 @@ import Loading from "../Loading";
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import CreateFormSidebar from "./CreateFormSidebar";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
 
 
 moment.locale('en');
@@ -32,7 +33,7 @@ function formatDate(date) {
 }
 
 
-class CalendarView extends React.Component {
+class CalendarUserView extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -46,13 +47,17 @@ class CalendarView extends React.Component {
 			learningDays: null,
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),
-			isCreating: false
+			isCreating: false,
+			currentLearningDayId: null,
+			isCurrentUser: false
 		};
 		
 		this.handleEnterEditMode = this.handleEnterEditMode.bind(this);
 		this.handleExitEditMode = this.handleExitEditMode.bind(this);
 		this.handleDaySelect = this.handleDaySelect.bind(this);
 		this.setDayStyle = this.setDayStyle.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 	
 	
@@ -68,15 +73,21 @@ class CalendarView extends React.Component {
 
 	async getData(startDate, endDate) {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		this.setState({
+			isCurrentUser: id === auth.user.id
+		});
 		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
+
+			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			this.setState({
 				learningDays: result.content,
-				events: result.content.map(function (value) { return value.date })
+				events: result.content.map(function (value) { return value.date }),
+				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null
 			});
-			this.initUI();
+			//this.initUI();
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
@@ -90,15 +101,15 @@ class CalendarView extends React.Component {
 	
 	
 	render() {
-		if (this.state.events == null) {
+		if (this.state.events === null) {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
 
@@ -143,25 +154,41 @@ class CalendarView extends React.Component {
 		if (this.state.isCreating) {
 			return (
 				<>
-					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode}/>
+					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day}/>
 				</>
 			);
 		}
 		if (this.dateNotEmpty(this.state.day)) {
-			return (
-				<>
-					<DayContentSidebar date={this.state.day} userId={this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}/>
-					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
-				</>
-			);
+			if (this.state.isCurrentUser) {
+				return (
+					<>
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+					</>
+				);
+			}
 		}
 		else {
-			return (
-				<>
-					<EmptySidebar />
-					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Create</button>
-				</>
-			);
+			if (this.state.isCurrentUser) {
+				return (
+					<>
+						<EmptySidebar />
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Create</button>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<EmptySidebar />
+					</>
+				);
+			}
 		}
 		
 		
@@ -202,11 +229,13 @@ class CalendarView extends React.Component {
 	}
 	
 	handleExitEditMode() {
-		this.setState({isCreating: false});
+		this.setState({ isCreating: false });
+		this.getData(this.state.startDate, this.state.endDate);
 	}
 	
 	handleDaySelect(slotInfo) {
-		this.setState({day: slotInfo.start, isCreating: false});
+		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(slotInfo.start).format("YYYY-MM-DD"));
+		this.setState({ day: slotInfo.start, isCreating: false, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null });
 	}
 
 	handleDateRangeChange(range) {
@@ -218,4 +247,4 @@ class CalendarView extends React.Component {
 	}
 }
 
-export default CalendarView;
+export default CalendarUserView;

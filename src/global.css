@@ -636,6 +636,20 @@ canvas {
 	width: 100%;
 }
 
+
+/******************************************************************************/
+
+#topicChangesTable {
+	border-collapse: collapse;
+}
+
+#topicChangesTable th, #topicChangesTable td {
+	border: 1px solid #000;
+	padding: 5px;
+}
+
+/******************************************************************************/
+
 .mw-120 {
 	max-width: 320px;
 }

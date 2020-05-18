@@ -8,6 +8,7 @@ import { teamService } from "../services/teamService.js";
 import { userService } from "../services/userService.js";
 import { auth } from "../services/auth.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { sortHelpers } from "../helpers/sortHelpers.js";
 
 class Team extends React.Component {
 	
@@ -59,28 +60,31 @@ class Team extends React.Component {
 		}
 
 		if (result.isSuccess === true) {
+			let teamMembers = result.content.members;
+
+			//sort by name
+			let sortedTeamMembers = sortHelpers.sortUsersByFirstNameAndLastName(teamMembers);
+
 			this.setState({
-				teamMembers: result.content.members
+				teamMembers: sortedTeamMembers,
+				listItems: sortedTeamMembers.map((member) =>
+					<li key={member.id}>
+						<Link to={"/user/" + member.id}>
+
+							{member.id === this.state.leader.id ?
+								<FontAwesomeIcon icon={faStar} listItem /> :
+								<FontAwesomeIcon icon={faUser} listItem />
+							}
+
+							{member.firstName} {member.lastName} ({member.username})
+					</Link>
+					</li>
+				)
 			});
+
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
-
-		this.setState({
-			listItems: this.state.teamMembers.map((member) =>
-				<li key={member.id}>
-					<Link to={"/user/" + member.id}>
-
-						{member.id === this.state.leader.id ?
-							<FontAwesomeIcon icon={faStar} listItem /> :
-							<FontAwesomeIcon icon={faUser} listItem />
-						}
-
-						{member.firstName} {member.lastName} ({member.username})
-					</Link>
-				</li>
-			)
-		});
 	}
 
 	renderAddNewTeamMemberButton() {
@@ -102,7 +106,6 @@ class Team extends React.Component {
 			return (
 				<div>
 					<h3 className="margin-top-24">Members:</h3>
-
 					<ul className="fa-ul">
 						{this.state.listItems}
 					</ul>

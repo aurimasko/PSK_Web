@@ -134,6 +134,18 @@ class User extends React.Component {
 		}
 	}
 
+	renderAttributes() {
+		if (!this.state.user.superVisorId && this.state.user.isSuperVisor) {
+			return "Admin, Super visor";
+		} else if (!this.state.user.superVisorId) {
+			return "Admin";
+		} else if (this.state.user.isSuperVisor) {
+			return "Super visor";
+		} else {
+			return "Member";
+		}
+	}
+
 	render() {
 		if (this.state.user == null) {
 			return (
@@ -158,6 +170,7 @@ class User extends React.Component {
 								<h1>
 									{this.state.user.firstName} {this.state.user.lastName}
 								</h1>
+								{this.renderAttributes()}
 								{this.renderRole()}
 							</div>
 							
@@ -195,7 +208,7 @@ class User extends React.Component {
 						</div>
 						
 						<div>
-							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).format('YYYY-MM-DD hh:mm')}
+							<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
 						</div>
 						<div>
 							<strong>Learning day limit per quarter: </strong> {this.state.user.learningDayLimitPerQuarter}

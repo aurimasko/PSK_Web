@@ -43,11 +43,11 @@ class Login extends React.Component {
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
 							Email address
-							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
+							<input required type="email" placeholder="example@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
 							Password
-							<input required type="password" value={this.state.password} onChange={this.handlePasswordChange} />
+							<input required type="password" placeholder="************" value={this.state.password} onChange={this.handlePasswordChange} />
 						</label>
 						
 						<hr />

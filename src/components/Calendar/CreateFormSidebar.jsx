@@ -1,68 +1,118 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-
+import Loading from "../../components/Loading";
+import { topicService } from "../../services/topicService.js";
+import { learningDayService } from "../../services/learningDayService.js";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
 
 class DayContentSidebar extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		
 		this.state = {
-			topics: [],
-			comment: ""
+			topics: null,
+			selectedTopics: [],
+			comment: "",
+			date: props.date,
+			isSaveButtonEnabled: true
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
 		this.handleTopicAdd = this.handleTopicAdd.bind(this);
 		this.handleTopicRemove = this.handleTopicRemove.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.notifRef = props.notifRef;
 	}
-	
+
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.date !== this.props.date) {
+			this.setState({
+				date: this.props.date
+			});
+		}
+	}
+
+	async getData() {
+
+		let result = await topicService.fetchTopics();
+		if (result.isSuccess === true) {
+			this.setState({
+				topics: result.content
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+	renderSaveButton() {
+		if (this.state.isSaveButtonEnabled) {
+			return (
+				<input className="primary" type="submit" value="Save" />
+			);
+		} else {
+			return <Loading width={50} height={50} type={"balls"} />;
+		}
+	}
+
 	render() {
-		return (
-			<>
-				
-				<form className="flex-down flex-spacer" onSubmit={this.handleSubmit}>
-					Learning day topics
-					{this.renderSelectedTopics()}
-					
-					<label>
-						Select to add more
-						<select value={0} onChange={this.handleTopicAdd}>
-							<option value="0" disabled> -- select an option -- </option> {/* value kituose cj bus id */}
-							<option>React.js portals</option>
-							<option>Docker</option>
-							<option>CSS grid</option>
-						</select>
-					</label>
-					<label>
-						Learning day comment
-						
-						<textarea onChange={this.handleCommentChange}></textarea>
-					</label>
-					
-					<div className="flex-spacer" />
-					
-					<hr />
-					<input className="primary" type="submit" value="Save"/>
-				</form>
-					
-				
-			</>
-		);
+		if (this.state.topics === null) {
+			return (
+				<Loading showText={true} />
+			);
+		} else {
+			return (
+				<>
+					<form className="flex-down flex-spacer" onSubmit={this.handleSubmit}>
+						Learning day topics
+						{this.renderSelectedTopics()}
+
+						<label>
+							Select to add more
+							<select value={0} onChange={this.handleTopicAdd}>
+								<option key="" value="">None</option>
+								{
+									this.state.topics.map((topic) => {
+										return (
+											<option key={topic.id} value={topic.id}>{topic.name}</option>
+										);
+									})
+								}
+							</select>
+						</label>
+						<label>
+							Learning day comment
+							
+							<textarea onChange={this.handleCommentChange}></textarea>
+						</label>
+
+						<div className="flex-spacer" />
+
+						<hr />
+						{this.renderSaveButton()}
+					</form>
+
+
+				</>
+			);
+		}
 	}
 	
-	renderSelectedTopics() { // Todo: reik pakeist kad naudotų topic tekstą ir id
+	renderSelectedTopics() {
 		
-		if (this.state.topics.length === 0) {
+		if (this.state.selectedTopics.length === 0) {
 			return <i>no topics selected</i>;
 		}
-		
-		const topics = this.state.topics.map( (topic, index) => {
+
+		const topics = this.state.selectedTopics.map( (topic, index) => {
 				return (
-					<div key={index} className="flex-right">
-						{topic}
+					<div key={topic.id} className="flex-right">
+						{topic.name}
 						<div className="flex-spacer" />
 						<button className="small-btn-noborder" onClick={(e) => {this.handleTopicRemove(index, e)}}>
 							<FontAwesomeIcon icon={faTimes} />
@@ -81,25 +131,50 @@ class DayContentSidebar extends React.Component {
 	}
 	
 	handleTopicAdd(event) {
+		//TODO: restrict adding two of same topics
+		//TODO: restrict to 0-4 topics
 		event.preventDefault();
-		let newTopics = this.state.topics;
-		newTopics.push(event.target.value);
+		let newTopics = this.state.selectedTopics;
+		let topicObj = this.state.topics.filter(t => t.id === event.target.value)[0];
+		newTopics.push(topicObj);
 		
-		this.setState({ topics: newTopics});
+		this.setState({ selectedTopics: newTopics});
 	}
 	
 	handleTopicRemove(index, e) {
 		e.preventDefault();
 		
-		let newTopics = this.state.topics;
+		let newTopics = this.state.selectedTopics;
 		newTopics.splice(index, 1);
 		
-		this.setState({ topics: newTopics});
+		this.setState({ selectedTopics: newTopics});
 	}
 	
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.handleExitEditMode();
+
+		this.setState({
+			isSaveButtonEnabled: false
+		});
+
+		//collect topic ids
+		let topicIds = this.state.selectedTopics.map((topic) => {
+			return topic.id;
+		});
+
+		learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
+					this.props.handleExitEditMode();
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					isSaveButtonEnabled: true
+				});
+			});
 	}
 }
 

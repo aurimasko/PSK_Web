@@ -4,9 +4,10 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment-with-locales-es6'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import "../../react-big-calendar-custom-style.css";
-import { learningDayService } from "../../services/learningDayService.js";
+import { teamService } from "../../services/teamService.js";
 import { auth } from "../../services/auth.js";
 import Loading from "../Loading";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
 
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
@@ -32,7 +33,7 @@ function formatDate(date) {
 }
 
 
-class CalendarView extends React.Component {
+class CalendarTeamView extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -42,18 +43,22 @@ class CalendarView extends React.Component {
 		
 		this.state = {
 			day: today,
+			team: null,
 			events: null,
 			learningDays: null,
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
-			endDate: moment(today).endOf('month').add(7, 'days'),
-			
-			sidebarSelectedUser: null
+			endDate: moment(today).endOf('month').add(7, 'days'),		
+			sidebarSelectedUser: null,
+			currentLearningDayId: null,
+			currentLearningDaysUserIds: null
 		};
 		
 		this.handleSelectUser = this.handleSelectUser.bind(this);
 		this.handleUserClose = this.handleUserClose.bind(this);
 		this.handleDaySelect = this.handleDaySelect.bind(this);
 		this.setDayStyle = this.setDayStyle.bind(this);
+
+		this.notifRef = React.createRef();
 	}
 	
 	
@@ -69,15 +74,20 @@ class CalendarView extends React.Component {
 
 	async getData(startDate, endDate) {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
-		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
+		const result = await teamService.fetchLearningDaysByLeaderId(id, startDate, endDate);
 		if (result.isSuccess === true) {
+			let currentLearningDay = result.content.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
+			let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 			this.setState({
-				learningDays: result.content,
-				events: result.content.map(function (value) { return value.date })
+				team: result.content,
+				learningDays: result.content.learningDays,
+				events: result.content.learningDays.map(function (value) { return value.date }),
+				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
+				currentLearningDaysUserIds: currentLearningDaysUserIds
 			});
 			this.initUI();
 		} else {
-			console.log(JSON.stringify(result));
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
@@ -91,15 +101,15 @@ class CalendarView extends React.Component {
 	
 	
 	render() {
-		if (this.state.events == null) {
+		if (this.state.events === null) {
 			return (
-				<Layout>
-					<Loading showText={true} />
+				<Layout ref={this.notifRef}>
+					<Loading showText={true}/>
 				</Layout>
 			);
 		} else {
 			return (
-				<Layout>
+				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
 
@@ -143,11 +153,11 @@ class CalendarView extends React.Component {
 		
 		if (this.state.sidebarSelectedUser !== null) {
 			return (
-				<DayContentSidebar date={this.state.day} userId={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose}/>
+				<DayContentSidebar date={this.state.day} user={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose} currentLearningDayId={this.state.currentLearningDayId} notifRef={this.notifRef} isTeam={false}/>
 			);
 		}
 		else if (this.dateNotEmpty(this.state.day)) {
-			return <UserListSidebar date={this.state.day} handleSelectUser={this.handleSelectUser}/>;
+			return <UserListSidebar date={this.state.day} currentLearningDayUserIds={this.state.currentLearningDaysUserIds} notifRef={this.notifRef} handleSelectUser={this.handleSelectUser} />;
 		}
 		else {
 			return <EmptySidebar />;
@@ -186,16 +196,20 @@ class CalendarView extends React.Component {
 		return false;
 	}
 	
-	handleSelectUser(id) {
-		this.setState({sidebarSelectedUser: id});
+	handleSelectUser(user) {
+		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD") &&
+			d.employeeId === user.id);
+		this.setState({ sidebarSelectedUser: user, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null});
 	}
 	
 	handleUserClose() {
-		this.setState({sidebarSelectedUser: null});
+		this.setState({ sidebarSelectedUser: null, currentLearningDayId: null });
 	}
 	
 	handleDaySelect(slotInfo) {
-		this.setState({day: slotInfo.start, sidebarSelectedUser: null});
+		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(slotInfo.start).format("YYYY-MM-DD"));
+		let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
+		this.setState({ day: slotInfo.start, sidebarSelectedUser: null, currentLearningDaysUserIds: currentLearningDaysUserIds});
 	}
 
 	handleDateRangeChange(range) {
@@ -207,4 +221,4 @@ class CalendarView extends React.Component {
 	}
 }
 
-export default CalendarView;
+export default CalendarTeamView;
