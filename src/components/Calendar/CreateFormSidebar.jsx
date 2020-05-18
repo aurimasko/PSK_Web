@@ -77,6 +77,7 @@ class DayContentSidebar extends React.Component {
 							<select value={0} onChange={this.handleTopicAdd}>
 								<option key="" value="">None</option>
 								{
+									//filter out selected topics out of dropdown
 									this.state.topics.map((topic) => {
 										return (
 											<option key={topic.id} value={topic.id}>{topic.name}</option>
@@ -108,7 +109,7 @@ class DayContentSidebar extends React.Component {
 		if (this.state.selectedTopics.length === 0) {
 			return <i>no topics selected</i>;
 		}
-
+		
 		const topics = this.state.selectedTopics.map( (topic, index) => {
 				return (
 					<div key={topic.id} className="flex-right">
