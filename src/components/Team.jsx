@@ -66,27 +66,25 @@ class Team extends React.Component {
 			let sortedTeamMembers = sortHelpers.sortUsersByFirstNameAndLastName(teamMembers);
 
 			this.setState({
-				teamMembers: sortedTeamMembers
+				teamMembers: sortedTeamMembers,
+				listItems: sortedTeamMembers.map((member) =>
+					<li key={member.id}>
+						<Link to={"/user/" + member.id}>
+
+							{member.id === this.state.leader.id ?
+								<FontAwesomeIcon icon={faStar} listItem /> :
+								<FontAwesomeIcon icon={faUser} listItem />
+							}
+
+							{member.firstName} {member.lastName} ({member.username})
+					</Link>
+					</li>
+				)
 			});
+
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
-
-		this.setState({
-			listItems: sortedTeamMembers.map((member) =>
-				<li key={member.id}>
-					<Link to={"/user/" + member.id}>
-
-						{member.id === this.state.leader.id ?
-							<FontAwesomeIcon icon={faStar} listItem /> :
-							<FontAwesomeIcon icon={faUser} listItem />
-						}
-
-						{member.firstName} {member.lastName} ({member.username})
-					</Link>
-				</li>
-			)
-		});
 	}
 
 	renderAddNewTeamMemberButton() {
