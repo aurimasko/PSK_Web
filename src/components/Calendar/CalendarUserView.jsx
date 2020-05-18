@@ -48,7 +48,8 @@ class CalendarUserView extends React.Component {
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),
 			isCreating: false,
-			currentLearningDayId: null
+			currentLearningDayId: null,
+			isCurrentUser: false
 		};
 		
 		this.handleEnterEditMode = this.handleEnterEditMode.bind(this);
@@ -72,6 +73,9 @@ class CalendarUserView extends React.Component {
 
 	async getData(startDate, endDate) {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		this.setState({
+			isCurrentUser: id === auth.user.id
+		});
 		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
 
@@ -155,20 +159,36 @@ class CalendarUserView extends React.Component {
 			);
 		}
 		if (this.dateNotEmpty(this.state.day)) {
-			return (
-				<>
-					<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
-					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
-				</>
-			);
+			if (this.state.isCurrentUser) {
+				return (
+					<>
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+					</>
+				);
+			}
 		}
 		else {
-			return (
-				<>
-					<EmptySidebar />
-					<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Create</button>
-				</>
-			);
+			if (this.state.isCurrentUser) {
+				return (
+					<>
+						<EmptySidebar />
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Create</button>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<EmptySidebar />
+					</>
+				);
+			}
 		}
 		
 		
