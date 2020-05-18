@@ -73,7 +73,7 @@ class Team extends React.Component {
 		}
 
 		this.setState({
-			listItems: this.state.teamMembers.map((member) =>
+			listItems: sortedTeamMembers.map((member) =>
 				<li key={member.id}>
 					<Link to={"/user/" + member.id}>
 
