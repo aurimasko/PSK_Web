@@ -47,8 +47,10 @@ class CalendarTeamView extends React.Component {
 			day: today,
 			team: null,
 			filteredTeammates: [],
+			teammates: null,
 			events: null,
 			learningDays: null,
+			filteredLearningDays: null,
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),		
 			sidebarSelectedUser: null,
@@ -80,15 +82,29 @@ class CalendarTeamView extends React.Component {
 		const id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		const result = await teamService.fetchLearningDaysByLeaderId(id, startDate, endDate);
 		if (result.isSuccess === true) {
-			let currentLearningDay = result.content.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
+			let learningDays = result.content.learningDays;
+			let currentLearningDay = learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
+			const filteredLearningDays = learningDays.filter((d) => this.state.filteredTeammates.indexOf(d.employeeId) === -1);
+
 			this.setState({
 				team: result.content,
 				learningDays: result.content.learningDays,
-				events: result.content.learningDays.map(function (value) { return value.date }),
+				filteredLearningDays: filteredLearningDays,
+				events: filteredLearningDays.map(function (value) { return value.date }),
 				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
 				currentLearningDaysUserIds: currentLearningDaysUserIds
 			});
+
+			const teamResult = await teamService.fetchTeamByLeaderId(id);
+			if (teamResult.isSuccess === true) {
+				this.setState({
+					teammates: teamResult.content.members
+				});
+			} else {
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(teamResult) });
+			}
+
 			//this.initUI();
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
@@ -165,17 +181,12 @@ class CalendarTeamView extends React.Component {
 	}
 	
 	renderTeamFilerList() {
-		// this should just be this.state.team.members but it's always null atm
-		
-		let teammates = [
-			{
-				id: "1",
-				firstName: "Vardenis",
-				lastName: "Pavardenis"
-			}
-		];
-		
-		return teammates.map((tm) => this.renderTeamFilerListItem(tm));
+		if (this.state.teammates === null) {
+			return <Loading width={30} height={30} type={"spin"} />;
+		} else {
+			let teammates = this.state.teammates;
+			return teammates.map((tm) => this.renderTeamFilerListItem(tm));
+		}
 	}
 	
 	renderTeamFilerListItem(teammate) {
@@ -189,7 +200,7 @@ class CalendarTeamView extends React.Component {
 					}
 				</span>
 				
-				<span className="margin-left-8">{teammate.firstName} {teammate.lastName}</span>
+				<span className="margin-left-8">{teammate.firstName} {teammate.lastName} ({teammate.username})</span>
 			</button>
 		);
 	}
@@ -247,23 +258,41 @@ class CalendarTeamView extends React.Component {
 			// isFiltered is not bool, so just toggle whatever value is in the state
 			isFiltered = !this.state.filteredTeammates.includes(id);
 		}
-		
+
 		if (isFiltered === true) {
 			const newFilteredList = this.state.filteredTeammates.concat(id);
-			this.setState({filteredTeammates: newFilteredList});
+			const filteredLearningDays = this.state.learningDays.filter((d) => newFilteredList.indexOf(d.employeeId) === -1);
+			this.setState({
+				filteredTeammates: newFilteredList,
+				filteredLearningDays: filteredLearningDays,
+				events: filteredLearningDays.map((d) => d.date)
+			});
 		}
 		else {
 			const newFilteredList = this.state.filteredTeammates.filter((tm) => tm !== id);
-			this.setState({filteredTeammates: newFilteredList});
+			const filteredLearningDays = this.state.learningDays.filter((d) => newFilteredList.indexOf(d.employeeId) === -1);
+			this.setState({
+				filteredTeammates: newFilteredList,
+				filteredLearningDays: filteredLearningDays,
+				events: filteredLearningDays.map((d) => d.date)
+			});
 		}
 	}
 	
 	handleToggleEveryone() {
 		if (this.state.filteredTeammates.length > 0) {
-			this.setState({filteredTeammates: []});
+			this.setState({
+				filteredTeammates: [],
+				filteredLearningDays: this.state.learningDays,
+				events: this.state.learningDays.map((d) => d.date)
+			});
 		}
 		else {
-			alert("will work when this.state.team.members won't be always null");
+			this.setState({
+				filteredTeammates: this.state.teammates.map((m) => m.id),
+				filteredLearningDays: [],
+				events: []
+			});
 		}
 	}
 	
