@@ -16,7 +16,10 @@ class DayContentSidebar extends React.Component {
 			comment: "",
 			date: props.date,
 			isSaveButtonEnabled: true,
-			isEditing: props.isEditing
+			//editing stuff
+			isEditing: props.isEditing,
+			learningDayId: props.learningDayId,
+			learningDayForEditing: null
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -48,9 +51,27 @@ class DayContentSidebar extends React.Component {
 			this.setState({
 				topics: result.content
 			});
+
+			//if editing, fill in the information
+			if (this.state.isEditing) {
+				var learningDayResult = await learningDayService.fetchLearningDaysById(this.state.learningDayId);
+				if (learningDayResult.isSuccess === true) {
+					let learningDay = learningDayResult.content[0];
+					this.setState({
+						learningDayForEditing: learningDay,
+						comment: learningDay.comment,
+						selectedTopics: result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1)
+					});
+
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(learningDayResult) });
+				}
+			}
+
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
+
 	}
 
 	renderSaveButton() {
@@ -64,7 +85,8 @@ class DayContentSidebar extends React.Component {
 	}
 
 	render() {
-		if (this.state.topics === null) {
+		//if editing, wait for learning day to load
+		if (this.state.topics === null || (this.state.isEditing && this.state.learningDayForEditing === null)) {
 			return (
 				<Loading showText={true} />
 			);
@@ -177,19 +199,45 @@ class DayContentSidebar extends React.Component {
 			return topic.id;
 		});
 
-		learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
-			.then((data) => {
-				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
-					this.props.handleExitEditMode();
-				} else {
-					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
-				}
+		//edit
+		if (this.state.isEditing) {
+			//create copy
+			let learningDayToUpdate = Object.assign({}, this.state.learningDayForEditing);
+			learningDayToUpdate.comment = this.state.comment;
+			learningDayToUpdate.topicsId = topicIds;
 
-				this.setState({
-					isSaveButtonEnabled: true
+
+			learningDayService.updateLearningDay(learningDayToUpdate)
+				.then((data) => {
+					if (data.isSuccess) {
+						this.notifRef.current.addNotification({ text: "Learning day updated successfully", isSuccess: true });
+						this.props.handleExitEditMode();
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
+
+					this.setState({
+						isSaveButtonEnabled: true
+					});
 				});
-			});
+
+		//create
+		} else {
+
+			learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
+				.then((data) => {
+					if (data.isSuccess) {
+						this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
+						this.props.handleExitEditMode();
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
+
+					this.setState({
+						isSaveButtonEnabled: true
+					});
+				});
+		}
 	}
 }
 
