@@ -132,10 +132,21 @@ class DayContentSidebar extends React.Component {
 	}
 	
 	handleTopicAdd(event) {
-		//TODO: restrict adding two of same topics
-		//TODO: restrict to 0-4 topics
+
 		event.preventDefault();
 		let newTopics = this.state.selectedTopics;
+
+		//if topic already exists, don't add it
+		//should never happen, since list is already filtered
+		if (newTopics.filter(t => t.id === event.target.value).length > 0)
+			return;
+
+		//if there are already four topics, do not allow to add
+		if (newTopics.length == 4) {
+			this.notifRef.current.addNotification({ text: "Maximum of 4 topics can be added." });
+			return;
+		}
+
 		let topicObj = this.state.topics.filter(t => t.id === event.target.value)[0];
 		newTopics.push(topicObj);
 		
