@@ -83,6 +83,25 @@ p {
 	text-align: justify;
 }
 
+.text-primary {
+	color: var(--color-bg-primary);
+}
+
+.align-left {
+	text-align: left !important;
+}
+
+.align-right {
+	text-align: right !important;
+}
+
+.align-center {
+	text-align: center !important;
+}
+
+.align-justify {
+	text-align: justify !important;
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -239,8 +258,7 @@ p {
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	padding: 16px;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .grid.gaps {
@@ -257,6 +275,10 @@ p {
 	border: none;
 }
 
+.button.back-button {
+	padding: 8px 12px;
+	margin: 0px;
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -293,7 +315,7 @@ header a.button {
 	display: none;
 }
 
-@media (max-width:1000px) {
+@media (max-width: 800px) {
 	
 	.collapse {
 		display: none !important;
@@ -463,6 +485,11 @@ button.danger, input[type=submit].danger, a.button.danger {
 	background-color: var(--color-bg-danger);
 }
 
+button.disabled, .button.disabled {
+	pointer-events: none;
+	color: var(--color-fg-faint);
+}
+
 label {
 	display: block;
 	padding: 8px 0px;
@@ -542,6 +569,13 @@ canvas {
 	display: block;
 }
 
+.badge {
+	color: var(--color-fg-regular);
+	background-color: var(--color-bg-surface-hover);
+	padding: 2px 4px;
+	margin: auto 8px;
+}
+
 
 
 /*----------------------------------------------------------------------------*/
@@ -597,6 +631,10 @@ canvas {
 
 .margin-right-8 {
 	margin-right: 8px;
+}
+
+.margin-right-4 {
+	margin-right: 4px;
 }
 
 .margin-top-32 {
@@ -658,4 +696,9 @@ canvas {
 
 .mw-120 {
 	max-width: 320px;
+}
+
+
+.inline-block {
+	display: inline-block;
 }
