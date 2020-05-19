@@ -16,7 +16,8 @@ class User extends React.Component {
 		super(props);
 		this.state = {
 			role: null,
-			user: null
+			user: null,
+			superVisor: null
 		};
 		
 		this.notifRef = React.createRef();
@@ -85,6 +86,13 @@ class User extends React.Component {
 			return (
 				<h4>
 					Role: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
+					{this.canChangeRole() ?
+						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
+							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+							edit
+						</Link> :
+						""
+					}
 				</h4>
 			);
 		}
@@ -92,7 +100,7 @@ class User extends React.Component {
 			return (
 				<h4>
 					Role: <span className="unbold">none</span>
-					{this.canChangeRole ? 
+					{this.canChangeRole() ? 
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 							edit
@@ -106,7 +114,7 @@ class User extends React.Component {
 	}
 	
 	renderSupervisor() {
-		
+
 		if (this.state.user === null) {
 			return ( 
 				<>
@@ -117,19 +125,20 @@ class User extends React.Component {
 				</>
 			);
 		}
-		
-		return (
-			<div>
-				<strong>Supervisor: </strong> TODO
-				{this.canChangeSupervisor() ?
+
+		if (this.canChangeSupervisor()) {
+			return (
+				<div>
+					<strong>Supervisor: </strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 						edit
-					</Link>:
-					""
-				}
-			</div>
-		);
+					</Link>
+				</div>
+			);
+		} else {
+			return "";
+		}
 	}
 	
 	canEditUserInfo() {
@@ -147,14 +156,18 @@ class User extends React.Component {
 	}
 	
 	canChangeRole() {
-		if (this.state.user !== null && (auth.user.isAdmin || this.state.user.superVisorId === auth.user.id)) {
+		if (this.state.user !== null && (!auth.user.superVisorId || this.state.user.superVisorId === auth.user.id)) {
 			return true;
 		}
 		else return false;
 	}
 	
 	canChangeSupervisor() {
-		if (this.state.user !== null && auth.user.isAdmin) {
+		//if not supervisor or current user
+		//then it's either an admin or higher than supervisor
+		if (this.state.user !== null &&
+			(this.state.user.superVisorId !== auth.user.id || !auth.user.superVisorId) &&
+			this.state.user.id !== auth.user.id) {
 			return true;
 		}
 		else return false;
