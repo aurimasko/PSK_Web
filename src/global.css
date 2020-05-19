@@ -276,6 +276,10 @@ p {
 	border: none;
 }
 
+.button.back-button {
+	padding: 8px 12px;
+	margin: 0px;
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -312,7 +316,7 @@ header a.button {
 	display: none;
 }
 
-@media (max-width:1000px) {
+@media (max-width: 800px) {
 	
 	.collapse {
 		display: none !important;

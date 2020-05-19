@@ -37,15 +37,7 @@ class Header extends React.Component {
 		return (
 			<header className={this.props.noScroll ? "no-scroll" : ""}>
 				
-				{this.renderBackButton()}
-				
-				<div className="flex-spacer"></div>
-				
-				<button className="primary collapse-menu" onClick={this.handleClick}>
-					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
-				</button>
-				
-				
+				{/*this.renderBackButton()*/}
 				
 				<Link
 					className="button primary"
@@ -54,6 +46,12 @@ class Header extends React.Component {
 				>
 					<FontAwesomeIcon icon={faUser} /> {auth.user.firstName} {auth.user.lastName}
 				</Link>
+				
+				<div className="flex-spacer"></div>
+				
+				<button className="primary collapse-menu" onClick={this.handleClick}>
+					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
+				</button>
 				
 				
 				<Link
@@ -112,7 +110,7 @@ class Header extends React.Component {
 	}
 	
 	renderBackButton() {
-		const { match, location, history } = this.props;
+		const { location, history } = this.props;
 		
 		if(location.pathname !== "/user/me/calendar" && history.length > 1) {
 			return (
@@ -131,7 +129,7 @@ class Header extends React.Component {
 	}
 	
 	handleBackButton() {
-		const { match, location, history } = this.props;
+		const { history } = this.props;
 		this.setState({hamburgerActive: false});
 		history.goBack();
 	}

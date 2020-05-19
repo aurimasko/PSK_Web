@@ -4,6 +4,10 @@ import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
 
 class EditUser extends React.Component {
 
@@ -80,9 +84,23 @@ class EditUser extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
-
-						<h1 className="margin-bottom-8">Edit {this.state.user.firstName} {this.state.user.lastName}</h1>
-
+						
+						<div className="flex-right">
+						
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
+							
+							
+							<h1>
+								Edit {this.state.user.firstName} {this.state.user.lastName}
+							</h1>
+						</div>
+						
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							
 							<label>

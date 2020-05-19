@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTimes, faCheckDouble, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faCheck, faTimes, faCheckDouble, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Loading from "../components/Loading";
 
 class Objectives extends React.Component {
@@ -56,14 +56,16 @@ class Objectives extends React.Component {
 				<div className="container wide">
 
 					<div className="flex-right">
-
+					
 						<div className="flex-down margin-right-16 margin-left-8">
 							<div className="flex-spacer"></div>
-							
+							<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
+								<FontAwesomeIcon icon={faArrowLeft} />
+							</Link>
 							<div className="flex-spacer"></div>
 						</div>
-
-
+						
+						
 						<h1>
 							Vardaitis Pavardaitis's objectives
 						</h1>
