@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faCalendarAlt, faUsers, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 import { roleService } from "../services/roleService.js";
@@ -186,9 +186,16 @@ class User extends React.Component {
 									Calendar
 								</Link>
 								
+								<Link className="button" to={"/user/" + this.state.user.id + "/objectives"}>
+								<div className="w100 margin-vertical-16">
+									<FontAwesomeIcon icon={faTasks} size="3x" />
+								</div>
+									Objectives
+								</Link>
+								
 								<Link className="button" to={"/user/" + this.state.user.id + "/topics"}>
 								<div className="w100 margin-vertical-16">
-									<FontAwesomeIcon icon={faClipboardList} size="3x" />
+									<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
 								</div>
 									Learned topics
 								</Link>
