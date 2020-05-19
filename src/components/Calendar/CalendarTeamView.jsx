@@ -85,7 +85,7 @@ class CalendarTeamView extends React.Component {
 				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
 				currentLearningDaysUserIds: currentLearningDaysUserIds
 			});
-			this.initUI();
+			//this.initUI();
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}

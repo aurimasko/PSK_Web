@@ -15,7 +15,8 @@ class DayContentSidebar extends React.Component {
 			selectedTopics: [],
 			comment: "",
 			date: props.date,
-			isSaveButtonEnabled: true
+			isSaveButtonEnabled: true,
+			isEditing: props.isEditing
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -31,9 +32,11 @@ class DayContentSidebar extends React.Component {
 	}
 
 	async componentDidUpdate(prevProps) {
-		if (prevProps.date !== this.props.date) {
+		if (prevProps.date !== this.props.date ||
+			prevProps.isEditing !== this.props.isEditing) {
 			this.setState({
-				date: this.props.date
+				date: this.props.date,
+				isEditing: this.props.isEditing
 			});
 		}
 	}

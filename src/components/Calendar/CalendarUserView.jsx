@@ -150,14 +150,25 @@ class CalendarUserView extends React.Component {
 	}
 	
 	renderSidebarContent() {
-		
-		if (this.state.isCreating) {
+
+		//creating
+		if (this.dateNotEmpty(this.state.day) && this.state.isCreating) {
 			return (
 				<>
 					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day}/>
 				</>
 			);
 		}
+
+		//editing
+		if (!this.dateNotEmpty(this.state.day) && this.state.isCreating) {
+			return (
+				<>
+					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true}/>
+				</>
+			);
+		}
+
 		if (this.dateNotEmpty(this.state.day)) {
 			if (this.state.isCurrentUser) {
 				return (

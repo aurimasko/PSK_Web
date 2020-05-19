@@ -31,7 +31,7 @@ export const teamService = {
 		var startDateDate = moment(startDate).format("YYYY-MM-DD");
 		var endDateDate = moment(endDate).format("YYYY-MM-DD");
 		return await fetch(
-			endPoints.teamAPIBaseEndPoint + "/LearningDays?superVisorId=" + id + "&startDate=" + startDateDate + "&endDate=" + endDateDate,
+			endPoints.teamAPIBaseEndPoint + "/LearningDays?superVisorId=" + id + "&dateFrom=" + startDateDate + "&dateTo=" + endDateDate,
 			{
 				method: 'get',
 				headers: new Headers({
