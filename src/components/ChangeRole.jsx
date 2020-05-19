@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import { roleService } from "../services/roleService.js";
+import { auth } from "../services/auth.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { Link } from "react-router-dom";
@@ -163,13 +164,20 @@ class ChangeRole extends React.Component {
 
 		userToUpdate.roleId = newRoleId;
 
-		//TODO: If current user, change auth.user property
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
 					this.notifRef.current.addNotification({ text: "Role changed successfully.", isSuccess: true });
+
+					//If current user, change auth.user property
+					//Will only happen to admin, since he can only change his own role
+					if (this.state.user === auth.user.id) {
+						auth.user.roleId = newRoleId;
+					}
+
 					let thisUp = this;
 
+					//TODO: fix role being cached in User profile
 					//Give some time to read message
 					setTimeout(function () {
 						thisUp.props.history.push("/user/" + thisUp.state.user.id);
