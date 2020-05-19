@@ -41,17 +41,7 @@ class EditUser extends React.Component {
 	}
 
 	async getData() {
-		//let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
-		//TODO: check if user to edit == current user, else permission denied.
-		//TODO: admin can edit anyone
-
-		//var result = await userService.fetchUserById(id);
-		//if (result.isSuccess == true) {
-		//	var user = result.
-		//} else {
-		//	console.log(JSON.stringify(result));
-  //      }
-
+		//allow to edit yourself only
 		this.setState({
 			user: auth.user,
 			newEmail: auth.user.username,
@@ -80,7 +70,7 @@ class EditUser extends React.Component {
 				</Layout>
 			);
 		} else {
-			//add message so that if email address is changed, the username will change
+			//TODO: add message so that if email address is changed, the username will change
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
@@ -152,7 +142,7 @@ class EditUser extends React.Component {
 			.then((data) => {
 				if (data.isSuccess) {
 					let userReturned = data.content[0];
-					//update current user (check if current user, admin can edit anyone)
+
 					if (auth.user.id === userReturned.id) {
 						auth.user = userReturned;
 					}
@@ -162,8 +152,7 @@ class EditUser extends React.Component {
 					});
 
 					this.getData();
-					//this.props.history.push("/user/" + userReturned.id + "/edit");
-					//Add proper handling of concurrency exception
+					//TODO: Add proper handling of concurrency exception
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
