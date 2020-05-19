@@ -136,6 +136,11 @@ p {
 	width: 100%;
 }
 
+.width-container.wide.m, .container.wide.m {
+	max-width: 720px;
+	width: 100%;
+}
+
 .graph-container {
 	display: inline-block;
 	width: 100%;
@@ -279,6 +284,23 @@ p {
 	padding: 8px 12px;
 	margin: 0px;
 }
+
+.modal-container {
+	display: none;
+	position: fixed;
+	z-index: 10000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.modal-container.show {
+	display: inherit;
+}
+
 
 
 /*----------------------------------------------------------------------------*/

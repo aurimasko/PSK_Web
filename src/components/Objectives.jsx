@@ -2,8 +2,10 @@ import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCheck, faTimes, faCheckDouble, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import Loading from "../components/Loading";
+import { faArrowLeft, faCheck, faTimes, faCheckDouble, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Loading from "./Loading";
+import ObjectiveHistoryModal from "./ObjectiveHistoryModal";
+
 
 class Objectives extends React.Component {
 	
@@ -28,18 +30,21 @@ class Objectives extends React.Component {
 					status: "declined"
 				},
 				{
-					id: 1,
+					id: 3,
 					name: "CSS grid",
 					date: "2022-22-22",
 					status: "accepted"
 				},
 				{
-					id: 2,
+					id: 4,
 					name: "Bootstrap",
 					date: "2012-22-13",
 					status: "done"
 				}
-			]
+			],
+			historyModalIsEnabled: false,
+			selectedObjective: null,
+			historyList: []
 		};
 
 		this.notifRef = React.createRef();
@@ -47,7 +52,9 @@ class Objectives extends React.Component {
 		this.handleAccept = this.handleAccept.bind(this);
 		this.handleDecline = this.handleDecline.bind(this);
 		this.handleFinish = this.handleFinish.bind(this);
+		this.handleHistory = this.handleHistory.bind(this);
 		this.handleDelete = this.handleDelete.bind(this);
+		this.handleHistoryModalClose = this.handleHistoryModalClose.bind(this);
 	}
 	
 	render() {
@@ -77,6 +84,14 @@ class Objectives extends React.Component {
 						Add new objective
 					</Link>
 				</div>
+				
+				<ObjectiveHistoryModal
+					isEnabled={this.state.historyModalIsEnabled}
+					selectedObjective={this.state.selectedObjective}
+					historyList={this.state.historyList}
+					handleClose={this.handleHistoryModalClose}
+					/>
+				
 			</Layout>
 		);
 	}
@@ -112,7 +127,7 @@ class Objectives extends React.Component {
 					</div>
 				</div>
 				
-				{this.renderListItemButtons(objective.status)}
+				{this.renderListItemButtons(objective)}
 			</li>
 		);
 		
@@ -123,20 +138,20 @@ class Objectives extends React.Component {
 		);
 	}
 	
-	renderListItemButtons(status) {
+	renderListItemButtons(objective) {
 		
 		let extraButtons;
 		
-		if (status === "created") {
+		if (objective.status === "created") {
 			extraButtons = (
 				<>
-					<button className="button" onClick={this.handleAccept}>
+					<button className="button" onClick={ () => this.handleAccept(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faCheck} />
 						</div>
 						Accept
 					</button>
-					<button className="button" onClick={this.handleDecline}>
+					<button className="button" onClick={ () => this.handleDecline(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faTimes} />
 						</div>
@@ -146,9 +161,9 @@ class Objectives extends React.Component {
 			);
 		}
 		
-		if (status === "accepted") {
+		if (objective.status === "accepted") {
 			extraButtons = (
-				<button className="button" onClick={this.handleFinish}>
+				<button className="button" onClick={ () => this.handleFinish(objective.id) }>
 					<div>
 						<FontAwesomeIcon icon={faCheckDouble} />
 					</div>
@@ -162,8 +177,14 @@ class Objectives extends React.Component {
 				<div className="flex-spacer" />
 				{extraButtons}
 				
+				<button className="button" onClick={ () => this.handleHistory(objective.id) }>
+					<div>
+						<FontAwesomeIcon icon={faHistory} />
+					</div>
+					History
+				</button>
 				
-				<button className="button" onClick={this.handleDelete}>
+				<button className="button" onClick={ () => this.handleDelete(objective.id) }>
 					<div>
 						<FontAwesomeIcon icon={faTrashAlt} />
 					</div>
@@ -185,8 +206,44 @@ class Objectives extends React.Component {
 		alert("finish functionality is not implemented");
 	}
 	
+	handleHistory(id) {
+		
+		this.setState({
+			historyModalIsEnabled: true,
+			selectedObjective: this.state.objectives.find( x => x.id === id),
+			historyList: [
+				{
+					date: "2020-20-20",
+					user: {
+						firstName: "Vardaitis",
+						lastName: "Pavardaitis"
+					},
+					oldState: "none",
+					newState: "created"
+				},
+				{
+					date: "2021-21-21",
+					user: {
+						firstName: "Pavardis",
+						lastName: "Vardis"
+					},
+					oldState: "created",
+					newState: "accepted"
+				}
+			]
+		});
+	}
+	
 	handleDelete(id) {
 		alert("delete functionality is not implemented");
+	}
+	
+	handleHistoryModalClose() {
+		this.setState({
+			historyModalIsEnabled: false,
+			selectedObjective: null,
+			historyList: []
+		});
 	}
 }
 
