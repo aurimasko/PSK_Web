@@ -78,7 +78,7 @@ class DayContentSidebar extends React.Component {
 								<option key="" value="">None</option>
 								{
 									//filter out selected topics out of dropdown
-									this.state.topics.map((topic) => {
+									this.state.topics.filter(t => this.state.selectedTopics.indexOf(t) == -1).map((topic) => {
 										return (
 											<option key={topic.id} value={topic.id}>{topic.name}</option>
 										);
