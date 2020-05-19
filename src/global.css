@@ -88,19 +88,19 @@ p {
 }
 
 .align-left {
-	text-align: left;
+	text-align: left !important;
 }
 
 .align-right {
-	text-align: right;
+	text-align: right !important;
 }
 
 .align-center {
-	text-align: center;
+	text-align: center !important;
 }
 
 .align-justify {
-	text-align: justify;
+	text-align: justify !important;
 }
 
 
@@ -258,8 +258,7 @@ p {
 
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	padding: 16px;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .grid.gaps {
@@ -486,6 +485,11 @@ button.danger, input[type=submit].danger, a.button.danger {
 	background-color: var(--color-bg-danger);
 }
 
+button.disabled, .button.disabled {
+	pointer-events: none;
+	color: var(--color-fg-faint);
+}
+
 label {
 	display: block;
 	padding: 8px 0px;
@@ -565,6 +569,13 @@ canvas {
 	display: block;
 }
 
+.badge {
+	color: var(--color-fg-regular);
+	background-color: var(--color-bg-surface-hover);
+	padding: 2px 4px;
+	margin: auto 8px;
+}
+
 
 
 /*----------------------------------------------------------------------------*/
@@ -620,6 +631,10 @@ canvas {
 
 .margin-right-8 {
 	margin-right: 8px;
+}
+
+.margin-right-4 {
+	margin-right: 4px;
 }
 
 .margin-top-32 {
@@ -681,4 +696,9 @@ canvas {
 
 .mw-120 {
 	max-width: 320px;
+}
+
+
+.inline-block {
+	display: inline-block;
 }
