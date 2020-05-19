@@ -8,6 +8,8 @@ import { teamService } from "../../services/teamService.js";
 import { auth } from "../../services/auth.js";
 import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
@@ -44,6 +46,7 @@ class CalendarTeamView extends React.Component {
 		this.state = {
 			day: today,
 			team: null,
+			filteredTeammates: [],
 			events: null,
 			learningDays: null,
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
@@ -57,6 +60,7 @@ class CalendarTeamView extends React.Component {
 		this.handleUserClose = this.handleUserClose.bind(this);
 		this.handleDaySelect = this.handleDaySelect.bind(this);
 		this.setDayStyle = this.setDayStyle.bind(this);
+		this.handleToggleEveryone = this.handleToggleEveryone.bind(this);
 
 		this.notifRef = React.createRef();
 	}
@@ -112,7 +116,18 @@ class CalendarTeamView extends React.Component {
 				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
-
+						
+						<div className="cal-side-panel flex-down">
+							<h1 className="center unbold">
+								Team members:
+							</h1>
+							{this.renderTeamFilerList()}
+							
+							<div className="flex-spacer" />
+							
+							<button className="primary" onClick={this.handleToggleEveryone}>Toggle everyone</button>
+						</div>
+						
 						<div className="flex-spacer" />
 
 						<div className="cal-main-panel">
@@ -147,6 +162,36 @@ class CalendarTeamView extends React.Component {
 				</Layout>
 			);
 		}
+	}
+	
+	renderTeamFilerList() {
+		// this should just be this.state.team.members but it's always null atm
+		
+		let teammates = [
+			{
+				id: "1",
+				firstName: "Vardenis",
+				lastName: "Pavardenis"
+			}
+		];
+		
+		return teammates.map((tm) => this.renderTeamFilerListItem(tm));
+	}
+	
+	renderTeamFilerListItem(teammate) {
+		return (
+			<button className="flex-right align-left" onClick={() => this.handleToggleTeammate(teammate.id)}>
+				<span className="margin-left-8 text-primary">
+					
+					{ ( !Array.isArray(this.state.filteredTeammates) || this.state.filteredTeammates.includes(teammate.id) ) ? 
+						<FontAwesomeIcon icon={faSquare} />:
+						<FontAwesomeIcon icon={faCheckSquare} />
+					}
+				</span>
+				
+				<span className="margin-left-8">{teammate.firstName} {teammate.lastName}</span>
+			</button>
+		);
 	}
 	
 	renderSidebarContent() {
@@ -194,6 +239,32 @@ class CalendarTeamView extends React.Component {
 		}
 		
 		return false;
+	}
+	
+	handleToggleTeammate(id, isFiltered) {
+		
+		if (isFiltered !== true && isFiltered !== true) {
+			// isFiltered is not bool, so just toggle whatever value is in the state
+			isFiltered = !this.state.filteredTeammates.includes(id);
+		}
+		
+		if (isFiltered === true) {
+			const newFilteredList = this.state.filteredTeammates.concat(id);
+			this.setState({filteredTeammates: newFilteredList});
+		}
+		else {
+			const newFilteredList = this.state.filteredTeammates.filter((tm) => tm !== id);
+			this.setState({filteredTeammates: newFilteredList});
+		}
+	}
+	
+	handleToggleEveryone() {
+		if (this.state.filteredTeammates.length > 0) {
+			this.setState({filteredTeammates: []});
+		}
+		else {
+			alert("will work when this.state.team.members won't be always null");
+		}
 	}
 	
 	handleSelectUser(user) {

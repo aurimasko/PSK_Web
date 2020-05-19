@@ -83,6 +83,25 @@ p {
 	text-align: justify;
 }
 
+.text-primary {
+	color: var(--color-bg-primary);
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-justify {
+	text-align: justify;
+}
 
 
 /*----------------------------------------------------------------------------*/
