@@ -200,7 +200,7 @@ class CalendarTeamView extends React.Component {
 					}
 				</span>
 				
-				<span className="margin-left-8">{teammate.firstName} {teammate.lastName} ({teammate.username})</span>
+				<span className="margin-left-8"><a href="#" title={teammate.username}>{teammate.firstName} {teammate.lastName}</a></span>
 			</button>
 		);
 	}

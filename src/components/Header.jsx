@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { auth } from "../services/auth.js";
+import { languageService } from "../services/languageService.js";
 
 
 class Header extends React.Component {
@@ -23,7 +24,7 @@ class Header extends React.Component {
 			user: {
 				id: null
 			},
-			
+			language: languageService.getLanguage(),
 			hamburgerActive: false
 		}
 		
@@ -31,6 +32,7 @@ class Header extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 		this.handleUseOther = this.handleUseOther.bind(this);
 		this.handleUseLogout = this.handleUseLogout.bind(this);
+		this.handleLanguageChange = this.handleLanguageChange.bind(this);
 	}
 	
 	render() {
@@ -38,7 +40,7 @@ class Header extends React.Component {
 			<header className={this.props.noScroll ? "no-scroll" : ""}>
 				
 				{/*this.renderBackButton()*/}
-				
+
 				<Link
 					className="button primary"
 					to={"/user/me"}
@@ -52,7 +54,8 @@ class Header extends React.Component {
 				<button className="primary collapse-menu" onClick={this.handleClick}>
 					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
 				</button>
-				
+
+				{this.renderLanguageSelection()}
 				
 				<Link
 					className={
@@ -63,7 +66,7 @@ class Header extends React.Component {
 					to={"/user/me/calendar"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faCalendarAlt} /> My calendar
+					<FontAwesomeIcon icon={faCalendarAlt} /> {languageService.translate("MyCalendar")}
 				</Link>
 				
 				
@@ -127,7 +130,26 @@ class Header extends React.Component {
 			return "";
 		}
 	}
-	
+
+	renderLanguageSelection() {
+		return (
+			<select className={
+				this.state.hamburgerActive ?
+					"button primary collapse uncollapse" :
+					"button primary collapse"
+			} value={this.state.language} onChange={this.handleLanguageChange} style={{width: "auto"}}>
+				<option key="en" value="en">English</option>
+				<option key="lt" value="lt">Lithuanian</option>
+			</select>
+		);
+	}
+
+	handleLanguageChange(event) {
+		languageService.setLanguage(event.target.value);
+		this.setState({ language: event.target.value });
+		event.preventDefault();
+	}
+
 	handleBackButton() {
 		const { history } = this.props;
 		this.setState({hamburgerActive: false});

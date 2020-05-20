@@ -47,9 +47,9 @@ class UserListSidebar extends React.Component {
 				users: sortedUsers,
 				usersList: sortedUsers.map((user) =>
 					<li key={user.id}>
-						<a href="#" onClick={(e) => { this.props.handleSelectUser(user); e.preventDefault(); }}>
+						<a href="#" onClick={(e) => { this.props.handleSelectUser(user); e.preventDefault(); }} title={user.username}>
 							<FontAwesomeIcon icon={faUser} listItem />
-							{user.firstName} {user.lastName} ({user.username})
+							{user.firstName} {user.lastName}
 						</a>
 					</li>
 				)

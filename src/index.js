@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { setDefaultLanguage, setDefaultTranslations } from 'react-multi-lang'
+import en from './translations/en.json'
+import lt from './translations/lt.json'
+
+setDefaultTranslations({ lt, en })
+setDefaultLanguage('en')
 
 ReactDOM.render(
 	<React.StrictMode>
