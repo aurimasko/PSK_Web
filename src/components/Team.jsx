@@ -69,14 +69,14 @@ class Team extends React.Component {
 				teamMembers: sortedTeamMembers,
 				listItems: sortedTeamMembers.map((member) =>
 					<li key={member.id}>
-						<Link to={"/user/" + member.id}>
+						<Link to={"/user/" + member.id} title={member.username}>
 
 							{member.id === this.state.leader.id ?
 								<FontAwesomeIcon icon={faStar} listItem /> :
 								<FontAwesomeIcon icon={faUser} listItem />
 							}
 
-							{member.firstName} {member.lastName} ({member.username})
+							{member.firstName} {member.lastName}
 					</Link>
 					</li>
 				)
