@@ -18,7 +18,7 @@ class Layout extends React.Component {
 	
 	render() {
 		return (
-			<>
+			<div id="fake-root">
 				<Header noScroll={this.props.noScroll} />
 				<Notifications ref={this.notifRef} noScroll={this.props.noScroll} />
 				
@@ -27,7 +27,7 @@ class Layout extends React.Component {
 				</div>
 				
 				<Footer />
-			</>
+			</div>
 		);
 	}
 	
