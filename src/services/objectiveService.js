@@ -12,5 +12,18 @@ export const objectiveService = {
 				}),
 			}
 		).then(response => { return response.json(); });
-	}
+	},
+	async updateObjective(objective) {
+		return await fetch(
+			endPoints.objectiveAPIBaseEndPoint,
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(objective)
+			}
+		).then(response => { return response.json(); });
+	},
 }

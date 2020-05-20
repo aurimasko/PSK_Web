@@ -23,7 +23,8 @@ class Objectives extends React.Component {
 			objectives: null,
 			historyModalIsEnabled: false,
 			selectedObjective: null,
-			historyList: []
+			historyList: [],
+			areButtonsEnabled: true
 		};
 
 		this.notifRef = React.createRef();
@@ -135,8 +136,8 @@ class Objectives extends React.Component {
 				<div>
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Topic")}: </span>
-						<Link className="bold" to={"/topic/" + objective.id}>
-							{objective.name}
+						<Link className="bold" to={"/topic/" + objective.topicId}>
+							{/*objective.topic.name*/}
 						</Link>
 					</div>
 					
@@ -194,32 +195,45 @@ class Objectives extends React.Component {
 				</button>
 			);
 		}
-		
-		return (
-			<div className="flex-right flex-wrap flex-spacer">
-				<div className="flex-spacer" />
-				{extraButtons}
-				
-				<button className="button" onClick={ () => this.handleHistory(objective.id) }>
-					<div>
-						<FontAwesomeIcon icon={faHistory} />
-					</div>
-					{languageService.translate("Objectives.History")}
-				</button>
-			</div>
-		);
+
+		if (!this.state.areButtonsEnabled) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			return (
+				<div className="flex-right flex-wrap flex-spacer">
+					<div className="flex-spacer" />
+					{extraButtons}
+
+					<button className="button" onClick={() => this.handleHistory(objective.id)}>
+						<div>
+							<FontAwesomeIcon icon={faHistory} />
+						</div>
+						{languageService.translate("Objectives.History")}
+					</button>
+				</div>
+			);
+		}
 	};
 	
-	handleAccept(id) {
-		alert("accept functionality is not implemented");
+	async handleAccept(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Accepted";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
-	handleDecline(id) {
-		alert("decline functionality is not implemented");
+	async handleDecline(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Declined";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
-	handleFinish(id) {
-		alert("finish functionality is not implemented");
+	async handleFinish(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Completed";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
 	async handleHistory(id) {
@@ -257,6 +271,25 @@ class Objectives extends React.Component {
 			selectedObjective: null,
 			historyList: []
 		});
+	}
+
+	async updateObjective(objective) {
+		this.setState({
+			areButtonsEnabled: false
+		});
+
+		objectiveService.updateObjective(objective)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					areButtonsEnabled: true
+				});
+			});
 	}
 }
 
