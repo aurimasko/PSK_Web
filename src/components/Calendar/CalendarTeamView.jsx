@@ -55,7 +55,8 @@ class CalendarTeamView extends React.Component {
 			endDate: moment(today).endOf('month').add(7, 'days'),		
 			sidebarSelectedUser: null,
 			currentLearningDayId: null,
-			currentLearningDaysUserIds: null
+			currentLearningDaysUserIds: null,
+			filteredCurrentLearningDaysUserIds: null
 		};
 		
 		this.handleSelectUser = this.handleSelectUser.bind(this);
@@ -86,6 +87,7 @@ class CalendarTeamView extends React.Component {
 			let currentLearningDay = learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 			const filteredLearningDays = learningDays.filter((d) => this.state.filteredTeammates.indexOf(d.employeeId) === -1);
+			let filteredCurrentLearningDayUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
 
 			this.setState({
 				team: result.content,
@@ -93,7 +95,8 @@ class CalendarTeamView extends React.Component {
 				filteredLearningDays: filteredLearningDays,
 				events: filteredLearningDays.map(function (value) { return value.date }),
 				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
-				currentLearningDaysUserIds: currentLearningDaysUserIds
+				currentLearningDaysUserIds: currentLearningDaysUserIds,
+				filteredCurrentLearningDaysUserIds: filteredCurrentLearningDayUserIds
 			});
 
 			const teamResult = await teamService.fetchTeamByLeaderId(id);
@@ -226,7 +229,7 @@ class CalendarTeamView extends React.Component {
 			);
 		}
 		else if (this.dateNotEmpty(this.state.day)) {
-			return <UserListSidebar date={this.state.day} currentLearningDayUserIds={this.state.currentLearningDaysUserIds} notifRef={this.notifRef} handleSelectUser={this.handleSelectUser} />;
+			return <UserListSidebar date={this.state.day} currentLearningDayUserIds={this.state.filteredCurrentLearningDaysUserIds} notifRef={this.notifRef} handleSelectUser={this.handleSelectUser} />;
 		}
 		else {
 			return <EmptySidebar />;
@@ -275,19 +278,25 @@ class CalendarTeamView extends React.Component {
 		if (isFiltered === true) {
 			const newFilteredList = this.state.filteredTeammates.concat(id);
 			const filteredLearningDays = this.state.learningDays.filter((d) => newFilteredList.indexOf(d.employeeId) === -1);
+			const filteredCurrentLearningDaysUserIds = this.state.currentLearningDaysUserIds.filter((u) => newFilteredList.indexOf(u) === -1);
+
 			this.setState({
 				filteredTeammates: newFilteredList,
 				filteredLearningDays: filteredLearningDays,
-				events: filteredLearningDays.map((d) => d.date)
+				events: filteredLearningDays.map((d) => d.date),
+				filteredCurrentLearningDaysUserIds: filteredCurrentLearningDaysUserIds
 			});
 		}
 		else {
 			const newFilteredList = this.state.filteredTeammates.filter((tm) => tm !== id);
 			const filteredLearningDays = this.state.learningDays.filter((d) => newFilteredList.indexOf(d.employeeId) === -1);
+			const filteredCurrentLearningDaysUserIds = this.state.currentLearningDaysUserIds.filter((u) => newFilteredList.indexOf(u) === -1);
+
 			this.setState({
 				filteredTeammates: newFilteredList,
 				filteredLearningDays: filteredLearningDays,
-				events: filteredLearningDays.map((d) => d.date)
+				events: filteredLearningDays.map((d) => d.date),
+				filteredCurrentLearningDaysUserIds: filteredCurrentLearningDaysUserIds
 			});
 		}
 	}
@@ -297,14 +306,16 @@ class CalendarTeamView extends React.Component {
 			this.setState({
 				filteredTeammates: [],
 				filteredLearningDays: this.state.learningDays,
-				events: this.state.learningDays.map((d) => d.date)
+				events: this.state.learningDays.map((d) => d.date),
+				filteredCurrentLearningDaysUserIds: this.state.currentLearningDaysUserIds
 			});
 		}
 		else {
 			this.setState({
 				filteredTeammates: this.state.teammates.map((m) => m.id),
 				filteredLearningDays: [],
-				events: []
+				events: [],
+				filteredCurrentLearningDaysUserIds: []
 			});
 		}
 	}
@@ -322,7 +333,9 @@ class CalendarTeamView extends React.Component {
 	handleDaySelect(slotInfo) {
 		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(slotInfo.start).format("YYYY-MM-DD"));
 		let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
-		this.setState({ day: slotInfo.start, sidebarSelectedUser: null, currentLearningDaysUserIds: currentLearningDaysUserIds});
+		const filteredCurrentLearningDaysUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
+
+		this.setState({ day: slotInfo.start, sidebarSelectedUser: null, currentLearningDaysUserIds: currentLearningDaysUserIds, filteredCurrentLearningDaysUserIds: filteredCurrentLearningDaysUserIds});
 	}
 
 	handleDateRangeChange(range) {
