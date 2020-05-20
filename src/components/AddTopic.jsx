@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class AddTopic extends React.Component {
 
@@ -43,7 +44,7 @@ class AddTopic extends React.Component {
 	renderAddButton() {
 		if (this.state.isAddButtonEnabled) {
 			return (
-				<input className="primary" type="submit" value="Add" />
+				<input className="primary" type="submit" value={languageService.translate("Add")} />
 			);
 		} else {
 			return <Loading width={50} height={50} type={"balls"} />;
@@ -62,23 +63,23 @@ class AddTopic extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
-						<h1 className="margin-bottom-8">Add new topic</h1>
+						<h1 className="margin-bottom-8">{languageService.translate("AddTopic.Title")}</h1>
 
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							<label>
-								Name
+								{languageService.translate("AddTopic.Name")}
 							<input required type="text" value={this.state.name} onChange={this.handleNameChange} />
 							</label>
 							<label>
-								References
+								{languageService.translate("AddTopic.References")}
 								<textarea type="text" onChange={this.handleReferencesChange} >
 									{this.state.references}
 								</textarea>
 							</label>
 							<label>
-								Parent topic
+								{languageService.translate("AddTopic.ParentTopic")}
 								<select value={this.state.parentTopicId} onChange={this.handleParentIdChange}>
-									<option key="" value="">None</option>
+									<option key="" value="">{languageService.translate("None")}</option>
 									{
 										this.state.topics.map((topic) => {
 											return (
@@ -118,7 +119,7 @@ class AddTopic extends React.Component {
 		topicService.createTopic(this.state.name, this.state.references, this.state.parentTopicId)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Topic added successfully", isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("AddTopic.SuccessMessage"), isSuccess: true });
 
 					//clear fields
 					this.setState({

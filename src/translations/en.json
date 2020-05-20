@@ -52,9 +52,27 @@
     "Calendar": "Calendar",
     "LearnedTopics": "Learned topics"
   },
+  "AddTeamMember": {
+    "Title": "Add new team member",
+    "EmailAddress": "Email address",
+    "FirstName": "First name",
+    "LastName": "Last name",
+    "SuccessMessage": "Team member added successfully. An email with further instructions was sent to him."
+  },
+  "Topics": {
+    "Title": "Temos"
+  },
+  "AddTopic": {
+    "Title": "Add new topic",
+    "Name": "Name",
+    "References": "References",
+    "ParentTopic": "Parent topic",
+    "SuccessMessage": "Topic added"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
   "Loading": "Loading...",
-  "Update": "Update"
+  "Update": "Update",
+  "Add": "Add"
 }
