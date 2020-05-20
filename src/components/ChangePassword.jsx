@@ -4,6 +4,7 @@ import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import Loading from "../components/Loading";
+import { languageService } from "../services/languageService.js";
 
 class ChangePassword extends React.Component {
 
@@ -29,7 +30,7 @@ class ChangePassword extends React.Component {
 		if (this.state.isUpdateButtonEnabled) {
 			return (
 				<button className="primary" type="submit" disabled={!this.state.isUpdateButtonEnabled}>
-					Change
+					{languageService.translate("Change")}
 				</button>
 			);
 		} else {
@@ -42,20 +43,20 @@ class ChangePassword extends React.Component {
 			<Layout ref={this.notifRef}>
 				<div className="container wide">
 
-					<h1 className="margin-bottom-8">Change password</h1>
+					<h1 className="margin-bottom-8">{languageService.translate("ChangePassword.Title")}</h1>
 
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 
 						<label>
-							Current password
+							{languageService.translate("ChangePassword.CurrentPassword")}
 						<input required type="password" value={this.state.currentPassword} onChange={this.handleCurrentPasswordChange} />
 						</label>
 						<label>
-							New password
+							{languageService.translate("ChangePassword.NewPassword")}
 						<input required type="password" value={this.state.newPassword} onChange={this.handleNewPasswordChange} />
 						</label>
 						<label>
-							New password repeated
+							{languageService.translate("ChangePassword.RepeatNewPassword")}
 						<input required type="password" value={this.state.newPasswordRepeated} onChange={this.handleNewPasswordRepeatedChange} />
 						</label>
 						<hr />
@@ -87,7 +88,7 @@ class ChangePassword extends React.Component {
 		userService.changePassword(this.state.currentPassword, this.state.newPassword, this.state.newPasswordRepeated)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Password changed. You will be logged out.", isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("ChangePassword.SuccessMessage"), isSuccess: true });
 					let thisUp = this;
 					//Give some time to read message
 					setTimeout(function () {

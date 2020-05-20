@@ -26,6 +26,15 @@
     "Loading": "Užkraunamas vartotojas...",
     "ChangePassword": "Keisti slaptažodį"
   },
+  "ChangePassword": {
+    "Title": "Keisti slaptažodį",
+    "CurrentPassword": "Dabartinis slaptažodis",
+    "NewPassword": "Naujas slaptažodis",
+    "RepeatNewPassword": "Pakartoti naują slaptažodį",
+    "SuccessMessage": "Slaptažodis sėkmingai pakeistas. Prisijunkite iš naujo."
+  },
   "Edit": "Redaguoti",
-  "None": "Nėra"
+  "None": "Nėra",
+  "Change": "Keisti",
+  "Loading": "Kraunasi..."
 }

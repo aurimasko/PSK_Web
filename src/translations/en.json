@@ -26,6 +26,15 @@
     "Loading": "Loading user...",
     "ChangePassword": "Change password"
   },
+  "ChangePassword": {
+    "Title": "Change password",
+    "CurrentPassword": "Current password",
+    "NewPassword": "New password",
+    "RepeatNewPassword": "Repeat new password",
+    "SuccessMessage": "Password changed. You will be logged out"
+  },
   "Edit": "Edit",
-  "None": "None"
+  "None": "None",
+  "Change": "Change",
+  "Loading": "Loading..."
 }
