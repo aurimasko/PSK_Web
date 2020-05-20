@@ -158,6 +158,13 @@
     "Decline": "Decline",
     "Complete": "Complete"
   },
+  "ObjectiveChangeHistory": {
+    "Title": "Objective change history",
+    "Date": "Change date",
+    "User": "Changed by",
+    "OldStatus": "Old status",
+    "NewStatus": "New status"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

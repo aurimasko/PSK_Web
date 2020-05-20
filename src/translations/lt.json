@@ -158,6 +158,13 @@
     "Decline": "Atmesti",
     "Complete": "Užbaigti"
   },
+  "ObjectiveChangeHistory": {
+    "Title": "Tikslo keitimo istorija",
+    "Date": "Keitimo data",
+    "User": "Pakeitė",
+    "OldStatus": "Sena būsena",
+    "NewStatus": "Nauja būsena"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

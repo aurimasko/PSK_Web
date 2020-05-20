@@ -8,7 +8,7 @@ const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays";
 const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics";
 const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges";
 const objectiveAPIBaseEndPoint = apiBaseEndPoint + "/Objective";
-const objectiveChangesAPIBaseEndPoint = apiBaseEndPoint + "/ObjectiveChanges";
+const objectiveChangesAPIBaseEndPoint = apiBaseEndPoint + "/ObjectiveChange";
 
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,

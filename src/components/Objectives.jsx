@@ -8,6 +8,7 @@ import ObjectiveHistoryModal from "./ObjectiveHistoryModal";
 import { auth } from "../services/auth.js";
 import { userService } from "../services/userService.js";
 import { objectiveService } from "../services/objectiveService.js";
+import { objectiveChangeService } from "../services/objectiveChangeService.js";
 import moment from 'moment';
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
@@ -70,7 +71,7 @@ class Objectives extends React.Component {
 		let result = await objectiveService.fetchObjectivesByUserId(id);
 		if (result.isSuccess === true) {
 			this.setState({
-				objectives: result.content.sort((a, b) => b.date - a.date)
+				objectives: result.content.sort((a, b) => b.creationDate - a.creationDate)
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
@@ -221,34 +222,33 @@ class Objectives extends React.Component {
 		alert("finish functionality is not implemented");
 	}
 	
-	handleHistory(id) {
+	async handleHistory(id) {
+		let result = await objectiveChangeService.fetchObjectiveChangesForObjective(id);
+		if (result.isSuccess === true) {
+			let selectedObjective = this.state.objectives.find(x => x.id === id);
+			let historyList = result.content.sort((a, b) => b.creationDate - a.creationDate);
 
+			//add creation record
+			let finalHistoryList = [];
+			let creationRecord = {
+				oldState: "-",
+				newState: languageService.translate("Objectives.Created"),
+				objectiveId: id,
+				creationDate: selectedObjective.creationDate,
+				creator: {}
+			};
 
+			finalHistoryList.push(creationRecord);
+			finalHistoryList.concat(historyList);
 
-		this.setState({
-			historyModalIsEnabled: true,
-			selectedObjective: this.state.objectives.find( x => x.id === id),
-			historyList: [
-				{
-					date: "2020-20-20",
-					user: {
-						firstName: "Vardaitis",
-						lastName: "Pavardaitis"
-					},
-					oldState: "none",
-					newState: "created"
-				},
-				{
-					date: "2021-21-21",
-					user: {
-						firstName: "Pavardis",
-						lastName: "Vardis"
-					},
-					oldState: "created",
-					newState: "accepted"
-				}
-			]
-		});
+			this.setState({
+				historyModalIsEnabled: true,
+				selectedObjective: selectedObjective,
+				historyList: finalHistoryList
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
 	}
 	
 	handleHistoryModalClose() {

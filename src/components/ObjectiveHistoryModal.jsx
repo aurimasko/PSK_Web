@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-
+import { languageService } from "../services/languageService.js";
 
 class ObjectivesHistoryModal extends React.Component {
 	
@@ -16,12 +16,7 @@ class ObjectivesHistoryModal extends React.Component {
 					<div className="flex-right">
 						
 						<h1>
-							Topic <Link className="bold" to={"/topic/" + 1}>
-								{ this.props.selectedObjective !== null ?
-									this.props.selectedObjective.name :
-									""
-								}
-							</Link> history
+							{languageService.translate("ObjectiveChangeHistory.Title")}
 						</h1>
 						
 						<div className="flex-spacer" />
@@ -49,22 +44,22 @@ class ObjectivesHistoryModal extends React.Component {
 				<hr />
 				
 				<div>
-					<span className="bold">Date of the change: </span>
-					{histItem.date}
+					<span className="bold">{languageService.translate("ObjectiveChangeHistory.Date")}: </span>
+					{moment.utc(histItem.creationDate).local().format('YYYY-MM-DD hh:mm')}
 				</div>
 				<div>
-					<span className="bold">User who chaged status: </span>
-					{histItem.user.firstName} {histItem.user.lastName}
+					<span className="bold">{languageService.translate("ObjectiveChangeHistory.User")}: </span>
+					{histItem.creator.firstName} {histItem.creator.lastName}
 				</div>
 				<div>
 					<div>
-						<span className="bold">Old status: </span>
+						<span className="bold">{languageService.translate("ObjectiveChangeHistory.OldStatus")}: </span>
 						{histItem.oldState}
 					</div>
 				</div>
 				<div>
 					<div>
-						<span className="bold">New status: </span>
+						<span className="bold">{languageService.translate("ObjectiveChangeHistory.NewStatus")}: </span>
 						{histItem.newState}
 					</div>
 				</div>
