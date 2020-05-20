@@ -99,6 +99,19 @@
     "Button": "Login",
     "IncorrectUsernameOrPassword": "Incorrect email address or password."
   },
+  "NotFound": {
+    "Title": "Page not found",
+    "Link": "Go back to the start screen"
+  },
+  "Roles": {
+    "Title": "Roles",
+    "UsersInRole": "Users in role"
+  },
+  "Role": {
+    "Title": "{name} role",
+    "CreationDate": "Creation date",
+    "UsersInRole": "Users in role"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

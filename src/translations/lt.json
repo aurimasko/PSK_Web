@@ -99,6 +99,19 @@
     "Button": "Prisijungti",
     "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis."
   },
+  "NotFound": {
+    "Title": "Puslapis nerastas",
+    "Link": "Grįžti į pradinį puslapį"
+  },
+  "Roles": {
+    "Title": "Rolės",
+    "UsersInRole": "Vartotojai"
+  },
+  "Role": {
+    "Title": "{name} rolė",
+    "CreationDate": "Sukūrimo data",
+    "UsersInRole": "Vartotojai"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
