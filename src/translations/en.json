@@ -39,6 +39,19 @@
     "FirstName": "First name",
     "LastName": "Last name"
   },
+  "AccessDenied": {
+    "Title": "Access denied",
+    "Message": "Oops! Looks like you tried to do something that you don't have sufficient permissions for. Try clicking the back button or go back to the ",
+    "Link": "start screen"
+  },
+  "Team": {
+    "Title": "Team",
+    "Leader": "Leader",
+    "Members": "Members",
+    "AddNewTeamMember": "Add new member",
+    "Calendar": "Calendar",
+    "LearnedTopics": "Learned topics"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

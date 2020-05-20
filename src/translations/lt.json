@@ -39,6 +39,19 @@
     "FirstName": "Vardas",
     "LastName": "Pavardė"
   },
+  "AccessDenied": {
+    "Title": "Neturite teisių pasiekti šį puslapį",
+    "Message": "Apgailėstaujame, tačiau neturite teisių pasiekti šio puslapio. Grįžkite atgal arba paspauskite mygtuką, kad grįžti į pradinį ekraną: ",
+    "Link": "grįžti į pradinį ekraną"
+  },
+  "Team": {
+    "Title": "Komanda",
+    "Leader": "Vadovas",
+    "Members": "Nariai",
+    "AddNewTeamMember": "Pridėti naują narį",
+    "Calendar": "Kalendorius",
+    "LearnedTopics": "Išmoktos temos"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
