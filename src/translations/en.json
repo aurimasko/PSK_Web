@@ -92,6 +92,13 @@
     "OldName": "Old name",
     "NewName": "New name"
   },
+  "Login": {
+    "Title": "Login",
+    "EmailAddress": "Email address",
+    "Password": "Password",
+    "Button": "Login",
+    "IncorrectUsernameOrPassword": "Incorrect email address or password."
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

@@ -3,6 +3,7 @@ import { auth } from "../services/auth.js";
 
 import Notifications from "./Notifications";
 import Loading from "../components/Loading";
+import { languageService } from "../services/languageService.js";
 
 class Login extends React.Component {
 	
@@ -24,7 +25,7 @@ class Login extends React.Component {
 
 	renderLoginButton() {
 		if (this.state.isLoginButtonEnabled) {
-			return <input className="primary" type="submit" value="Login" />;
+			return <input className="primary" type="submit" value={languageService.translate("Login.Button")} />;
 		} else {
 			return <Loading width={50} height={50} type={"balls"} />;
 		}
@@ -38,15 +39,15 @@ class Login extends React.Component {
 				
 				<div className="flex-spacer" />
 				<div className="container wide">
-					<h1 className="margin-bottom-8">Login</h1>
+					<h1 className="margin-bottom-8">{languageService.translate("Login.Title")}</h1>
 					
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
-							Email address
+							{languageService.translate("Login.EmailAddress")}
 							<input required type="email" placeholder="example@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
-							Password
+							{languageService.translate("Login.Password")}
 							<input required type="password" placeholder="************" value={this.state.password} onChange={this.handlePasswordChange} />
 						</label>
 						
@@ -78,10 +79,8 @@ class Login extends React.Component {
 				if (response === true) {
 					this.props.history.push("/");
 				} else {
-					if (response === "NotFound") {
-						this.notifRef.current.addNotification({ text: "User was not found." });
-					} else if (response === "UsernameOrPasswordIsIncorrect") {
-						this.notifRef.current.addNotification({ text: "Incorrect password." });
+					if (response === "NotFound" || response === "UsernameOrPasswordIsIncorrect") {
+						this.notifRef.current.addNotification({ text: languageService.translate("Login.IncorrectUsernameOrPassword") });
 					} else {
 						this.notifRef.current.addNotification({ text: response });
 					}

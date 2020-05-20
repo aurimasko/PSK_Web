@@ -92,6 +92,13 @@
     "OldName": "Senas pavadinimas",
     "NewName": "Naujas pavadinimas"
   },
+  "Login": {
+    "Title": "Prisijungimas",
+    "EmailAddress": "El.pašto adresas",
+    "Password": "Slaptažodis",
+    "Button": "Prisijungti",
+    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis."
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
