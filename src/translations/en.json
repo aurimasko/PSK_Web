@@ -69,10 +69,34 @@
     "ParentTopic": "Parent topic",
     "SuccessMessage": "Topic added"
   },
+  "ChangeRole": {
+    "Title": "Change {name} role",
+    "PickRole": "Pick role",
+    "SuccessMessage": "Role changed successfully"
+  },
+  "EditTopic": {
+    "Title": "Edit {name}",
+    "Name": "Name",
+    "References": "References",
+    "ParentTopic": "Parent topic",
+    "SuccessMessage": "Topic has been changed"
+  },
+  "Topic": {
+    "CreatedOn": "Created on",
+    "ParentTopic": "Parent topic",
+    "ChangesJournal": "Changes journal"
+  },
+  "TopicChangesJournal": {
+    "Date": "Date",
+    "User": "User",
+    "OldName": "Old name",
+    "NewName": "New name"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
   "Loading": "Loading...",
   "Update": "Update",
-  "Add": "Add"
+  "Add": "Add",
+  "NoChanges": "No changes"
 }

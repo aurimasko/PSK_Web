@@ -69,10 +69,34 @@
     "ParentTopic": "Tėvinė tema",
     "SuccessMessage": "Tema pridėta"
   },
+  "ChangeRole": {
+    "Title": "Keisti {name} rolę",
+    "PickRole": "Pasirinkite rolę",
+    "SuccessMessage": "Rolė pakeista"
+  },
+  "EditTopic": {
+    "Title": "Redaguokite temą '{name}'",
+    "Name": "Pavadinimas",
+    "References": "Nuorodos",
+    "ParentTopic": "Tėvinė tema",
+    "SuccessMessage": "Tema pakeista"
+  },
+  "Topic": {
+    "CreatedOn": "Sukūrimo data",
+    "ParentTopic": "Tėvinė tema",
+    "ChangesJournal": "Pakeitimų žurnalas"
+  },
+  "TopicChangesJournal": {
+    "Date": "Data",
+    "User": "Vartotojas",
+    "OldName": "Senas pavadinimas",
+    "NewName": "Naujas pavadinimas"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
   "Loading": "Kraunasi...",
   "Update": "Atnaujinti",
-  "Add": "Pridėti"
+  "Add": "Pridėti",
+  "NoChanges": "Nėra pakeitimų"
 }
