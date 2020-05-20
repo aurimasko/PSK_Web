@@ -149,7 +149,7 @@ class EditTopic extends React.Component {
 		topicService.updateTopic(topicToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					let topicReturned = data.content;
+					let topicReturned = data.content[0];
 
 					this.setState({
 						topic: topicReturned

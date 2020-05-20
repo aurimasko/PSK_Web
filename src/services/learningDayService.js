@@ -48,5 +48,18 @@ export const learningDayService = {
 				)
 			}
 		).then(response => { return response.json(); });
+	},
+	async updateLearningDay(learningDay) {
+		return await fetch(
+			endPoints.learningDaysAPIBaseEndPoint,
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json"
+				}),
+				body: JSON.stringify(learningDay)
+			}
+		).then(response => { return response.json(); });
 	}
 }

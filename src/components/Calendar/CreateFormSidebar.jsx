@@ -15,7 +15,11 @@ class DayContentSidebar extends React.Component {
 			selectedTopics: [],
 			comment: "",
 			date: props.date,
-			isSaveButtonEnabled: true
+			isSaveButtonEnabled: true,
+			//editing stuff
+			isEditing: props.isEditing,
+			learningDayId: props.learningDayId,
+			learningDayForEditing: null
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -31,9 +35,11 @@ class DayContentSidebar extends React.Component {
 	}
 
 	async componentDidUpdate(prevProps) {
-		if (prevProps.date !== this.props.date) {
+		if (prevProps.date !== this.props.date ||
+			prevProps.isEditing !== this.props.isEditing) {
 			this.setState({
-				date: this.props.date
+				date: this.props.date,
+				isEditing: this.props.isEditing
 			});
 		}
 	}
@@ -45,9 +51,27 @@ class DayContentSidebar extends React.Component {
 			this.setState({
 				topics: result.content
 			});
+
+			//if editing, fill in the information
+			if (this.state.isEditing) {
+				var learningDayResult = await learningDayService.fetchLearningDaysById(this.state.learningDayId);
+				if (learningDayResult.isSuccess === true) {
+					let learningDay = learningDayResult.content[0];
+					this.setState({
+						learningDayForEditing: learningDay,
+						comment: learningDay.comment,
+						selectedTopics: result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1)
+					});
+
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(learningDayResult) });
+				}
+			}
+
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
+
 	}
 
 	renderSaveButton() {
@@ -61,7 +85,8 @@ class DayContentSidebar extends React.Component {
 	}
 
 	render() {
-		if (this.state.topics === null) {
+		//if editing, wait for learning day to load
+		if (this.state.topics === null || (this.state.isEditing && this.state.learningDayForEditing === null)) {
 			return (
 				<Loading showText={true} />
 			);
@@ -77,7 +102,8 @@ class DayContentSidebar extends React.Component {
 							<select value={0} onChange={this.handleTopicAdd}>
 								<option key="" value="">None</option>
 								{
-									this.state.topics.map((topic) => {
+									//filter out selected topics out of dropdown
+									this.state.topics.filter(t => this.state.selectedTopics.indexOf(t) == -1).map((topic) => {
 										return (
 											<option key={topic.id} value={topic.id}>{topic.name}</option>
 										);
@@ -108,7 +134,7 @@ class DayContentSidebar extends React.Component {
 		if (this.state.selectedTopics.length === 0) {
 			return <i>no topics selected</i>;
 		}
-
+		
 		const topics = this.state.selectedTopics.map( (topic, index) => {
 				return (
 					<div key={topic.id} className="flex-right">
@@ -131,10 +157,21 @@ class DayContentSidebar extends React.Component {
 	}
 	
 	handleTopicAdd(event) {
-		//TODO: restrict adding two of same topics
-		//TODO: restrict to 0-4 topics
+
 		event.preventDefault();
 		let newTopics = this.state.selectedTopics;
+
+		//if topic already exists, don't add it
+		//should never happen, since list is already filtered
+		if (newTopics.filter(t => t.id === event.target.value).length > 0)
+			return;
+
+		//if there are already four topics, do not allow to add
+		if (newTopics.length == 4) {
+			this.notifRef.current.addNotification({ text: "Maximum of 4 topics can be added." });
+			return;
+		}
+
 		let topicObj = this.state.topics.filter(t => t.id === event.target.value)[0];
 		newTopics.push(topicObj);
 		
@@ -162,19 +199,45 @@ class DayContentSidebar extends React.Component {
 			return topic.id;
 		});
 
-		learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
-			.then((data) => {
-				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
-					this.props.handleExitEditMode();
-				} else {
-					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
-				}
+		//edit
+		if (this.state.isEditing) {
+			//create copy
+			let learningDayToUpdate = Object.assign({}, this.state.learningDayForEditing);
+			learningDayToUpdate.comment = this.state.comment;
+			learningDayToUpdate.topicsId = topicIds;
 
-				this.setState({
-					isSaveButtonEnabled: true
+
+			learningDayService.updateLearningDay(learningDayToUpdate)
+				.then((data) => {
+					if (data.isSuccess) {
+						this.notifRef.current.addNotification({ text: "Learning day updated successfully", isSuccess: true });
+						this.props.handleExitEditMode();
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
+
+					this.setState({
+						isSaveButtonEnabled: true
+					});
 				});
-			});
+
+		//create
+		} else {
+
+			learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
+				.then((data) => {
+					if (data.isSuccess) {
+						this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
+						this.props.handleExitEditMode();
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
+
+					this.setState({
+						isSaveButtonEnabled: true
+					});
+				});
+		}
 	}
 }
 

@@ -119,12 +119,13 @@ class CalendarUserView extends React.Component {
 						<div className="flex-spacer" />
 
 						<div className="cal-main-panel">
-							
-							<Link className="margin-bottom-16" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}>
-								<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
-								Go to this user's page
-							</Link>
-							
+
+							{this.props.match.params.id !== "me" && this.props.match.params.id !== auth.user.id ?
+								<Link className="margin-bottom-16" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}>
+									<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
+									Go to this user's page
+								</Link> : ""
+							}
 							<Calendar
 								localizer={localizer}
 								views={{ month: true }}
@@ -158,14 +159,25 @@ class CalendarUserView extends React.Component {
 	}
 	
 	renderSidebarContent() {
-		
-		if (this.state.isCreating) {
+
+		//creating
+		if (!this.dateNotEmpty(this.state.day) && this.state.isCreating) {
 			return (
 				<>
 					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day}/>
 				</>
 			);
 		}
+
+		//editing
+		if (this.dateNotEmpty(this.state.day) && this.state.isCreating) {
+			return (
+				<>
+					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true} learningDayId={this.state.currentLearningDayId}/>
+				</>
+			);
+		}
+
 		if (this.dateNotEmpty(this.state.day)) {
 			if (this.state.isCurrentUser) {
 				return (
