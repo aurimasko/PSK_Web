@@ -23,7 +23,7 @@ class Objectives extends React.Component {
 			objectives: null,
 			historyModalIsEnabled: false,
 			selectedObjective: null,
-			historyList: [],
+			historyList: null,
 			areButtonsEnabled: true
 		};
 
@@ -237,6 +237,10 @@ class Objectives extends React.Component {
 	}
 	
 	async handleHistory(id) {
+		this.setState({
+			historyModalIsEnabled: true
+		});
+
 		let result = await objectiveChangeService.fetchObjectiveChangesForObjective(id);
 		if (result.isSuccess === true) {
 			let selectedObjective = this.state.objectives.find(x => x.id === id);
@@ -256,7 +260,6 @@ class Objectives extends React.Component {
 			finalHistoryList.concat(historyList);
 
 			this.setState({
-				historyModalIsEnabled: true,
 				selectedObjective: selectedObjective,
 				historyList: finalHistoryList
 			});
@@ -269,7 +272,7 @@ class Objectives extends React.Component {
 		this.setState({
 			historyModalIsEnabled: false,
 			selectedObjective: null,
-			historyList: []
+			historyList: null
 		});
 	}
 

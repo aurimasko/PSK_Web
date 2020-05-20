@@ -3,6 +3,7 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { languageService } from "../services/languageService.js";
+import Loading from "./Loading";
 
 class ObjectivesHistoryModal extends React.Component {
 	
@@ -35,7 +36,11 @@ class ObjectivesHistoryModal extends React.Component {
 	}
 	
 	renderHistoryList() {
-		return this.props.historyList.map( (histItem, index) => this.renderHistoryListItem(histItem, index));
+		if (this.props.historyList === null) {
+			return <Loading showText={true} />;
+		} else {
+			return this.props.historyList.map((histItem, index) => this.renderHistoryListItem(histItem, index));
+		}
 	}
 	
 	renderHistoryListItem(histItem, index) {
