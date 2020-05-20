@@ -124,6 +124,24 @@
     "LearningDayComment": "Learning day comment",
     "NoComment": "No comment"
   },
+  "TeamCalendar": {
+    "Today": "Today",
+    "Back": "<",
+    "Next": ">",
+    "Teammates": "Teammates",
+    "TeamMembers": "Team members",
+    "ToggleEveryone": "Toggle everyone"
+  },
+  "CreateLearningDay": {
+    "Topics": "Learning day topics",
+    "SelectToAddMore": "Select to add more",
+    "Comment": "Learning day comment",
+    "NoTopicsSelected": "No topics selected",
+    "Max4Topics": "Maximum of 4 topics can be added.",
+    "UpdateSuccessMessage": "Learning day updated successfully.",
+    "AddSuccessMessage": "Learning day added successfully.",
+    "Save": "Save"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

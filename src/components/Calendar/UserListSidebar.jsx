@@ -5,6 +5,7 @@ import { userService } from "../../services/userService.js";
 import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
 import { sortHelpers } from "../../helpers/sortHelpers.js";
+import { languageService } from "../../services/languageService.js";
 
 class UserListSidebar extends React.Component {
 
@@ -67,7 +68,7 @@ class UserListSidebar extends React.Component {
 				<>
 
 					<div>
-						<h3 className="margin-top-24">Teammates:</h3>
+						<h3 className="margin-top-24">{languageService.translate("TeamCalendar.Teammates")}:</h3>
 						<ul className="fa-ul">
 							{this.state.usersList}
 						</ul>

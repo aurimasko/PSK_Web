@@ -124,6 +124,24 @@
     "LearningDayComment": "Mokymosi dienos komentaras",
     "NoComment": "Nėra komentarų"
   },
+  "TeamCalendar": {
+    "Today": "Šiandien",
+    "Back": "<",
+    "Next": ">",
+    "Teammates": "Komandos nariai",
+    "TeamMembers": "Komandos nariai",
+    "ToggleEveryone": "Pažymėti visus"
+  },
+  "CreateLearningDay": {
+    "Topics": "Mokymosi dienos temos",
+    "SelectToAddMore": "Pasirinkite, kad pridėti daugiau",
+    "Comment": "Mokymosi dienos komentaras",
+    "NoTopicsSelected": "Nepasirinkta mokymosi temų",
+    "Max4Topics": "Daugiausiai 4 temos yra galimos.",
+    "UpdateSuccessMessage": "Mokymosi diena atnaujinta sėkmingai.",
+    "AddSuccessMessage": "Mokymosi diena pridėta.",
+    "Save": "Išsaugoti"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

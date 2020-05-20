@@ -14,9 +14,9 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import UserListSidebar from "./UserListSidebar";
+import { languageService } from "../../services/languageService.js";
 
-
-moment.locale('en');
+moment.locale(languageService.getLanguage());
 const localizer = momentLocalizer(moment);
 
 
@@ -105,18 +105,31 @@ class CalendarTeamView extends React.Component {
 				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(teamResult) });
 			}
 
-			//this.initUI();
+			this.initUI();
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
 	initUI() {
-		var calendarButtons = document.getElementsByClassName("rbc-btn-group")[0].childNodes;
+		var calendarButtonsParents = document.getElementsByClassName("rbc-btn-group");
+		if (!calendarButtonsParents) {
+			return;
+		}
 
-		calendarButtons[0].innerHTML = "Today";
-		calendarButtons[1].innerHTML = "<";
-		calendarButtons[2].innerHTML = ">";
+		var calendarButtonParent = calendarButtonsParents[0];
+		if (!calendarButtonParent) {
+			return;
+		}
+
+		var calendarButtons = calendarButtonParent.childNodes;
+		if (calendarButtons.length == 0) {
+			return;
+		}
+
+		calendarButtons[0].innerHTML = languageService.translate("TeamCalendar.Today");
+		calendarButtons[1].innerHTML = languageService.translate("TeamCalendar.Back");
+		calendarButtons[2].innerHTML = languageService.translate("TeamCalendar.Next");
 	}
 	
 	
@@ -135,13 +148,13 @@ class CalendarTeamView extends React.Component {
 						
 						<div className="cal-side-panel flex-down">
 							<h1 className="center unbold">
-								Team members:
+								{languageService.translate("TeamCalendar.TeamMembers")}:
 							</h1>
 							{this.renderTeamFilerList()}
 							
 							<div className="flex-spacer" />
 							
-							<button className="primary" onClick={this.handleToggleEveryone}>Toggle everyone</button>
+							<button className="primary" onClick={this.handleToggleEveryone}>{languageService.translate("TeamCalendar.ToggleEveryone")}</button>
 						</div>
 						
 						<div className="flex-spacer" />
