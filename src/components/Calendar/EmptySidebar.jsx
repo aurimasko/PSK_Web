@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { languageService } from "../../services/languageService.js";
 
 class DayContentSidebar extends React.Component {
 	
@@ -9,7 +9,7 @@ class DayContentSidebar extends React.Component {
 				<div className="flex-spacer" />
 				
 				<span className="center margin-left-16 margin-right-16">
-					There are no registered learning days on this date.
+					{languageService.translate("UserCalendar.NoRegisteredLearningDaysMessage")}
 				</span>
 				
 				<div className="flex-spacer" />

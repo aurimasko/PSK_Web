@@ -15,9 +15,9 @@ import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import CreateFormSidebar from "./CreateFormSidebar";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { languageService } from "../../services/languageService.js";
 
-
-moment.locale('en');
+moment.locale(languageService.getLanguage());
 const localizer = momentLocalizer(moment);
 
 
@@ -88,18 +88,31 @@ class CalendarUserView extends React.Component {
 				events: result.content.map(function (value) { return value.date }),
 				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null
 			});
-			//this.initUI();
+			this.initUI();
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
 	initUI() {
-		var calendarButtons = document.getElementsByClassName("rbc-btn-group")[0].childNodes;
+		var calendarButtonsParents = document.getElementsByClassName("rbc-btn-group");
+		if (!calendarButtonsParents) {
+			return;
+		}
 
-		calendarButtons[0].innerHTML = "Today";
-		calendarButtons[1].innerHTML = "<";
-		calendarButtons[2].innerHTML = ">";
+		var calendarButtonParent = calendarButtonsParents[0];
+		if (!calendarButtonParent) {
+			return;
+		}
+
+		var calendarButtons = calendarButtonParent.childNodes;
+		if (calendarButtons.length == 0) {
+			return;
+		}
+
+		calendarButtons[0].innerHTML = languageService.translate("UserCalendar.Today");
+		calendarButtons[1].innerHTML = languageService.translate("UserCalendar.Back");
+		calendarButtons[2].innerHTML = languageService.translate("UserCalendar.Next");
 	}
 	
 	
@@ -123,7 +136,7 @@ class CalendarUserView extends React.Component {
 							{this.props.match.params.id !== "me" && this.props.match.params.id !== auth.user.id ?
 								<Link className="margin-bottom-16" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}>
 									<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
-									Go to this user's page
+									{languageService.translate("UserCalendar.GoToUsersPage")}
 								</Link> : ""
 							}
 							<Calendar
@@ -183,7 +196,7 @@ class CalendarUserView extends React.Component {
 				return (
 					<>
 						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
-						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Edit</button>
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>{languageService.translate("Edit")}</button>
 					</>
 				);
 			} else {
@@ -199,7 +212,7 @@ class CalendarUserView extends React.Component {
 				return (
 					<>
 						<EmptySidebar />
-						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>Create</button>
+						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>{languageService.translate("Create")}</button>
 					</>
 				);
 			} else {

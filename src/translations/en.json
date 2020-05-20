@@ -112,11 +112,24 @@
     "CreationDate": "Creation date",
     "UsersInRole": "Users in role"
   },
+  "UserCalendar": {
+    "Today": "Today",
+    "Back": "<",
+    "Next": ">",
+    "NoRegisteredLearningDaysMessage": "There are no registered learning days on this date.",
+    "GoToUsersPage": "Go to this user's page"
+  },
+  "LearningDaySidebar": {
+    "LearningDayTopics": "Learning day topics",
+    "LearningDayComment": "Learning day comment",
+    "NoComment": "No comment"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
   "Loading": "Loading...",
   "Update": "Update",
   "Add": "Add",
+  "Create": "Create",
   "NoChanges": "No changes"
 }

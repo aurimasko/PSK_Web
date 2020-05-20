@@ -112,11 +112,24 @@
     "CreationDate": "Sukūrimo data",
     "UsersInRole": "Vartotojai"
   },
+  "UserCalendar": {
+    "Today": "Šiandien",
+    "Back": "<",
+    "Next": ">",
+    "NoRegisteredLearningDaysMessage": "Šia data nėra registruotų mokymosi dienų.",
+    "GoToUsersPage": "Pereiti prie šio vartotojo profilio."
+  },
+  "LearningDaySidebar": {
+    "LearningDayTopics": "Mokymosi dienos temos",
+    "LearningDayComment": "Mokymosi dienos komentaras",
+    "NoComment": "Nėra komentarų"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
   "Loading": "Kraunasi...",
   "Update": "Atnaujinti",
   "Add": "Pridėti",
+  "Create": "Sukurti",
   "NoChanges": "Nėra pakeitimų"
 }
