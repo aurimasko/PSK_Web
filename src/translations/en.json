@@ -33,8 +33,15 @@
     "RepeatNewPassword": "Repeat new password",
     "SuccessMessage": "Password changed. You will be logged out"
   },
+  "EditUser": {
+    "Title": "Edit {name}",
+    "EmailAddress": "Email address",
+    "FirstName": "First name",
+    "LastName": "Last name"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
-  "Loading": "Loading..."
+  "Loading": "Loading...",
+  "Update": "Update"
 }

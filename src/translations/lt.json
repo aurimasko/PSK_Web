@@ -33,8 +33,15 @@
     "RepeatNewPassword": "Pakartoti naują slaptažodį",
     "SuccessMessage": "Slaptažodis sėkmingai pakeistas. Prisijunkite iš naujo."
   },
+  "EditUser": {
+    "Title": "Redaguoti {name}",
+    "EmailAddress": "El. pašto adresas",
+    "FirstName": "Vardas",
+    "LastName": "Pavardė"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
-  "Loading": "Kraunasi..."
+  "Loading": "Kraunasi...",
+  "Update": "Atnaujinti"
 }
