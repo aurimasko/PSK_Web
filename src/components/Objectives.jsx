@@ -5,7 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faCheck, faTimes, faCheckDouble, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Loading from "./Loading";
 import ObjectiveHistoryModal from "./ObjectiveHistoryModal";
-
+import { auth } from "../services/auth.js";
+import { userService } from "../services/userService.js";
+import { objectiveService } from "../services/objectiveService.js";
+import moment from 'moment';
+import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class Objectives extends React.Component {
 	
@@ -13,35 +18,8 @@ class Objectives extends React.Component {
 		super(props);
 		
 		this.state = {
-			user: {
-				id: "tempvalue"
-			},
-			objectives: [
-				{
-					id: 1,
-					name: "Flutter",
-					date: "2020-20-20",
-					status: "created" // "created", "declined", "accepted", "done" 
-				},
-				{
-					id: 2,
-					name: "Foundation",
-					date: "2019-22-33",
-					status: "declined"
-				},
-				{
-					id: 3,
-					name: "CSS grid",
-					date: "2022-22-22",
-					status: "accepted"
-				},
-				{
-					id: 4,
-					name: "Bootstrap",
-					date: "2012-22-13",
-					status: "done"
-				}
-			],
+			user: null,
+			objectives: null,
 			historyModalIsEnabled: false,
 			selectedObjective: null,
 			historyList: []
@@ -53,47 +31,91 @@ class Objectives extends React.Component {
 		this.handleDecline = this.handleDecline.bind(this);
 		this.handleFinish = this.handleFinish.bind(this);
 		this.handleHistory = this.handleHistory.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
 		this.handleHistoryModalClose = this.handleHistoryModalClose.bind(this);
 	}
-	
-	render() {
-		return (
-			<Layout ref={this.notifRef}>
-				<div className="container wide">
 
-					<div className="flex-right">
-					
-						<div className="flex-down margin-right-16 margin-left-8">
-							<div className="flex-spacer"></div>
-							<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
-								<FontAwesomeIcon icon={faArrowLeft} />
-							</Link>
-							<div className="flex-spacer"></div>
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		if (id === auth.user.id) {
+			this.setState({
+				user: auth.user
+			});
+
+			this.getObjectives(auth.user.id);
+		} else {
+			let result = await userService.fetchUserById(id);
+			if (result.isSuccess === true) {
+				this.setState({
+					user: result.content[0]
+				});
+
+				this.getObjectives(result.content[0].id);
+			} else {
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			}
+		}
+	}
+
+	async getObjectives(id) {
+		let result = await objectiveService.fetchObjectivesByUserId(id);
+		if (result.isSuccess === true) {
+			this.setState({
+				objectives: result.content.sort((a, b) => b.date - a.date)
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+	render() {
+		if (this.state.user === null || this.state.objectives === null) {
+			return <Loading />
+		} else {
+			return (
+				<Layout ref={this.notifRef}>
+					<div className="container wide">
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
+
+
+							<h1>
+								{languageService.translate("Objectives.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
+							</h1>
 						</div>
-						
-						
-						<h1>
-							Vardaitis Pavardaitis's objectives
-						</h1>
+
+						{this.renderObjectivesList()}
+
+						<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+							{languageService.translate("Objectives.AddNew")}
+						</Link>
 					</div>
 
-					{this.renderObjectivesList()}
-					
-					<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-						Add new objective
-					</Link>
-				</div>
-				
-				<ObjectiveHistoryModal
-					isEnabled={this.state.historyModalIsEnabled}
-					selectedObjective={this.state.selectedObjective}
-					historyList={this.state.historyList}
-					handleClose={this.handleHistoryModalClose}
+					<ObjectiveHistoryModal
+						isEnabled={this.state.historyModalIsEnabled}
+						selectedObjective={this.state.selectedObjective}
+						historyList={this.state.historyList}
+						handleClose={this.handleHistoryModalClose}
 					/>
-				
-			</Layout>
-		);
+
+				</Layout>
+			);
+		}
 	}
 	
 	renderObjectivesList() {
@@ -103,7 +125,7 @@ class Objectives extends React.Component {
 		}
 		
 		if (this.state.objectives.length === 0) {
-			return "There are no objectives";
+			return languageService.translate("Objectives.NoObjectives");
 		}
 		
 		const listItems = this.state.objectives.map((objective) =>
@@ -111,19 +133,19 @@ class Objectives extends React.Component {
 				
 				<div>
 					<div>
-						<span className="bold">Topic: </span>
+						<span className="bold">{languageService.translate("Objectives.Topic")}: </span>
 						<Link className="bold" to={"/topic/" + objective.id}>
 							{objective.name}
 						</Link>
 					</div>
 					
 					<div>
-						<span className="bold">Date: </span>
-						{objective.date}
+						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
+						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD hh:mm')}
 					</div>
 					<div>
-						<span className="bold">Status: </span>
-						{objective.status}
+						<span className="bold">{languageService.translate("Objectives.Status")}: </span>
+						{languageService.translate("Objectives." + objective.status)}
 					</div>
 				</div>
 				
@@ -142,32 +164,32 @@ class Objectives extends React.Component {
 		
 		let extraButtons;
 		
-		if (objective.status === "created") {
+		if (objective.status === "Created") {
 			extraButtons = (
 				<>
 					<button className="button" onClick={ () => this.handleAccept(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faCheck} />
 						</div>
-						Accept
+						{languageService.translate("Objectives.Accept")}
 					</button>
 					<button className="button" onClick={ () => this.handleDecline(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faTimes} />
 						</div>
-						Decline
+						{languageService.translate("Objectives.Decline")}
 					</button>
 				</>
 			);
 		}
 		
-		if (objective.status === "accepted") {
+		if (objective.status === "Accepted") {
 			extraButtons = (
 				<button className="button" onClick={ () => this.handleFinish(objective.id) }>
 					<div>
 						<FontAwesomeIcon icon={faCheckDouble} />
 					</div>
-					Finished
+					{languageService.translate("Objectives.Complete")}
 				</button>
 			);
 		}
@@ -181,14 +203,7 @@ class Objectives extends React.Component {
 					<div>
 						<FontAwesomeIcon icon={faHistory} />
 					</div>
-					History
-				</button>
-				
-				<button className="button" onClick={ () => this.handleDelete(objective.id) }>
-					<div>
-						<FontAwesomeIcon icon={faTrashAlt} />
-					</div>
-					Delete
+					{languageService.translate("Objectives.History")}
 				</button>
 			</div>
 		);
@@ -207,7 +222,9 @@ class Objectives extends React.Component {
 	}
 	
 	handleHistory(id) {
-		
+
+
+
 		this.setState({
 			historyModalIsEnabled: true,
 			selectedObjective: this.state.objectives.find( x => x.id === id),
@@ -232,10 +249,6 @@ class Objectives extends React.Component {
 				}
 			]
 		});
-	}
-	
-	handleDelete(id) {
-		alert("delete functionality is not implemented");
 	}
 	
 	handleHistoryModalClose() {

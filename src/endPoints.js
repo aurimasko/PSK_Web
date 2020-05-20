@@ -4,10 +4,11 @@ const apiBaseEndPoint = "https://confikturaservice.azurewebsites.net";
 const usersAPIBaseEndPoint = apiBaseEndPoint + "/Users";
 const rolesAPIBaseEndPoint = apiBaseEndPoint + "/Roles";
 const teamAPIBaseEndPoint = apiBaseEndPoint + "/Team";
-const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays"
-const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics"
-const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges"
-
+const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays";
+const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics";
+const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges";
+const objectiveAPIBaseEndPoint = apiBaseEndPoint + "/Objective";
+const objectiveChangesAPIBaseEndPoint = apiBaseEndPoint + "/ObjectiveChanges";
 
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,
@@ -16,5 +17,7 @@ module.exports = {
     teamAPIBaseEndPoint: teamAPIBaseEndPoint,
     learningDaysAPIBaseEndPoint: learningDaysAPIBaseEndPoint,
     topicAPIBaseEndPoint: topicAPIBaseEndPoint,
-    topicChangesAPIBaseEndPoint: topicChangesAPIBaseEndPoint
+    topicChangesAPIBaseEndPoint: topicChangesAPIBaseEndPoint,
+    objectiveAPIBaseEndPoint: objectiveAPIBaseEndPoint,
+    objectiveChangesAPIBaseEndPoint: objectiveChangesAPIBaseEndPoint
 }

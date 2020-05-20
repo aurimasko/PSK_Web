@@ -142,6 +142,22 @@
     "AddSuccessMessage": "Learning day added successfully.",
     "Save": "Save"
   },
+  "Objectives": {
+    "Title": "{name}'s objectives",
+    "Topic": "Topic",
+    "Date": "Date",
+    "Status": "Status",
+    "AddNew": "Add new objective",
+    "NoObjectives": "There are no objectives",
+    "Created": "Created",
+    "Accepted": "Accepted",
+    "Declined": "Declined",
+    "Completed": "Completed",
+    "History": "Change history",
+    "Accept": "Accept",
+    "Decline": "Decline",
+    "Complete": "Complete"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

@@ -142,6 +142,22 @@
     "AddSuccessMessage": "Mokymosi diena pridėta.",
     "Save": "Išsaugoti"
   },
+  "Objectives": {
+    "Title": "{name} tikslai",
+    "Topic": "Tema",
+    "Date": "Data",
+    "Status": "Būsena",
+    "AddNew": "Pridėti naują",
+    "NoObjectives": "Nėra tikslų",
+    "Created": "Sukurtas",
+    "Accepted": "Priimtas",
+    "Declined": "Atmestas",
+    "Completed": "Įvykdytas",
+    "History": "Keitimo istorija",
+    "Accept": "Priimti",
+    "Decline": "Atmesti",
+    "Complete": "Užbaigti"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
