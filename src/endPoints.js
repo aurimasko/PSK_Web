@@ -8,6 +8,7 @@ const learningDaysAPIBaseEndPoint = apiBaseEndPoint + "/LearningDays"
 const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics"
 const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges"
 
+
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,
     usersAPIBaseEndPoint: usersAPIBaseEndPoint,
