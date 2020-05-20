@@ -1,5 +1,6 @@
 import endPoints from "../endPoints.js"
 import { auth } from "../services/auth.js"
+import { languageService } from "../services/languageService.js";
 
 export const topicService = {
 	async fetchTopics() {
@@ -9,8 +10,9 @@ export const topicService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
-				}),
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
 			}
 		).then(response => { return response.json(); });
 	},
@@ -20,8 +22,9 @@ export const topicService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
-				}),
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
 			}
 		).then(response => { return response.json(); });
 	},
@@ -38,8 +41,9 @@ export const topicService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
-				}),
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
 			}
 		).then(response => { return response.json(); });
 	},
@@ -50,7 +54,8 @@ export const topicService = {
 				method: 'post',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json"
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
 				}),
 				body: JSON.stringify(
 					{
@@ -69,7 +74,8 @@ export const topicService = {
 				method: 'put',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json"
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
 				}),
 				body: JSON.stringify(topic)
 			}
