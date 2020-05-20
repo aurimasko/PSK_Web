@@ -25,6 +25,7 @@ import ChangeRole from "./components/ChangeRole";
 import AddTopic from "./components/AddTopic";
 import EditTopic from "./components/EditTopic";
 import Objectives from "./components/Objectives";
+import AddObjective from "./components/AddObjective";
 
 function App() {
 	return (
@@ -32,7 +33,7 @@ function App() {
 			<Switch>
 				<AuthRoute path="/user/:id/calendar" component={CalendarUserView} />
 				<AuthRoute path="/user/:id/topics" component={TopicsView} />
-				<AuthRoute path="/user/:id/objectives/add" component={NotFound} />
+				<AuthRoute path="/user/:id/objectives/add" component={AddObjective} />
 				<AuthRoute path="/user/:id/objectives" component={Objectives} />
 				<AuthRoute path="/user/:id/team/calendar" component={CalendarTeamView} />
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
