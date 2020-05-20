@@ -1,3 +1,31 @@
 ﻿{
-  "MyCalendar":  "Mano kalendorius"
+  "Header": {
+    "MyCalendar": "Mano kalendorius",
+    "Topics": "Temos",
+    "Roles": "Rolės",
+    "Logout": "Atsijungti",
+    "Back": "Grįžti"
+  },
+  "Footer": {
+    "About": "Apie",
+    "Help": "Pagalba"
+  },
+  "User": {
+    "Role": "Rolė",
+    "Calendar": "Kalendorius",
+    "Objectives": "Tikslai",
+    "LearnedTopics": "Išmoktos temos",
+    "Team": "Komanda",
+    "MoreInformation": "Papildoma informacija",
+    "EmailAddress": "El. pašto adresas",
+    "RegistrationDate": "Registracijos data",
+    "LearningDayLimit": "Mokymosi dienų limitas per ketvirtį",
+    "SuperVisorBadge": "Komandos vadovas",
+    "AdminBadge": "Administratorius",
+    "WorkerBadge": "Darbuotojas",
+    "Loading": "Užkraunamas vartotojas...",
+    "ChangePassword": "Keisti slaptažodį"
+  },
+  "Edit": "Redaguoti",
+  "None": "Nėra"
 }

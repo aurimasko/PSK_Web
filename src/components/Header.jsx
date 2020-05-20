@@ -66,7 +66,7 @@ class Header extends React.Component {
 					to={"/user/me/calendar"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faCalendarAlt} /> {languageService.translate("MyCalendar")}
+					<FontAwesomeIcon icon={faCalendarAlt} /> {languageService.translate("Header.MyCalendar")}
 				</Link>
 				
 				
@@ -79,7 +79,7 @@ class Header extends React.Component {
 					to={"/topics"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faClipboardList} /> Topics
+					<FontAwesomeIcon icon={faClipboardList} /> {languageService.translate("Header.Topics")}
 				</Link>
 				
 				<Link
@@ -91,7 +91,7 @@ class Header extends React.Component {
 					to={"/roles"}
 					onClick={this.handleUseOther}
 				>
-					<FontAwesomeIcon icon={faTags} /> Roles	
+					<FontAwesomeIcon icon={faTags} /> {languageService.translate("Header.Roles")}	
 				</Link>
 				
 				
@@ -104,7 +104,7 @@ class Header extends React.Component {
 					to="/login"
 					onClick={this.handleUseLogout}
 				>
-					<FontAwesomeIcon icon={faSignOutAlt} /> Logout
+					<FontAwesomeIcon icon={faSignOutAlt} /> {languageService.translate("Header.Logout")}
 				</Link>
 				
 				
@@ -122,7 +122,7 @@ class Header extends React.Component {
 					to={"/user/me"}
 					onClick={this.handleBackButton}
 				>
-					<FontAwesomeIcon icon={faArrowLeft} /> Back
+					<FontAwesomeIcon icon={faArrowLeft} /> {languageService.translate("Header.Back")}
 				</button>
 			);
 		}
@@ -148,6 +148,7 @@ class Header extends React.Component {
 		languageService.setLanguage(event.target.value);
 		this.setState({ language: event.target.value });
 		event.preventDefault();
+		window.location.reload(false);
 	}
 
 	handleBackButton() {

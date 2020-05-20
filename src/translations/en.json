@@ -1,3 +1,31 @@
 {
-  "MyCalendar": "My calendar"
+  "Header": {
+    "MyCalendar": "My calendar",
+    "Topics": "Topics",
+    "Roles": "Roles",
+    "Logout": "Logout",
+    "Back": "Back"
+  },
+  "Footer": {
+    "About": "About",
+    "Help": "Help"
+  },
+  "User": {
+    "Role": "Role",
+    "Calendar": "Calendar",
+    "Objectives": "Objectives",
+    "LearnedTopics": "Learned topics",
+    "Team": "Team",
+    "MoreInformation": "More information",
+    "EmailAddress": "Email address",
+    "RegistrationDate": "Registration date",
+    "LearningDayLimit": "Learning day limit per quarter",
+    "SuperVisorBadge": "Supervisor",
+    "AdminBadge": "Admin",
+    "WorkerBadge": "Member",
+    "Loading": "Loading user...",
+    "ChangePassword": "Change password"
+  },
+  "Edit": "Edit",
+  "None": "None"
 }
