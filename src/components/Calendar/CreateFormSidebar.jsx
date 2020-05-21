@@ -60,7 +60,7 @@ class DayContentSidebar extends React.Component {
 					let learningDay = learningDayResult.content[0];
 					this.setState({
 						learningDayForEditing: learningDay,
-						comment: learningDay.comment,
+						comment: learningDay.comments,
 						selectedTopics: result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1)
 					});
 
@@ -203,7 +203,7 @@ class DayContentSidebar extends React.Component {
 		if (this.state.isEditing) {
 			//create copy
 			let learningDayToUpdate = Object.assign({}, this.state.learningDayForEditing);
-			learningDayToUpdate.comment = this.state.comment;
+			learningDayToUpdate.comments = this.state.comment;
 			learningDayToUpdate.topicsId = topicIds;
 
 

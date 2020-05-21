@@ -9,7 +9,7 @@ export const learningDayService = {
 		var startDateDate = moment(startDate).format("YYYY-MM-DD");
 		var endDateDate = moment(endDate).format("YYYY-MM-DD");
 		return await fetch(
-			endPoints.learningDaysAPIBaseEndPoint + "?usersIds=" + userId + "&startDate=" + startDateDate + "&endDate=" + endDateDate,
+			endPoints.learningDaysAPIBaseEndPoint + "?usersIds=" + userId + "&dateFrom=" + startDateDate + "&dateTo=" + endDateDate,
 			{
 				method: 'get',
 				headers: new Headers({
