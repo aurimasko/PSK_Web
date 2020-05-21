@@ -4,7 +4,8 @@ export const languageService = {
 	getLanguage() {
 		let fromCookies = Cookies.get('language');
 		if (!fromCookies)
-			return getLanguage();
+			//return english by default
+			return "en";
 		else
 			return fromCookies;
 	},

@@ -255,7 +255,7 @@ class User extends React.Component {
 		} else if (this.state.user.isSuperVisor) {
 			return <span className="badge">{languageService.translate("User.SuperVisorBadge")}</span>;
 		} else {
-			return <span className="badge">{languageService.translate("User.MemberBadge")}</span>;
+			return <span className="badge">{languageService.translate("User.WorkerBadge")}</span>;
 		}
 	}
 	
