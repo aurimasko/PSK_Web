@@ -5,7 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faCheck, faTimes, faCheckDouble, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Loading from "./Loading";
 import ObjectiveHistoryModal from "./ObjectiveHistoryModal";
-
+import { auth } from "../services/auth.js";
+import { userService } from "../services/userService.js";
+import { objectiveService } from "../services/objectiveService.js";
+import { objectiveChangeService } from "../services/objectiveChangeService.js";
+import moment from 'moment';
+import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class Objectives extends React.Component {
 	
@@ -13,38 +19,12 @@ class Objectives extends React.Component {
 		super(props);
 		
 		this.state = {
-			user: {
-				id: "tempvalue"
-			},
-			objectives: [
-				{
-					id: 1,
-					name: "Flutter",
-					date: "2020-20-20",
-					status: "created" // "created", "declined", "accepted", "done" 
-				},
-				{
-					id: 2,
-					name: "Foundation",
-					date: "2019-22-33",
-					status: "declined"
-				},
-				{
-					id: 3,
-					name: "CSS grid",
-					date: "2022-22-22",
-					status: "accepted"
-				},
-				{
-					id: 4,
-					name: "Bootstrap",
-					date: "2012-22-13",
-					status: "done"
-				}
-			],
+			user: null,
+			objectives: null,
 			historyModalIsEnabled: false,
 			selectedObjective: null,
-			historyList: []
+			historyList: null,
+			areButtonsEnabled: true
 		};
 
 		this.notifRef = React.createRef();
@@ -53,47 +33,91 @@ class Objectives extends React.Component {
 		this.handleDecline = this.handleDecline.bind(this);
 		this.handleFinish = this.handleFinish.bind(this);
 		this.handleHistory = this.handleHistory.bind(this);
-		this.handleDelete = this.handleDelete.bind(this);
 		this.handleHistoryModalClose = this.handleHistoryModalClose.bind(this);
 	}
-	
-	render() {
-		return (
-			<Layout ref={this.notifRef}>
-				<div className="container wide">
 
-					<div className="flex-right">
-					
-						<div className="flex-down margin-right-16 margin-left-8">
-							<div className="flex-spacer"></div>
-							<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
-								<FontAwesomeIcon icon={faArrowLeft} />
-							</Link>
-							<div className="flex-spacer"></div>
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		if (id === auth.user.id) {
+			this.setState({
+				user: auth.user
+			});
+
+			this.getObjectives(auth.user.id);
+		} else {
+			let result = await userService.fetchUserById(id);
+			if (result.isSuccess === true) {
+				this.setState({
+					user: result.content[0]
+				});
+
+				this.getObjectives(result.content[0].id);
+			} else {
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			}
+		}
+	}
+
+	async getObjectives(id) {
+		let result = await objectiveService.fetchObjectivesByUserId(id);
+		if (result.isSuccess === true) {
+			this.setState({
+				objectives: result.content.sort((a, b) => b.creationDate - a.creationDate)
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+	render() {
+		if (this.state.user === null || this.state.objectives === null) {
+			return <Loading />
+		} else {
+			return (
+				<Layout ref={this.notifRef}>
+					<div className="container wide">
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
+
+
+							<h1>
+								{languageService.translate("Objectives.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
+							</h1>
 						</div>
-						
-						
-						<h1>
-							Vardaitis Pavardaitis's objectives
-						</h1>
+
+						{this.renderObjectivesList()}
+
+						<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+							{languageService.translate("Objectives.AddNew")}
+						</Link>
 					</div>
 
-					{this.renderObjectivesList()}
-					
-					<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-						Add new objective
-					</Link>
-				</div>
-				
-				<ObjectiveHistoryModal
-					isEnabled={this.state.historyModalIsEnabled}
-					selectedObjective={this.state.selectedObjective}
-					historyList={this.state.historyList}
-					handleClose={this.handleHistoryModalClose}
+					<ObjectiveHistoryModal
+						isEnabled={this.state.historyModalIsEnabled}
+						selectedObjective={this.state.selectedObjective}
+						historyList={this.state.historyList}
+						handleClose={this.handleHistoryModalClose}
 					/>
-				
-			</Layout>
-		);
+
+				</Layout>
+			);
+		}
 	}
 	
 	renderObjectivesList() {
@@ -103,7 +127,7 @@ class Objectives extends React.Component {
 		}
 		
 		if (this.state.objectives.length === 0) {
-			return "There are no objectives";
+			return languageService.translate("Objectives.NoObjectives");
 		}
 		
 		const listItems = this.state.objectives.map((objective) =>
@@ -111,19 +135,19 @@ class Objectives extends React.Component {
 				
 				<div>
 					<div>
-						<span className="bold">Topic: </span>
-						<Link className="bold" to={"/topic/" + objective.id}>
-							{objective.name}
+						<span className="bold">{languageService.translate("Objectives.Topic")}: </span>
+						<Link className="bold" to={"/topic/" + objective.topicId}>
+							{/*objective.topic.name*/}
 						</Link>
 					</div>
 					
 					<div>
-						<span className="bold">Date: </span>
-						{objective.date}
+						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
+						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD hh:mm')}
 					</div>
 					<div>
-						<span className="bold">Status: </span>
-						{objective.status}
+						<span className="bold">{languageService.translate("Objectives.Status")}: </span>
+						{languageService.translate("Objectives." + objective.status)}
 					</div>
 				</div>
 				
@@ -142,108 +166,133 @@ class Objectives extends React.Component {
 		
 		let extraButtons;
 		
-		if (objective.status === "created") {
+		if (objective.status === "Created") {
 			extraButtons = (
 				<>
 					<button className="button" onClick={ () => this.handleAccept(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faCheck} />
 						</div>
-						Accept
+						{languageService.translate("Objectives.Accept")}
 					</button>
 					<button className="button" onClick={ () => this.handleDecline(objective.id) }>
 						<div>
 							<FontAwesomeIcon icon={faTimes} />
 						</div>
-						Decline
+						{languageService.translate("Objectives.Decline")}
 					</button>
 				</>
 			);
 		}
 		
-		if (objective.status === "accepted") {
+		if (objective.status === "Accepted") {
 			extraButtons = (
 				<button className="button" onClick={ () => this.handleFinish(objective.id) }>
 					<div>
 						<FontAwesomeIcon icon={faCheckDouble} />
 					</div>
-					Finished
+					{languageService.translate("Objectives.Complete")}
 				</button>
 			);
 		}
-		
-		return (
-			<div className="flex-right flex-wrap flex-spacer">
-				<div className="flex-spacer" />
-				{extraButtons}
-				
-				<button className="button" onClick={ () => this.handleHistory(objective.id) }>
-					<div>
-						<FontAwesomeIcon icon={faHistory} />
-					</div>
-					History
-				</button>
-				
-				<button className="button" onClick={ () => this.handleDelete(objective.id) }>
-					<div>
-						<FontAwesomeIcon icon={faTrashAlt} />
-					</div>
-					Delete
-				</button>
-			</div>
-		);
+
+		if (!this.state.areButtonsEnabled) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			return (
+				<div className="flex-right flex-wrap flex-spacer">
+					<div className="flex-spacer" />
+					{extraButtons}
+
+					<button className="button" onClick={() => this.handleHistory(objective.id)}>
+						<div>
+							<FontAwesomeIcon icon={faHistory} />
+						</div>
+						{languageService.translate("Objectives.History")}
+					</button>
+				</div>
+			);
+		}
 	};
 	
-	handleAccept(id) {
-		alert("accept functionality is not implemented");
+	async handleAccept(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Accepted";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
-	handleDecline(id) {
-		alert("decline functionality is not implemented");
+	async handleDecline(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Declined";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
-	handleFinish(id) {
-		alert("finish functionality is not implemented");
+	async handleFinish(id) {
+		let selectedObjective = this.state.objectives.find(x => x.id === id);
+		selectedObjective.Status = "Completed";
+
+		await this.updateObjective(selectedObjective);
 	}
 	
-	handleHistory(id) {
-		
+	async handleHistory(id) {
 		this.setState({
-			historyModalIsEnabled: true,
-			selectedObjective: this.state.objectives.find( x => x.id === id),
-			historyList: [
-				{
-					date: "2020-20-20",
-					user: {
-						firstName: "Vardaitis",
-						lastName: "Pavardaitis"
-					},
-					oldState: "none",
-					newState: "created"
-				},
-				{
-					date: "2021-21-21",
-					user: {
-						firstName: "Pavardis",
-						lastName: "Vardis"
-					},
-					oldState: "created",
-					newState: "accepted"
-				}
-			]
+			historyModalIsEnabled: true
 		});
-	}
-	
-	handleDelete(id) {
-		alert("delete functionality is not implemented");
+
+		let result = await objectiveChangeService.fetchObjectiveChangesForObjective(id);
+		if (result.isSuccess === true) {
+			let selectedObjective = this.state.objectives.find(x => x.id === id);
+			let historyList = result.content.sort((a, b) => b.creationDate - a.creationDate);
+
+			//add creation record
+			let finalHistoryList = [];
+			let creationRecord = {
+				oldState: "-",
+				newState: languageService.translate("Objectives.Created"),
+				objectiveId: id,
+				creationDate: selectedObjective.creationDate,
+				creator: {}
+			};
+
+			finalHistoryList.push(creationRecord);
+			finalHistoryList.concat(historyList);
+
+			this.setState({
+				selectedObjective: selectedObjective,
+				historyList: finalHistoryList
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
 	}
 	
 	handleHistoryModalClose() {
 		this.setState({
 			historyModalIsEnabled: false,
 			selectedObjective: null,
-			historyList: []
+			historyList: null
 		});
+	}
+
+	async updateObjective(objective) {
+		this.setState({
+			areButtonsEnabled: false
+		});
+
+		objectiveService.updateObjective(objective)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					areButtonsEnabled: true
+				});
+			});
 	}
 }
 

@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class AddTeamMember extends React.Component {
 
@@ -27,7 +28,7 @@ class AddTeamMember extends React.Component {
 	renderAddButton() {
 		if (this.state.isAddButtonEnabled) {
 			return (
-				<input className="primary" type="submit" value="Add" />
+				<input className="primary" type="submit" value={languageService.translate("Add")} />
 			);
 		} else {
 			return <Loading width={50} height={50} type={"balls"} />;
@@ -39,19 +40,19 @@ class AddTeamMember extends React.Component {
 			<Layout ref={this.notifRef}>
 				<div className="container wide">
 
-					<h1 className="margin-bottom-8">Add new team member</h1>
+					<h1 className="margin-bottom-8">{languageService.translate("AddTeamMember.Title")}</h1>
 
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
-							Email address
+							{languageService.translate("AddTeamMember.EmailAddress")}
 							<input required type="email" value={this.state.email} onChange={this.handleEmailChange} />
 						</label>
 						<label>
-							First name
+							{languageService.translate("AddTeamMember.FirstName")}
 							<input required type="text" value={this.state.firstName} onChange={this.handleFirstNameChange} />
 						</label>
 						<label>
-							Last name
+							{languageService.translate("AddTeamMember.LastName")}
 							<input required type="text" value={this.state.lastName} onChange={this.handleLastNameChange} />
 						</label>
 						<hr />
@@ -83,7 +84,7 @@ class AddTeamMember extends React.Component {
 		userService.createUser(this.state.email, this.state.firstName, this.state.lastName)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Team member added successfully", isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("AddTeamMember.SuccessMessage"), isSuccess: true });
 
 					//clear fields
 					this.setState({

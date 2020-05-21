@@ -1,0 +1,181 @@
+﻿{
+  "Header": {
+    "MyCalendar": "Mano kalendorius",
+    "Topics": "Temos",
+    "Roles": "Rolės",
+    "Logout": "Atsijungti",
+    "Back": "Grįžti"
+  },
+  "Footer": {
+    "About": "Apie",
+    "Help": "Pagalba"
+  },
+  "User": {
+    "Role": "Rolė",
+    "Calendar": "Kalendorius",
+    "Objectives": "Tikslai",
+    "LearnedTopics": "Išmoktos temos",
+    "Team": "Komanda",
+    "MoreInformation": "Papildoma informacija",
+    "EmailAddress": "El. pašto adresas",
+    "RegistrationDate": "Registracijos data",
+    "LearningDayLimit": "Mokymosi dienų limitas per ketvirtį",
+    "SuperVisorBadge": "Komandos vadovas",
+    "AdminBadge": "Administratorius",
+    "WorkerBadge": "Darbuotojas",
+    "Loading": "Užkraunamas vartotojas...",
+    "ChangePassword": "Keisti slaptažodį"
+  },
+  "ChangePassword": {
+    "Title": "Keisti slaptažodį",
+    "CurrentPassword": "Dabartinis slaptažodis",
+    "NewPassword": "Naujas slaptažodis",
+    "RepeatNewPassword": "Pakartoti naują slaptažodį",
+    "SuccessMessage": "Slaptažodis sėkmingai pakeistas. Prisijunkite iš naujo."
+  },
+  "EditUser": {
+    "Title": "Redaguoti {name}",
+    "EmailAddress": "El. pašto adresas",
+    "FirstName": "Vardas",
+    "LastName": "Pavardė"
+  },
+  "AccessDenied": {
+    "Title": "Neturite teisių pasiekti šį puslapį",
+    "Message": "Apgailėstaujame, tačiau neturite teisių pasiekti šio puslapio. Grįžkite atgal arba paspauskite mygtuką, kad grįžti į pradinį ekraną: ",
+    "Link": "grįžti į pradinį ekraną"
+  },
+  "Team": {
+    "Title": "Komanda",
+    "Leader": "Vadovas",
+    "Members": "Nariai",
+    "AddNewTeamMember": "Pridėti naują narį",
+    "Calendar": "Kalendorius",
+    "LearnedTopics": "Išmoktos temos"
+  },
+  "AddTeamMember": {
+    "Title": "Pridėti naują komandos narį",
+    "EmailAddress": "El. pašto adresas",
+    "FirstName": "Vardas",
+    "LastName": "Pavardė",
+    "SuccessMessage": "Komandos narys pridėtas sėkmingai. Jam išsiųstas laiškas su prisijungimo duomenimis."
+  },
+  "Topics": {
+    "Title": "Temos"
+  },
+  "AddTopic": {
+    "Title": "Pridėti naują temą",
+    "Name": "Pavadinimas",
+    "References": "Nuorodos",
+    "ParentTopic": "Tėvinė tema",
+    "SuccessMessage": "Tema pridėta"
+  },
+  "ChangeRole": {
+    "Title": "Keisti {name} rolę",
+    "PickRole": "Pasirinkite rolę",
+    "SuccessMessage": "Rolė pakeista"
+  },
+  "EditTopic": {
+    "Title": "Redaguokite temą '{name}'",
+    "Name": "Pavadinimas",
+    "References": "Nuorodos",
+    "ParentTopic": "Tėvinė tema",
+    "SuccessMessage": "Tema pakeista"
+  },
+  "Topic": {
+    "CreatedOn": "Sukūrimo data",
+    "ParentTopic": "Tėvinė tema",
+    "ChangesJournal": "Pakeitimų žurnalas"
+  },
+  "TopicChangesJournal": {
+    "Date": "Data",
+    "User": "Vartotojas",
+    "OldName": "Senas pavadinimas",
+    "NewName": "Naujas pavadinimas"
+  },
+  "Login": {
+    "Title": "Prisijungimas",
+    "EmailAddress": "El.pašto adresas",
+    "Password": "Slaptažodis",
+    "Button": "Prisijungti",
+    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis."
+  },
+  "NotFound": {
+    "Title": "Puslapis nerastas",
+    "Link": "Grįžti į pradinį puslapį"
+  },
+  "Roles": {
+    "Title": "Rolės",
+    "UsersInRole": "Vartotojai"
+  },
+  "Role": {
+    "Title": "{name} rolė",
+    "CreationDate": "Sukūrimo data",
+    "UsersInRole": "Vartotojai"
+  },
+  "UserCalendar": {
+    "Today": "Šiandien",
+    "Back": "<",
+    "Next": ">",
+    "NoRegisteredLearningDaysMessage": "Šia data nėra registruotų mokymosi dienų.",
+    "GoToUsersPage": "Pereiti prie šio vartotojo profilio."
+  },
+  "LearningDaySidebar": {
+    "LearningDayTopics": "Mokymosi dienos temos",
+    "LearningDayComment": "Mokymosi dienos komentaras",
+    "NoComment": "Nėra komentarų"
+  },
+  "TeamCalendar": {
+    "Today": "Šiandien",
+    "Back": "<",
+    "Next": ">",
+    "Teammates": "Komandos nariai",
+    "TeamMembers": "Komandos nariai",
+    "ToggleEveryone": "Pažymėti visus"
+  },
+  "CreateLearningDay": {
+    "Topics": "Mokymosi dienos temos",
+    "SelectToAddMore": "Pasirinkite, kad pridėti daugiau",
+    "Comment": "Mokymosi dienos komentaras",
+    "NoTopicsSelected": "Nepasirinkta mokymosi temų",
+    "Max4Topics": "Daugiausiai 4 temos yra galimos.",
+    "UpdateSuccessMessage": "Mokymosi diena atnaujinta sėkmingai.",
+    "AddSuccessMessage": "Mokymosi diena pridėta.",
+    "Save": "Išsaugoti"
+  },
+  "Objectives": {
+    "Title": "{name} tikslai",
+    "Topic": "Tema",
+    "Date": "Data",
+    "Status": "Būsena",
+    "AddNew": "Pridėti naują",
+    "NoObjectives": "Nėra tikslų",
+    "Created": "Sukurtas",
+    "Accepted": "Priimtas",
+    "Declined": "Atmestas",
+    "Completed": "Įvykdytas",
+    "History": "Keitimo istorija",
+    "Accept": "Priimti",
+    "Decline": "Atmesti",
+    "Complete": "Užbaigti"
+  },
+  "ObjectiveChangeHistory": {
+    "Title": "Tikslo keitimo istorija",
+    "Date": "Keitimo data",
+    "User": "Pakeitė",
+    "OldStatus": "Sena būsena",
+    "NewStatus": "Nauja būsena"
+  },
+  "AddObjective": {
+    "Title": "Pridėti naują tikslą",
+    "Topic": "Tema",
+    "SuccessMessage": "Tikslas pridėtas."
+  },
+  "Edit": "Redaguoti",
+  "None": "Nėra",
+  "Change": "Keisti",
+  "Loading": "Kraunasi...",
+  "Update": "Atnaujinti",
+  "Add": "Pridėti",
+  "Create": "Sukurti",
+  "NoChanges": "Nėra pakeitimų"
+}

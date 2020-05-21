@@ -6,6 +6,7 @@ import { learningDayService } from "../../services/learningDayService.js";
 import { topicService } from "../../services/topicService.js";
 import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { languageService } from "../../services/languageService.js";
 
 class DayContentSidebar extends React.Component {
 
@@ -69,7 +70,7 @@ class DayContentSidebar extends React.Component {
 		} else {
 			return (
 				<>
-					<h3>Learning day topics:</h3>
+					<h3>{languageService.translate("LearningDaySidebar.LearningDayTopics")}:</h3>
 
 					<ul className="fa-ul margin-top-16 scroll">
 						{
@@ -97,7 +98,7 @@ class DayContentSidebar extends React.Component {
 		if (this.state.learningDay.comments) {
 			return (
 				<>
-					<h3 className="margin-top-16">Learning day comment:</h3>
+					<h3 className="margin-top-16">{languageService.translate("LearningDaySidebar.LearningDayComment")}:</h3>
 
 					<p className="">
 						<i>{this.state.learningDay.comments}</i>
@@ -106,10 +107,10 @@ class DayContentSidebar extends React.Component {
 		} else {
 			return (
 				<>
-					<h3 className="margin-top-16">Learning day comments:</h3>
+					<h3 className="margin-top-16">{languageService.translate("LearningDaySidebar.LearningDayComment")}:</h3>
 
 					<p className="">
-						<i>no comments</i>
+						<i>{languageService.translate("LearningDaySidebar.NoComment")}</i>
 					</p>
 				</>);
 		}

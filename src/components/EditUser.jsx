@@ -7,7 +7,7 @@ import { responseHelpers } from "../helpers/responseHelpers.js";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-
+import { languageService } from "../services/languageService.js";
 
 class EditUser extends React.Component {
 
@@ -54,7 +54,7 @@ class EditUser extends React.Component {
 		if (this.state.isUpdateButtonEnabled) {
 			return (
 				<button className="primary" type="submit" disabled={!this.state.isUpdateButtonEnabled}>
-					Update
+					{languageService.translate("Update")}
 				</button>
 			);
 		} else {
@@ -87,22 +87,22 @@ class EditUser extends React.Component {
 							
 							
 							<h1>
-								Edit {this.state.user.firstName} {this.state.user.lastName}
+								{languageService.translate("EditUser.Title", { name: this.state.user.firstName + " " + this.state.user.lastName})}
 							</h1>
 						</div>
 						
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							
 							<label>
-								Email address
+								{languageService.translate("EditUser.EmailAddress")}
 							<input required type="email" value={this.state.newEmail} onChange={this.handleEmailChange} />
 							</label>
 							<label>
-								First name
+								{languageService.translate("EditUser.FirstName")}
 							<input required type="text" value={this.state.newFirstName} onChange={this.handleFirstNameChange} />
 							</label>
 							<label>
-								Last name
+								{languageService.translate("EditUser.LastName")}
 							<input required type="text" value={this.state.newLastName} onChange={this.handleLastNameChange} />
 							</label>
 							<hr />

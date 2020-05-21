@@ -9,6 +9,7 @@ import { userService } from "../services/userService.js";
 import { auth } from "../services/auth.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { sortHelpers } from "../helpers/sortHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class Team extends React.Component {
 	
@@ -69,14 +70,14 @@ class Team extends React.Component {
 				teamMembers: sortedTeamMembers,
 				listItems: sortedTeamMembers.map((member) =>
 					<li key={member.id}>
-						<Link to={"/user/" + member.id}>
+						<Link to={"/user/" + member.id} title={member.username}>
 
 							{member.id === this.state.leader.id ?
 								<FontAwesomeIcon icon={faStar} listItem /> :
 								<FontAwesomeIcon icon={faUser} listItem />
 							}
 
-							{member.firstName} {member.lastName} ({member.username})
+							{member.firstName} {member.lastName}
 					</Link>
 					</li>
 				)
@@ -91,7 +92,7 @@ class Team extends React.Component {
 		if (this.state.leader.id === auth.user.id) {
 			return (
 				<Link className="button" to={"team/add"}>
-					Add new member
+					{languageService.translate("Team.AddNewTeamMember")}
 				</Link>
 			);
 		} else {
@@ -105,7 +106,7 @@ class Team extends React.Component {
 		}else if (this.state.listItems.length > 0) {
 			return (
 				<div>
-					<h3 className="margin-top-24">Members:</h3>
+					<h3 className="margin-top-24">{languageService.translate("Team.Members")}:</h3>
 					<ul className="fa-ul">
 						{this.state.listItems}
 					</ul>
@@ -138,10 +139,10 @@ class Team extends React.Component {
 
 							<div>
 								<h1>
-									Team
-							</h1>
+									{languageService.translate("Team.Title")}
+								</h1>
 								<h4>
-									Leader: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
+									{languageService.translate("Team.Leader")}: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
 								</h4>
 							</div>
 
@@ -160,14 +161,14 @@ class Team extends React.Component {
 								<div className="w100 margin-vertical-16">
 									<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
 								</div>
-								Calendar
+								{languageService.translate("Team.Calendar")}
 							</Link>
 							
 							<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
 							<div className="w100 margin-vertical-16">
 								<FontAwesomeIcon icon={faClipboardList} size="4x" />
 							</div>
-								Learned topics
+								{languageService.translate("Team.LearnedTopics")}
 							</Link>
 							
 						</div>

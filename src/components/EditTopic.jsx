@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class EditTopic extends React.Component {
 
@@ -67,7 +68,7 @@ class EditTopic extends React.Component {
 		if (this.state.isUpdateButtonEnabled) {
 			return (
 				<button className="primary" type="submit" disabled={!this.state.isUpdateButtonEnabled}>
-					Update
+					{languageService.translate("Update")}
 				</button>
 			);
 		} else {
@@ -87,24 +88,24 @@ class EditTopic extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
-						<h1 className="margin-bottom-8">Edit {this.state.topic.name}</h1>
+						<h1 className="margin-bottom-8">{languageService.translate("EditTopic.Title", { name: this.state.topic.name })}</h1>
 
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 
 							<label>
-								Name
+								{languageService.translate("EditTopic.Name")}
 								<input required type="text" value={this.state.newName} onChange={this.handleNameChange} />
 							</label>
 							<label>
-								References
+								{languageService.translate("EditTopic.References")}
 								<textarea type="text" onChange={this.handleReferencesChange} >
 									{this.state.newReferences}
 								</textarea>
 							</label>
 							<label>
-								Parent topic
+								{languageService.translate("EditTopic.ParentTopic")}
 								<select value={this.state.newParentTopicId} onChange={this.handleParentTopicIdChange}>
-									<option key="" value="">None</option>
+									<option key="" value="">{languageService.translate("None")}</option>
 									{
 										this.state.topics.map((topic) => {
 											return (
@@ -154,7 +155,7 @@ class EditTopic extends React.Component {
 					this.setState({
 						topic: topicReturned
 					});
-					this.notifRef.current.addNotification({ text: "Updated successfully", isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("EditTopic.SuccessMessage"), isSuccess: true });
 					this.props.history.push("/topic/" + topicReturned.id + "/edit");
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });

@@ -2,11 +2,11 @@ import endPoints from "../endPoints.js"
 import { auth } from "../services/auth.js"
 import { languageService } from "../services/languageService.js";
 
-export const topicChangesService = {
-	async fetchTopicChangesForTopic(topicId) {
+export const objectiveChangeService = {
+	async fetchObjectiveChangesForObjective(objectiveId) {
 
 		return await fetch(
-			endPoints.topicChangesAPIBaseEndPoint + "?topicId=" + topicId,
+			endPoints.objectiveChangesAPIBaseEndPoint + "?objectiveId=" + objectiveId,
 			{
 				method: 'get',
 				headers: new Headers({

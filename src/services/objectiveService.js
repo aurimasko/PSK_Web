@@ -1,47 +1,51 @@
-import { auth } from "../services/auth.js"
 import endPoints from "../endPoints.js"
-import moment from 'moment';
+import { auth } from "../services/auth.js"
 import { languageService } from "../services/languageService.js";
 
-export const teamService = {
-	async fetchCurrentUserTeam() {
-
+export const objectiveService = {
+	async fetchObjectivesByUserId(id) {
 		return await fetch(
-			endPoints.teamAPIBaseEndPoint,
+			endPoints.objectiveAPIBaseEndPoint + "?objectiveHaverId=" + id,
 			{
 				method: 'get',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
 					"Accept-Language": languageService.getLanguage()
-				})
+				}),
 			}
 		).then(response => { return response.json(); });
 	},
-	async fetchTeamByLeaderId(id) {
-
+	async updateObjective(objective) {
 		return await fetch(
-			endPoints.teamAPIBaseEndPoint + "?superVisorId=" + id,
+			endPoints.objectiveAPIBaseEndPoint,
 			{
-				method: 'get',
+				method: 'put',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json",
 					"Accept-Language": languageService.getLanguage()
-				})
+				}),
+				body: JSON.stringify(objective)
 			}
 		).then(response => { return response.json(); });
 	},
-	async fetchLearningDaysByLeaderId(id, startDate, endDate) {
-		var startDateDate = moment(startDate).format("YYYY-MM-DD");
-		var endDateDate = moment(endDate).format("YYYY-MM-DD");
+	async createObjective(objectiveHaverId, topicId) {
 		return await fetch(
-			endPoints.teamAPIBaseEndPoint + "/LearningDays?superVisorId=" + id + "&dateFrom=" + startDateDate + "&dateTo=" + endDateDate,
+			endPoints.objectiveAPIBaseEndPoint,
 			{
-				method: 'get',
+				method: 'post',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json",
 					"Accept-Language": languageService.getLanguage()
-				})
+				}),
+				body: JSON.stringify(
+					{
+						objectiveHaverId: objectiveHaverId,
+						topicId: topicId
+					}
+				)
 			}
 		).then(response => { return response.json(); });
-	}
+	},
 }

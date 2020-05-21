@@ -1,5 +1,6 @@
 import { auth } from "../services/auth.js"
 import endPoints from "../endPoints.js"
+import { languageService } from "../services/languageService.js";
 
 export const userService = {
 
@@ -10,7 +11,8 @@ export const userService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
 				})
 			}
 		).then(response => { return response.json(); });
@@ -21,7 +23,8 @@ export const userService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
 				})
 			}
 		).then(response => { return response.json(); });
@@ -33,7 +36,8 @@ export const userService = {
 				method: 'post',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json"
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
 				}),
 				body: JSON.stringify(
 					{
@@ -51,7 +55,8 @@ export const userService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
 				})
 			}
 		).then(response => { return response.json(); });
@@ -68,7 +73,8 @@ export const userService = {
 			{
 				method: 'get',
 				headers: new Headers({
-					"Authorization": "Bearer " + auth.getAccessToken()
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
 				})
 			}
 		).then(response => { return response.json(); });
@@ -80,7 +86,8 @@ export const userService = {
 				method: 'put',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json"
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
 				}),
 				body: JSON.stringify(user)
 			}
@@ -93,7 +100,8 @@ export const userService = {
 				method: 'put',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json"
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
 				}),
 				body: JSON.stringify(
 					{

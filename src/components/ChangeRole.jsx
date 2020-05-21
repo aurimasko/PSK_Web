@@ -8,7 +8,7 @@ import { responseHelpers } from "../helpers/responseHelpers.js";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-
+import { languageService } from "../services/languageService.js";
 
 class ChangeRole extends React.Component {
 
@@ -87,7 +87,7 @@ class ChangeRole extends React.Component {
 		if (this.state.isChangeButtonEnabled) {
 			return (
 				<button className="primary" type="submit" disabled={!this.state.isChangeButtonEnabled}>
-					Change
+					{languageService.translate("Change")}
 				</button>
 			);
 		} else {
@@ -119,16 +119,16 @@ class ChangeRole extends React.Component {
 							
 							
 							<h1>
-								Change {this.state.user.firstName} {this.state.user.lastName} role
+								{languageService.translate("ChangeRole.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
 							</h1>
 						</div>
 						
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 
 							<label>
-								Pick a role:
+								{languageService.translate("ChangeRole.PickRole")}:
 								<select value={this.state.newRoleId} onChange={this.handleRoleChange}>
-									<option key="" value="">None</option>
+									<option key="" value="">{languageService.translate("None")}</option>
 									{
 										this.state.roles.map((role) => {
 											return (
@@ -167,7 +167,7 @@ class ChangeRole extends React.Component {
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: "Role changed successfully.", isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("ChangeRole.SuccessMessage"), isSuccess: true });
 
 					//If current user, change auth.user property
 					//Will only happen to admin, since he can only change his own role

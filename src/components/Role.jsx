@@ -9,6 +9,7 @@ import moment from 'moment';
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { sortHelpers } from "../helpers/sortHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class Role extends React.Component {
 	
@@ -71,7 +72,7 @@ class Role extends React.Component {
 			if (this.state.usersList.length > 0) {
 				return (
 					<div>
-						<h3 className="margin-top-24">Users in role:</h3>
+						<h3 className="margin-top-24">{languageService.translate("Role.UsersInRole")}:</h3>
 
 						<ul className="fa-ul">
 							{this.state.usersList}
@@ -109,10 +110,10 @@ class Role extends React.Component {
 
 							<div>
 								<h1>
-									{this.state.role.name} role
+									{languageService.translate("Role.Title", { name: this.state.role.name })}
 								</h1>
 								<h5>
-									Creation date: {moment.utc(this.state.role.creationDate).local().format('YYYY-MM-DD hh:mm')}
+									{languageService.translate("Role.CreationDate")}: {moment.utc(this.state.role.creationDate).local().format('YYYY-MM-DD hh:mm')}
 								</h5>
 								{this.renderRoleUsers()}
 							</div>

@@ -6,6 +6,7 @@ import { topicService } from "../services/topicService.js";
 import { topicChangesService } from "../services/topicChangesService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import moment from 'moment';
+import { languageService } from "../services/languageService.js";
 
 class Topic extends React.Component {
 
@@ -84,7 +85,7 @@ class Topic extends React.Component {
 			return (
 				<div>
 					<h4>
-						Parent topic: <Link className="" to={"/topic/" + this.state.parentTopic.id}>{this.state.parentTopic.name}</Link>
+						{languageService.translate("Topic.ParentTopic")}: <Link className="" to={"/topic/" + this.state.parentTopic.id}>{this.state.parentTopic.name}</Link>
 					</h4>
 				</div>
 			);
@@ -100,16 +101,16 @@ class Topic extends React.Component {
 			return (
 				<div>
 					<h4>
-						Changes journal
+						{languageService.translate("Topic.ChangesJournal")}
 					</h4>
 					<table id="topicChangesTable" width="100%">
 						<tbody>
 							<thead>
 								<tr>
-									<th>Date</th>
-									<th>User</th>
-									<th>Old name</th>
-									<th>New name</th>
+									<th>{languageService.translate("TopicChangesJournal.Date")}</th>
+									<th>{languageService.translate("TopicChangesJournal.User")}</th>
+									<th>{languageService.translate("TopicChangesJournal.OldName")}</th>
+									<th>{languageService.translate("TopicChangesJournal.NewName")}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -136,7 +137,7 @@ class Topic extends React.Component {
 			});
 		} else {
 			return (<tr>
-				<td colSpan="4">No changes</td>
+				<td colSpan="4">{languageService.translate("NoChanges")}</td>
 			</tr>);
 		}
 	}
@@ -156,9 +157,9 @@ class Topic extends React.Component {
 
 						<h1>{this.state.topic.name}</h1>
 						<Link className="button" to={"/topic/" + this.state.topic.id + "/edit"}>
-							<button>Edit</button>
+							<button>{languageService.translate("Edit")}</button>
 						</Link>
-						<h3>Created on: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
+						<h3>{languageService.translate("Topic.CreatedOn")}: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
 						{this.renderTopicParent()}
 
 						<p className="margin-top-16">

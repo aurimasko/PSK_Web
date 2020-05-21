@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class TopicsView extends React.Component {
 	
@@ -54,9 +55,9 @@ class TopicsView extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 						<Link className="button" to={"/topic/add"}>
-							<button>Add</button>
+							<button>{languageService.translate("Add")}</button>
 						</Link>
-						<h3 className="margin-top-24">Topics:</h3>
+						<h3 className="margin-top-24">{languageService.translate("Topics.Title")}:</h3>
 						<ul className="fa-ul">
 							{this.state.topicItems}
 						</ul>

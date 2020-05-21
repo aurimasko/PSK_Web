@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactLoading from "react-loading";
+import { languageService } from "../services/languageService.js";
 
 class Loading extends React.Component {
 
@@ -11,7 +12,7 @@ class Loading extends React.Component {
 			color: this.props.color ? this.props.color : "orange",
 			height: this.props.height ? this.props.height : 300,
 			width: this.props.width ? this.props.width : 300,
-			text: this.props.text ? this.props.text : "Loading...",
+			text: this.props.text ? this.props.text : languageService.translate("Loading"),
 			fontSize: this.props.fontSize ? this.props.fontSize : 40,
 			showText: this.props.showText ? this.props.showText : false
 		};

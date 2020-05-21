@@ -1,26 +1,23 @@
 import React from 'react';
 import Layout from "./Layout";
+import { objectiveService } from "../services/objectiveService.js";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
 
-class AddTopic extends React.Component {
+class AddObjective extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			name: "",
-			references: "",
-			parentTopicId: "",
+			topicId: "",
 			isAddButtonEnabled: true,
 			topics: null
 		}
 
-		this.handleNameChange = this.handleNameChange.bind(this);
-		this.handleReferencesChange = this.handleReferencesChange.bind(this);
-		this.handleParentIdChange = this.handleParentIdChange.bind(this);
+		this.handleTopicIdChange = this.handleTopicIdChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -34,7 +31,8 @@ class AddTopic extends React.Component {
 		let result = await topicService.fetchTopics();
 		if (result.isSuccess === true) {
 			this.setState({
-				topics: result.content
+				topics: result.content,
+				topicId: result.content[0].id
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
@@ -63,23 +61,12 @@ class AddTopic extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
-						<h1 className="margin-bottom-8">{languageService.translate("AddTopic.Title")}</h1>
+						<h1 className="margin-bottom-8">{languageService.translate("AddObjective.Title")}</h1>
 
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							<label>
-								{languageService.translate("AddTopic.Name")}
-							<input required type="text" value={this.state.name} onChange={this.handleNameChange} />
-							</label>
-							<label>
-								{languageService.translate("AddTopic.References")}
-								<textarea type="text" onChange={this.handleReferencesChange} >
-									{this.state.references}
-								</textarea>
-							</label>
-							<label>
-								{languageService.translate("AddTopic.ParentTopic")}
-								<select value={this.state.parentTopicId} onChange={this.handleParentIdChange}>
-									<option key="" value="">{languageService.translate("None")}</option>
+								{languageService.translate("AddObjective.Topic")}
+								<select value={this.state.topicId} onChange={this.handleTopicIdChange}>
 									{
 										this.state.topics.map((topic) => {
 											return (
@@ -99,16 +86,8 @@ class AddTopic extends React.Component {
 		}
 	}
 
-	handleNameChange(event) {
-		this.setState({ name: event.target.value });
-	}
-
-	handleReferencesChange(event) {
-		this.setState({ references: event.target.value });
-	}
-
-	handleParentIdChange(event) {
-		this.setState({ parentTopicId: event.target.value });
+	handleTopicIdChange(event) {
+		this.setState({ topicId: event.target.value });
 	}
 
 	handleSubmit(event) {
@@ -116,16 +95,14 @@ class AddTopic extends React.Component {
 			isAddButtonEnabled: false
 		});
 
-		topicService.createTopic(this.state.name, this.state.references, this.state.parentTopicId)
+		objectiveService.createObjective(this.props.match.params.id, this.state.topicId)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: languageService.translate("AddTopic.SuccessMessage"), isSuccess: true });
+					this.notifRef.current.addNotification({ text: languageService.translate("AddObjective.SuccessMessage"), isSuccess: true });
 
 					//clear fields
 					this.setState({
-						name: "",
-						references: "",
-						parentTopicId: ""
+						topicId: ""
 					});
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
@@ -140,4 +117,4 @@ class AddTopic extends React.Component {
 	}
 }
 
-export default AddTopic;
+export default AddObjective;

@@ -6,6 +6,7 @@ import { faTags, faTag } from '@fortawesome/free-solid-svg-icons'
 import { roleService } from "../services/roleService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class RolesList extends React.Component {
 	
@@ -73,11 +74,11 @@ class RolesList extends React.Component {
 
 
 							<h1>
-								Roles
+								{languageService.translate("Roles.Title")}
 							</h1>
 						</div>
 
-						<h3 className="margin-top-24">Users in role:</h3>
+						<h3 className="margin-top-24">{languageService.translate("Roles.UsersInRole")}:</h3>
 
 						<ul className="fa-ul">
 							{this.state.listItems}

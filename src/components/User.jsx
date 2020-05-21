@@ -9,6 +9,7 @@ import { userService } from "../services/userService.js";
 import moment from 'moment';
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
+import { languageService } from "../services/languageService.js";
 
 class User extends React.Component {
 	
@@ -77,7 +78,7 @@ class User extends React.Component {
 		if (this.state.role === null) {
 			return (
 				<h4>
-					Role: <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+					{languageService.translate("User.Role")}: <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 				</h4>
 			);
 		}
@@ -85,11 +86,11 @@ class User extends React.Component {
 		if (this.state.role.id) {
 			return (
 				<h4>
-					Role: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
+					{languageService.translate("User.Role")}: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
 					{this.canChangeRole() ?
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							edit
+							{languageService.translate("Edit")}
 						</Link> :
 						""
 					}
@@ -99,11 +100,11 @@ class User extends React.Component {
 		else {
 			return (
 				<h4>
-					Role: <span className="unbold">none</span>
+					{languageService.translate("User.Role")}: <span className="unbold">{languageService.translate("None")}</span>
 					{this.canChangeRole() ? 
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							edit
+							{languageService.translate("Edit")}
 						</Link>:
 						""
 					}
@@ -118,7 +119,7 @@ class User extends React.Component {
 		if (this.state.user === null) {
 			return ( 
 				<>
-					<strong>Supervisor: </strong>
+					<strong>{languageService.translate("User.SuperVisorBadge")}: </strong>
 					<span className="inline-block">
 						<Loading width={16} height={16} type={"spin"} />
 					</span>
@@ -132,7 +133,7 @@ class User extends React.Component {
 					<strong>Supervisor: </strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-						edit
+						{languageService.translate("Edit")}
 					</Link>
 				</div>
 			);
@@ -181,28 +182,28 @@ class User extends React.Component {
 						<div className="w100 margin-vertical-16">
 							<FontAwesomeIcon icon={faCalendarAlt} size="3x" />
 						</div>
-						Calendar
+						{languageService.translate("User.Calendar")}
 					</Link>
 					
 					<Link className="button disabled">
 					<div className="w100 margin-vertical-16">
 						<FontAwesomeIcon icon={faTasks} size="3x" />
 					</div>
-						Objectives
+						{languageService.translate("User.Objectives")}
 					</Link>
 					
 					<Link className="button disabled">
 					<div className="w100 margin-vertical-16">
 						<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
 					</div>
-						Learned topics
+						{languageService.translate("User.LearnedTopics")}
 					</Link>
 					
 					<Link className="button disabled">
 						<div className="w100 margin-vertical-16">
 							<FontAwesomeIcon icon={faUsers} size="3x" />
 						</div>
-						Team
+						{languageService.translate("User.Team")}
 					</Link>
 					
 				</div>
@@ -213,22 +214,22 @@ class User extends React.Component {
 				<div className="grid gaps">
 					<Link className="button align-left" to={"/user/" + this.state.user.id + "/calendar"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faCalendarAlt} />
-						Calendar
+						{languageService.translate("User.Calendar")}
 					</Link>
 					
 					<Link className="button align-left" to={"/user/" + this.state.user.id + "/objectives"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faTasks} />
-						Objectives
+						{languageService.translate("User.Objectives")}
 					</Link>
 					
 					<Link className="button align-left" to={"/user/" + this.state.user.id + "/topics"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faClipboardCheck} />
-						Learned topics
+						{languageService.translate("User.LearnedTopics")}
 					</Link>
 					
 					<Link className="button align-left" to={"/user/" + this.state.user.id + "/team"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
-						Team
+						{languageService.translate("User.Team")}
 					</Link>
 					
 				</div>
@@ -245,16 +246,16 @@ class User extends React.Component {
 		if (!this.state.user.superVisorId && this.state.user.isSuperVisor) {
 			return (
 				<>
-					<span className="badge">Admin</span>
-					<span className="badge">Supervisor</span>
+					<span className="badge">{languageService.translate("User.AdminBadge")}</span>
+					<span className="badge">{languageService.translate("User.SuperVisorBadge")}</span>
 				</>
 			);
 		} else if (!this.state.user.superVisorId) {
-			return <span className="badge">Admin</span>;
+			return <span className="badge">{languageService.translate("User.AdminBadge")}</span>;
 		} else if (this.state.user.isSuperVisor) {
-			return <span className="badge">Supervisor</span>;
+			return <span className="badge">{languageService.translate("User.SuperVisorBadge")}</span>;
 		} else {
-			return <span className="badge">Member</span>;
+			return <span className="badge">{languageService.translate("User.MemberBadge")}</span>;
 		}
 	}
 	
@@ -264,13 +265,13 @@ class User extends React.Component {
 			return (
 				<>
 					<div className="margin-top-16">
-						<strong>Email address: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+						<strong>{languageService.translate("User.EmailAddress")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 					</div>
 					<div>
-						<strong>Registration date: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+						<strong>{languageService.translate("User.RegistrationDate")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 					</div>
 					<div>
-						<strong>Learning day limit per quarter: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 					</div>
 				</>
 			);
@@ -279,13 +280,13 @@ class User extends React.Component {
 			return (
 				<>
 					<div className="margin-top-16">
-						<strong>Email address: </strong> {this.state.user.username}
+						<strong>{languageService.translate("User.EmailAddress")}: </strong> {this.state.user.username}
 					</div>
 					<div>
-						<strong>Registration date: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
+						<strong>{languageService.translate("User.RegistrationDate")}: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
 					</div>
 					<div>
-						<strong>Learning day limit per quarter: </strong> {this.state.user.learningDayLimitPerQuarter}
+						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter}
 					</div>
 				</>
 			);
@@ -314,7 +315,7 @@ class User extends React.Component {
 									{this.renderAttributes()}
 								</div> :
 								<h1>
-									Loading user...
+									{languageService.translate("User.Loading")}
 								</h1>
 							}
 							
@@ -330,7 +331,7 @@ class User extends React.Component {
 					
 					<div className="flex-right flex-wrap">
 						<h2>
-							More information:
+							{languageService.translate("User.MoreInformation")}:
 						</h2>
 						
 						<div className="flex-spacer" />
@@ -338,7 +339,7 @@ class User extends React.Component {
 						{this.canEditUserInfo() ?
 							<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/edit"}>
 								<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-								edit
+								{languageService.translate("Edit")}
 							</Link>:
 							""
 						}
@@ -350,7 +351,7 @@ class User extends React.Component {
 						this.canChangePassword() ?
 							<Link className="button border margin-top-32" to={"/user/me/changepassword"}>
 								<FontAwesomeIcon className="margin-right-8" icon={faUnlockAlt} />
-								Change password
+								{languageService.translate("User.ChangePassword")}
 							</Link>:
 							""
 					}

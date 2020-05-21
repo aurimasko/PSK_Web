@@ -1,0 +1,181 @@
+{
+  "Header": {
+    "MyCalendar": "My calendar",
+    "Topics": "Topics",
+    "Roles": "Roles",
+    "Logout": "Logout",
+    "Back": "Back"
+  },
+  "Footer": {
+    "About": "About",
+    "Help": "Help"
+  },
+  "User": {
+    "Role": "Role",
+    "Calendar": "Calendar",
+    "Objectives": "Objectives",
+    "LearnedTopics": "Learned topics",
+    "Team": "Team",
+    "MoreInformation": "More information",
+    "EmailAddress": "Email address",
+    "RegistrationDate": "Registration date",
+    "LearningDayLimit": "Learning day limit per quarter",
+    "SuperVisorBadge": "Supervisor",
+    "AdminBadge": "Admin",
+    "WorkerBadge": "Member",
+    "Loading": "Loading user...",
+    "ChangePassword": "Change password"
+  },
+  "ChangePassword": {
+    "Title": "Change password",
+    "CurrentPassword": "Current password",
+    "NewPassword": "New password",
+    "RepeatNewPassword": "Repeat new password",
+    "SuccessMessage": "Password changed. You will be logged out"
+  },
+  "EditUser": {
+    "Title": "Edit {name}",
+    "EmailAddress": "Email address",
+    "FirstName": "First name",
+    "LastName": "Last name"
+  },
+  "AccessDenied": {
+    "Title": "Access denied",
+    "Message": "Oops! Looks like you tried to do something that you don't have sufficient permissions for. Try clicking the back button or go back to the ",
+    "Link": "start screen"
+  },
+  "Team": {
+    "Title": "Team",
+    "Leader": "Leader",
+    "Members": "Members",
+    "AddNewTeamMember": "Add new member",
+    "Calendar": "Calendar",
+    "LearnedTopics": "Learned topics"
+  },
+  "AddTeamMember": {
+    "Title": "Add new team member",
+    "EmailAddress": "Email address",
+    "FirstName": "First name",
+    "LastName": "Last name",
+    "SuccessMessage": "Team member added successfully. An email with further instructions was sent to him."
+  },
+  "Topics": {
+    "Title": "Temos"
+  },
+  "AddTopic": {
+    "Title": "Add new topic",
+    "Name": "Name",
+    "References": "References",
+    "ParentTopic": "Parent topic",
+    "SuccessMessage": "Topic added"
+  },
+  "ChangeRole": {
+    "Title": "Change {name} role",
+    "PickRole": "Pick role",
+    "SuccessMessage": "Role changed successfully"
+  },
+  "EditTopic": {
+    "Title": "Edit {name}",
+    "Name": "Name",
+    "References": "References",
+    "ParentTopic": "Parent topic",
+    "SuccessMessage": "Topic has been changed"
+  },
+  "Topic": {
+    "CreatedOn": "Created on",
+    "ParentTopic": "Parent topic",
+    "ChangesJournal": "Changes journal"
+  },
+  "TopicChangesJournal": {
+    "Date": "Date",
+    "User": "User",
+    "OldName": "Old name",
+    "NewName": "New name"
+  },
+  "Login": {
+    "Title": "Login",
+    "EmailAddress": "Email address",
+    "Password": "Password",
+    "Button": "Login",
+    "IncorrectUsernameOrPassword": "Incorrect email address or password."
+  },
+  "NotFound": {
+    "Title": "Page not found",
+    "Link": "Go back to the start screen"
+  },
+  "Roles": {
+    "Title": "Roles",
+    "UsersInRole": "Users in role"
+  },
+  "Role": {
+    "Title": "{name} role",
+    "CreationDate": "Creation date",
+    "UsersInRole": "Users in role"
+  },
+  "UserCalendar": {
+    "Today": "Today",
+    "Back": "<",
+    "Next": ">",
+    "NoRegisteredLearningDaysMessage": "There are no registered learning days on this date.",
+    "GoToUsersPage": "Go to this user's page"
+  },
+  "LearningDaySidebar": {
+    "LearningDayTopics": "Learning day topics",
+    "LearningDayComment": "Learning day comment",
+    "NoComment": "No comment"
+  },
+  "TeamCalendar": {
+    "Today": "Today",
+    "Back": "<",
+    "Next": ">",
+    "Teammates": "Teammates",
+    "TeamMembers": "Team members",
+    "ToggleEveryone": "Toggle everyone"
+  },
+  "CreateLearningDay": {
+    "Topics": "Learning day topics",
+    "SelectToAddMore": "Select to add more",
+    "Comment": "Learning day comment",
+    "NoTopicsSelected": "No topics selected",
+    "Max4Topics": "Maximum of 4 topics can be added.",
+    "UpdateSuccessMessage": "Learning day updated successfully.",
+    "AddSuccessMessage": "Learning day added successfully.",
+    "Save": "Save"
+  },
+  "Objectives": {
+    "Title": "{name}'s objectives",
+    "Topic": "Topic",
+    "Date": "Date",
+    "Status": "Status",
+    "AddNew": "Add new objective",
+    "NoObjectives": "There are no objectives",
+    "Created": "Created",
+    "Accepted": "Accepted",
+    "Declined": "Declined",
+    "Completed": "Completed",
+    "History": "Change history",
+    "Accept": "Accept",
+    "Decline": "Decline",
+    "Complete": "Complete"
+  },
+  "ObjectiveChangeHistory": {
+    "Title": "Objective change history",
+    "Date": "Change date",
+    "User": "Changed by",
+    "OldStatus": "Old status",
+    "NewStatus": "New status"
+  },
+  "AddObjective": {
+    "Title": "Add new objective",
+    "Topic": "Topic",
+    "SuccessMessage": "Objective added successfully."
+  },
+  "Edit": "Edit",
+  "None": "None",
+  "Change": "Change",
+  "Loading": "Loading...",
+  "Update": "Update",
+  "Add": "Add",
+  "Create": "Create",
+  "NoChanges": "No changes"
+}

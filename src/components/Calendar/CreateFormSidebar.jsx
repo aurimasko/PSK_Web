@@ -5,6 +5,7 @@ import Loading from "../../components/Loading";
 import { topicService } from "../../services/topicService.js";
 import { learningDayService } from "../../services/learningDayService.js";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { languageService } from "../../services/languageService.js";
 
 class DayContentSidebar extends React.Component {
 	
@@ -77,7 +78,7 @@ class DayContentSidebar extends React.Component {
 	renderSaveButton() {
 		if (this.state.isSaveButtonEnabled) {
 			return (
-				<input className="primary" type="submit" value="Save" />
+				<input className="primary" type="submit" value={languageService.translate("CreateLearningDay.Save")} />
 			);
 		} else {
 			return <Loading width={50} height={50} type={"balls"} />;
@@ -94,13 +95,13 @@ class DayContentSidebar extends React.Component {
 			return (
 				<>
 					<form className="flex-down flex-spacer" onSubmit={this.handleSubmit}>
-						Learning day topics
+						{languageService.translate("CreateLearningDay.Topics")}
 						{this.renderSelectedTopics()}
 
 						<label>
-							Select to add more
+							{languageService.translate("CreateLearningDay.SelectToAddMore")}
 							<select value={0} onChange={this.handleTopicAdd}>
-								<option key="" value="">None</option>
+								<option key="" value="">{languageService.translate("None")}</option>
 								{
 									//filter out selected topics out of dropdown
 									this.state.topics.filter(t => this.state.selectedTopics.indexOf(t) == -1).map((topic) => {
@@ -112,8 +113,7 @@ class DayContentSidebar extends React.Component {
 							</select>
 						</label>
 						<label>
-							Learning day comment
-							
+							{languageService.translate("CreateLearningDay.Comment")}					
 							<textarea onChange={this.handleCommentChange}></textarea>
 						</label>
 
@@ -132,7 +132,7 @@ class DayContentSidebar extends React.Component {
 	renderSelectedTopics() {
 		
 		if (this.state.selectedTopics.length === 0) {
-			return <i>no topics selected</i>;
+			return <i>{languageService.translate("CreateLearningDay.NoTopicsSelected")}</i>;
 		}
 		
 		const topics = this.state.selectedTopics.map( (topic, index) => {
@@ -168,7 +168,7 @@ class DayContentSidebar extends React.Component {
 
 		//if there are already four topics, do not allow to add
 		if (newTopics.length == 4) {
-			this.notifRef.current.addNotification({ text: "Maximum of 4 topics can be added." });
+			this.notifRef.current.addNotification({ text: languageService.translate("CreateLearningDay.Max4Topics") });
 			return;
 		}
 
@@ -210,7 +210,7 @@ class DayContentSidebar extends React.Component {
 			learningDayService.updateLearningDay(learningDayToUpdate)
 				.then((data) => {
 					if (data.isSuccess) {
-						this.notifRef.current.addNotification({ text: "Learning day updated successfully", isSuccess: true });
+						this.notifRef.current.addNotification({ text: languageService.translate("CreateLearningDay.UpdateSuccessMessage"), isSuccess: true });
 						this.props.handleExitEditMode();
 					} else {
 						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
@@ -227,7 +227,7 @@ class DayContentSidebar extends React.Component {
 			learningDayService.addLearningDay(this.state.date, topicIds, this.state.comment)
 				.then((data) => {
 					if (data.isSuccess) {
-						this.notifRef.current.addNotification({ text: "Learning day added successfully", isSuccess: true });
+						this.notifRef.current.addNotification({ text: languageService.translate("CreateLearningDay.AddSuccessMessage"), isSuccess: true });
 						this.props.handleExitEditMode();
 					} else {
 						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
