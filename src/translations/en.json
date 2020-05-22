@@ -37,7 +37,8 @@
     "Title": "Edit {name}",
     "EmailAddress": "Email address",
     "FirstName": "First name",
-    "LastName": "Last name"
+    "LastName": "Last name",
+    "ChangeEmailAddressWarning": "Changing email address will change username and cause a relogin!"
   },
   "AccessDenied": {
     "Title": "Access denied",

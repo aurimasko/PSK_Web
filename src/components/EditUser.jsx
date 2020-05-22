@@ -95,7 +95,10 @@ class EditUser extends React.Component {
 							
 							<label>
 								{languageService.translate("EditUser.EmailAddress")}
-							<input required type="email" value={this.state.newEmail} onChange={this.handleEmailChange} />
+								<div className="container" style={{color: "red"}}>
+									{languageService.translate("EditUser.ChangeEmailAddressWarning")}
+								</div>
+								<input required type="email" value={this.state.newEmail} onChange={this.handleEmailChange} />
 							</label>
 							<label>
 								{languageService.translate("EditUser.FirstName")}
@@ -147,11 +150,18 @@ class EditUser extends React.Component {
 						auth.user = userReturned;
 					}
 
+					if (this.state.user.username !== this.state.newEmail) {
+						auth.logout();
+						this.props.history.push("/login");
+						return;
+					}
+
 					this.setState({
 						user: userReturned
 					});
 
 					this.getData();
+
 					//TODO: Add proper handling of concurrency exception
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });

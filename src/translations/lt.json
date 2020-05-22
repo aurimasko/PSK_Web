@@ -37,7 +37,8 @@
     "Title": "Redaguoti {name}",
     "EmailAddress": "El. pašto adresas",
     "FirstName": "Vardas",
-    "LastName": "Pavardė"
+    "LastName": "Pavardė",
+    "ChangeEmailAddressWarning": "Keičiant el.pašto adresą bus pakeistas prisijungimo vardas ir jūs turėsite prisijungti iš naujo!"
   },
   "AccessDenied": {
     "Title": "Neturite teisių pasiekti šį puslapį",
