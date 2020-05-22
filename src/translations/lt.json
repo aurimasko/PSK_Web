@@ -182,7 +182,8 @@
   "ChangeLearningDayLimit": {
     "Title": "Pakeisti {name} mokymosi dienų limitą",
     "LearningDayLimit": "Mokymosi dienų limitas",
-    "SuccessMessage": "Mokymosi dienų limitas pakeistas."
+    "SuccessMessage": "Mokymosi dienų limitas pakeistas.",
+    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",
