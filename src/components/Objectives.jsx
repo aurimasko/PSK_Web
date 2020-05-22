@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faCheck, faTimes, faCheckDouble, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faCheck, faTimes, faCheckDouble, faHistory } from '@fortawesome/free-solid-svg-icons'
 import Loading from "./Loading";
 import ObjectiveHistoryModal from "./ObjectiveHistoryModal";
 import { auth } from "../services/auth.js";
@@ -81,7 +81,7 @@ class Objectives extends React.Component {
 
 	renderAddButton() {
 		//current user cannot create objectives for himself
-		if (auth.user.id == this.state.user.id) {
+		if (auth.user.id === this.state.user.id) {
 			return "";
 		} else {
 			return (
@@ -273,7 +273,7 @@ class Objectives extends React.Component {
 			var filteredHistoryList = historyList.filter((h) => h.oldState === null);
 
 			let finalHistoryList = [];
-			if (filteredHistoryList.length == 0) {
+			if (filteredHistoryList.length === 0) {
 				let creationRecord = {
 					oldState: "-",
 					newState: languageService.translate("Objectives.Created"),
