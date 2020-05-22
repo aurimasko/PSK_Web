@@ -86,7 +86,7 @@ class User extends React.Component {
 		if (this.state.role.id) {
 			return (
 				<h4>
-					{languageService.translate("User.Role")}: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
+					{languageService.translate("User.Role")}: {auth.user.isSuperVisor ? <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link> : <>{this.state.role.name}</>}
 					{this.canChangeRole() ?
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
