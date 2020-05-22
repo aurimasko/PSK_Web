@@ -171,7 +171,12 @@
     "Title": "Pridėti naują tikslą",
     "Topic": "Tema",
     "SuccessMessage": "Tikslas pridėtas.",
-    "Deadline":  "Pabaigos data"
+    "Deadline": "Pabaigos data"
+  },
+  "ChangeSuperVisor": {
+    "Title": "Pakeisti {name} vadovą",
+    "PickSuperVisor": "Pasirinkite naują vadovą",
+    "SuccessMessage": "Vadovas pakeistas."
   },
   "Edit": "Redaguoti",
   "None": "Nėra",

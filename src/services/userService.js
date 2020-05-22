@@ -17,6 +17,19 @@ export const userService = {
 			}
 		).then(response => { return response.json(); });
 	},
+	async fetchUsers() {
+
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
+	},
 	async fetchUserById(id) {
 		return await fetch(
 			endPoints.usersAPIBaseEndPoint + "?id=" + id,

@@ -26,6 +26,7 @@ import AddTopic from "./components/AddTopic";
 import EditTopic from "./components/EditTopic";
 import Objectives from "./components/Objectives";
 import AddObjective from "./components/AddObjective";
+import ChangeSuperVisor from "./components/ChangeSuperVisor";
 
 function App() {
 	return (
@@ -41,6 +42,7 @@ function App() {
 				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id/changerole" component={ChangeRole} />
+				<AuthRoute path="/user/:id/changesupervisor" component={ChangeSuperVisor} />
 				<AuthRoute path="/user/me/changepassword" component={ChangePassword} />
 				<AuthRoute path="/user/:id" component={User} />
 				<AuthRoute path="/roles" component={RolesList} />

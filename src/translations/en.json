@@ -173,6 +173,11 @@
     "SuccessMessage": "Objective added successfully.",
     "Deadline": "Deadline"
   },
+  "ChangeSuperVisor": {
+    "Title": "Change {name} supervisor",
+    "PickSuperVisor": "Pick supervisor",
+    "SuccessMessage": "Supervisor changed successfully."
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
