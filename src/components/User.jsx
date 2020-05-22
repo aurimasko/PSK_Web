@@ -186,16 +186,16 @@ class User extends React.Component {
 					</Link>
 					
 					<Link className="button disabled">
-					<div className="w100 margin-vertical-16">
-						<FontAwesomeIcon icon={faTasks} size="3x" />
-					</div>
+						<div className="w100 margin-vertical-16">
+							<FontAwesomeIcon icon={faTasks} size="3x" />
+						</div>
 						{languageService.translate("User.Objectives")}
 					</Link>
 					
 					<Link className="button disabled">
-					<div className="w100 margin-vertical-16">
-						<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
-					</div>
+						<div className="w100 margin-vertical-16">
+							<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
+						</div>
 						{languageService.translate("User.LearnedTopics")}
 					</Link>
 					

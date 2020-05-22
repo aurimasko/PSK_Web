@@ -117,6 +117,54 @@ class Team extends React.Component {
 		}
 	}
 
+	renderButtons() {
+		if (this.state.teamMembers === null || (this.state.teamMembers !== null && this.state.teamMembers.length === 0)) {
+			return (
+				<div className="wide width-container">
+
+					<div className="grid gaps">
+						<Link className="button disabled">
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
+							</div>
+							{languageService.translate("Team.Calendar")}
+						</Link>
+
+						<Link className="button disabled">
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faClipboardList} size="4x" />
+							</div>
+							{languageService.translate("Team.LearnedTopics")}
+						</Link>
+
+					</div>
+				</div>
+			);
+		} else {
+			return (
+				<div className="wide width-container">
+
+					<div className="grid gaps">
+						<Link className="button" to={"/user/" + this.state.leader.id + "/team/calendar"}>
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
+							</div>
+							{languageService.translate("Team.Calendar")}
+						</Link>
+
+						<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faClipboardList} size="4x" />
+							</div>
+							{languageService.translate("Team.LearnedTopics")}
+						</Link>
+
+					</div>
+				</div>
+			);
+		}
+	}
+
 	render() {
 		if (this.state.leader == null) {
 			return (
@@ -154,25 +202,7 @@ class Team extends React.Component {
 
 					</div>
 					
-					<div className="wide width-container">
-						
-						<div className="grid gaps">
-							<Link className="button" to={"/user/" + this.state.leader.id + "/team/calendar"}>
-								<div className="w100 margin-vertical-16">
-									<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
-								</div>
-								{languageService.translate("Team.Calendar")}
-							</Link>
-							
-							<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faClipboardList} size="4x" />
-							</div>
-								{languageService.translate("Team.LearnedTopics")}
-							</Link>
-							
-						</div>
-					</div>
+					{this.renderButtons()}
 					
 				</Layout>
 			);
