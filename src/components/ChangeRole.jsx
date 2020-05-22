@@ -171,7 +171,7 @@ class ChangeRole extends React.Component {
 
 					//If current user, change auth.user property
 					//Will only happen to admin, since he can only change his own role
-					if (this.state.user === auth.user.id) {
+					if (this.state.user.id === auth.user.id) {
 						auth.user.roleId = newRoleId;
 					}
 
