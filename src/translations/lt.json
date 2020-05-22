@@ -178,6 +178,11 @@
     "PickSuperVisor": "Pasirinkite naują vadovą",
     "SuccessMessage": "Vadovas pakeistas."
   },
+  "ChangeLearningDayLimit": {
+    "Title": "Pakeisti {name} mokymosi dienų limitą",
+    "LearningDayLimit": "Mokymosi dienų limitas",
+    "SuccessMessage": "Mokymosi dienų limitas pakeistas."
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

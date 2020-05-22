@@ -173,6 +173,15 @@ class User extends React.Component {
 		}
 		else return false;
 	}
+
+	canChangeLearningDayLimit() {
+		//if supervisor of user or admin (he can change himself)
+		if (this.state.user.superVisorId === auth.user.id ||
+			!auth.user.superVisorId)
+			return true;
+		else
+			return false;
+	}
 	
 	renderMainButtons() {
 		if (this.state.user === null) {
@@ -236,6 +245,19 @@ class User extends React.Component {
 			);
 		}
 	}
+
+	renderChangeLearningDayLimitButton() {
+		if (this.canChangeLearningDayLimit()) {
+			return (
+				<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
+					<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+					{languageService.translate("Edit")}
+				</Link>
+			);
+		} else {
+			return "";
+		}
+	}
 	
 	renderAttributes() {
 		
@@ -286,7 +308,7 @@ class User extends React.Component {
 						<strong>{languageService.translate("User.RegistrationDate")}: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
 					</div>
 					<div>
-						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter}
+						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter} {this.renderChangeLearningDayLimitButton()}
 					</div>
 				</>
 			);

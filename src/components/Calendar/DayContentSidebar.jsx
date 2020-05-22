@@ -54,13 +54,19 @@ class DayContentSidebar extends React.Component {
 	}
 
 	async getTopics(topicsId) {
-		const result = await topicService.fetchTopicByIds(topicsId);
-		if (result.isSuccess === true) {
-			this.setState({
-				topics: result.content
-			});
+		if (topicsId && topicsId.length > 0) {
+			const result = await topicService.fetchTopicByIds(topicsId);
+			if (result.isSuccess === true) {
+				this.setState({
+					topics: result.content
+				});
+			} else {
+				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			}
 		} else {
-			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+			this.setState({
+				topics: []
+			});
 		}
 	}
 

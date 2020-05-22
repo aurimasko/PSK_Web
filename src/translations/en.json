@@ -178,6 +178,11 @@
     "PickSuperVisor": "Pick supervisor",
     "SuccessMessage": "Supervisor changed successfully."
   },
+  "ChangeLearningDayLimit": {
+    "Title": "Change {name} learning day limit",
+    "LearningDayLimit": "Learning day limit",
+    "SuccessMessage": "Learning day limit has been changed successfully."
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

@@ -27,6 +27,7 @@ import EditTopic from "./components/EditTopic";
 import Objectives from "./components/Objectives";
 import AddObjective from "./components/AddObjective";
 import ChangeSuperVisor from "./components/ChangeSuperVisor";
+import ChangeLearningDayLimit from "./components/ChangeLearningDayLimit";
 
 function App() {
 	return (
@@ -43,6 +44,7 @@ function App() {
 				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id/changerole" component={ChangeRole} />
 				<AuthRoute path="/user/:id/changesupervisor" component={ChangeSuperVisor} />
+				<AuthRoute path="/user/:id/changelearningdaylimit" component={ChangeLearningDayLimit} />
 				<AuthRoute path="/user/me/changepassword" component={ChangePassword} />
 				<AuthRoute path="/user/:id" component={User} />
 				<AuthRoute path="/roles" component={RolesList} />
