@@ -156,7 +156,9 @@
     "History": "Keitimo istorija",
     "Accept": "Priimti",
     "Decline": "Atmesti",
-    "Complete": "Užbaigti"
+    "Complete": "Užbaigti",
+    "Deadline": "Užbaigimo data",
+    "Creator": "Priskyrė"
   },
   "ObjectiveChangeHistory": {
     "Title": "Tikslo keitimo istorija",
@@ -168,7 +170,8 @@
   "AddObjective": {
     "Title": "Pridėti naują tikslą",
     "Topic": "Tema",
-    "SuccessMessage": "Tikslas pridėtas."
+    "SuccessMessage": "Tikslas pridėtas.",
+    "Deadline":  "Pabaigos data"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",

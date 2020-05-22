@@ -79,6 +79,19 @@ class Objectives extends React.Component {
 		}
 	}
 
+	renderAddButton() {
+		//current user cannot create objectives for himself
+		if (auth.user.id == this.state.user.id) {
+			return "";
+		} else {
+			return (
+				<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+					{languageService.translate("Objectives.AddNew")}
+				</Link>
+			);
+		}
+	}
+
 	render() {
 		if (this.state.user === null || this.state.objectives === null) {
 			return <Loading />
@@ -103,9 +116,7 @@ class Objectives extends React.Component {
 
 						{this.renderObjectivesList()}
 
-						<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-							{languageService.translate("Objectives.AddNew")}
-						</Link>
+						{this.renderAddButton()}
 					</div>
 
 					<ObjectiveHistoryModal
@@ -137,17 +148,26 @@ class Objectives extends React.Component {
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Topic")}: </span>
 						<Link className="bold" to={"/topic/" + objective.topicId}>
-							{/*objective.topic.name*/}
+							{objective.topic.name}
 						</Link>
 					</div>
 					
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
-						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD hh:mm')}
+						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD')}
 					</div>
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Status")}: </span>
 						{languageService.translate("Objectives." + objective.status)}
+					</div>
+					{objective.deadline ?
+						<div>
+							<span className="bold">{languageService.translate("Objectives.Deadline")}: </span>
+							{moment.utc(objective.deadline).local().format('YYYY-MM-DD')}
+						</div> : ""}
+					<div>
+						<span className="bold">{languageService.translate("Objectives.Creator")}: </span>
+						{objective.creator.firstName} {objective.creator.lastName}
 					</div>
 				</div>
 				
@@ -165,35 +185,38 @@ class Objectives extends React.Component {
 	renderListItemButtons(objective) {
 		
 		let extraButtons;
-		
-		if (objective.status === "Created") {
-			extraButtons = (
-				<>
-					<button className="button" onClick={ () => this.handleAccept(objective.id) }>
+
+		//let actions only for current user
+		if (objective.objectiveHaverId === auth.user.id) {
+			if (objective.status === "Created") {
+				extraButtons = (
+					<>
+						<button className="button" onClick={() => this.handleAccept(objective.id)}>
+							<div>
+								<FontAwesomeIcon icon={faCheck} />
+							</div>
+							{languageService.translate("Objectives.Accept")}
+						</button>
+						<button className="button" onClick={() => this.handleDecline(objective.id)}>
+							<div>
+								<FontAwesomeIcon icon={faTimes} />
+							</div>
+							{languageService.translate("Objectives.Decline")}
+						</button>
+					</>
+				);
+			}
+
+			if (objective.status === "Accepted") {
+				extraButtons = (
+					<button className="button" onClick={() => this.handleFinish(objective.id)}>
 						<div>
-							<FontAwesomeIcon icon={faCheck} />
+							<FontAwesomeIcon icon={faCheckDouble} />
 						</div>
-						{languageService.translate("Objectives.Accept")}
+						{languageService.translate("Objectives.Complete")}
 					</button>
-					<button className="button" onClick={ () => this.handleDecline(objective.id) }>
-						<div>
-							<FontAwesomeIcon icon={faTimes} />
-						</div>
-						{languageService.translate("Objectives.Decline")}
-					</button>
-				</>
-			);
-		}
-		
-		if (objective.status === "Accepted") {
-			extraButtons = (
-				<button className="button" onClick={ () => this.handleFinish(objective.id) }>
-					<div>
-						<FontAwesomeIcon icon={faCheckDouble} />
-					</div>
-					{languageService.translate("Objectives.Complete")}
-				</button>
-			);
+				);
+			}
 		}
 
 		if (!this.state.areButtonsEnabled) {
@@ -246,18 +269,24 @@ class Objectives extends React.Component {
 			let selectedObjective = this.state.objectives.find(x => x.id === id);
 			let historyList = result.content.sort((a, b) => b.creationDate - a.creationDate);
 
-			//add creation record
-			let finalHistoryList = [];
-			let creationRecord = {
-				oldState: "-",
-				newState: languageService.translate("Objectives.Created"),
-				objectiveId: id,
-				creationDate: selectedObjective.creationDate,
-				creator: {}
-			};
+			//add creation record if doesn't exists
+			var filteredHistoryList = historyList.filter((h) => h.oldState === null);
 
-			finalHistoryList.push(creationRecord);
-			finalHistoryList.concat(historyList);
+			let finalHistoryList = [];
+			if (filteredHistoryList.length == 0) {
+				let creationRecord = {
+					oldState: "-",
+					newState: languageService.translate("Objectives.Created"),
+					objectiveId: id,
+					creationDate: selectedObjective.creationDate,
+					creator: selectedObjective.creator
+				};
+
+				finalHistoryList.push(creationRecord);
+				finalHistoryList.concat(historyList);
+			} else {
+				finalHistoryList = historyList;
+			}
 
 			this.setState({
 				selectedObjective: selectedObjective,

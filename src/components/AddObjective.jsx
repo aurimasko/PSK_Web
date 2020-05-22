@@ -14,10 +14,12 @@ class AddObjective extends React.Component {
 		this.state = {
 			topicId: "",
 			isAddButtonEnabled: true,
-			topics: null
+			topics: null,
+			deadline: null
 		}
 
 		this.handleTopicIdChange = this.handleTopicIdChange.bind(this);
+		this.handleDeadlineChange = this.handleDeadlineChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -76,6 +78,10 @@ class AddObjective extends React.Component {
 									}
 								</select>
 							</label>
+							<label>
+								{languageService.translate("AddObjective.Deadline")}
+								<input value={this.state.deadline} type="date" onChange={this.handleDeadlineChange} />
+							</label>
 							<hr />
 
 							{this.renderAddButton()}
@@ -90,19 +96,24 @@ class AddObjective extends React.Component {
 		this.setState({ topicId: event.target.value });
 	}
 
+	handleDeadlineChange(event) {
+		this.setState({ deadline: event.target.value });
+	}
+
 	handleSubmit(event) {
 		this.setState({
 			isAddButtonEnabled: false
 		});
 
-		objectiveService.createObjective(this.props.match.params.id, this.state.topicId)
+		objectiveService.createObjective(this.props.match.params.id, this.state.topicId, this.state.deadline)
 			.then((data) => {
 				if (data.isSuccess) {
 					this.notifRef.current.addNotification({ text: languageService.translate("AddObjective.SuccessMessage"), isSuccess: true });
 
 					//clear fields
 					this.setState({
-						topicId: ""
+						topicId: "",
+						deadline: null
 					});
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });

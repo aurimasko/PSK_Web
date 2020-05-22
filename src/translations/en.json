@@ -156,7 +156,9 @@
     "History": "Change history",
     "Accept": "Accept",
     "Decline": "Decline",
-    "Complete": "Complete"
+    "Complete": "Complete",
+    "Deadline": "Deadline",
+    "Creator": "Creator"
   },
   "ObjectiveChangeHistory": {
     "Title": "Objective change history",
@@ -168,7 +170,8 @@
   "AddObjective": {
     "Title": "Add new objective",
     "Topic": "Topic",
-    "SuccessMessage": "Objective added successfully."
+    "SuccessMessage": "Objective added successfully.",
+    "Deadline": "Deadline"
   },
   "Edit": "Edit",
   "None": "None",
