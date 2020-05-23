@@ -448,6 +448,7 @@ class User extends React.Component {
 		this.setState({
 			enableDisableButtonEnabled: false
 		});
+
 		userService.enableUser(this.state.user.id)
 			.then((data) => {
 				if (data.isSuccess) {

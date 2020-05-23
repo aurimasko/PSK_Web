@@ -128,6 +128,11 @@ class ChangeLearningDayLimit extends React.Component {
 					this.notifRef.current.addNotification({ text: languageService.translate("ChangeLearningDayLimit.SuccessMessage"), isSuccess: true });
 					let thisUp = this;
 
+					//if admin, update the auth user
+					if (auth.user.id === this.state.user.id) {
+						auth.user = data.content[0];
+					}
+
 					//Give some time to read message
 					setTimeout(function () {
 						thisUp.props.history.push("/user/" + thisUp.state.user.id);
