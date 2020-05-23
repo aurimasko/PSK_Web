@@ -25,7 +25,11 @@
     "WorkerBadge": "Darbuotojas",
     "Loading": "Užkraunamas vartotojas...",
     "ChangePassword": "Keisti slaptažodį",
-    "SendLearningDayAsEvent": "Siųsti mokymosi dienas el.paštu"
+    "SendLearningDayAsEvent": "Siųsti mokymosi dienas el.paštu",
+    "Enable": "Aktyvuoti",
+    "Disable": "Deaktyvuoti",
+    "EnableSuccessMessage": "Vartotojas aktyvuotas.",
+    "DisableSuccessMessage": "Vartotojas deaktyvuotas."
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
@@ -101,7 +105,8 @@
     "EmailAddress": "El.pašto adresas",
     "Password": "Slaptažodis",
     "Button": "Prisijungti",
-    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis."
+    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis.",
+    "UserIsDisabled": "Apgailestaujame, tačiau vartotojas yra deaktyvuotas."
   },
   "NotFound": {
     "Title": "Puslapis nerastas",

@@ -125,5 +125,31 @@ export const userService = {
 				)
 			}
 		).then(response => { return response.json(); });
-    }
+	},
+	async enableUser(userId) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + "/" + userId + "/Enable",
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
+	},
+	async disableUser(userId) {
+		return await fetch(
+			endPoints.usersAPIBaseEndPoint + "/" + userId + "/Disable",
+			{
+				method: 'put',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
+	}
 }

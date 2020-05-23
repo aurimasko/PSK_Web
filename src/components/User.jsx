@@ -18,10 +18,13 @@ class User extends React.Component {
 		this.state = {
 			role: null,
 			user: null,
-			superVisor: null
+			superVisor: null,
+			enableDisableButtonEnabled: true
 		};
 		
 		this.notifRef = React.createRef();
+		this.handleEnableClicked = this.handleEnableClicked.bind(this);
+		this.handleDisableClicked = this.handleDisableClicked.bind(this);
 	}
 	
 	async componentDidMount() {
@@ -182,6 +185,14 @@ class User extends React.Component {
 		else
 			return false;
 	}
+
+	canDisableEnableUser() {
+		//only super visor can enable or disable user
+		if (this.state.user.superVisorId === auth.user.id)
+			return true;
+		else
+			return false;
+	}
 	
 	renderMainButtons() {
 		if (this.state.user === null) {
@@ -320,7 +331,29 @@ class User extends React.Component {
 			);
 		}
 	}
-	
+
+	renderActionButtons() {
+		if (this.state.user === null) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			if (this.state.enableDisableButtonEnabled) {
+				return (
+					this.canDisableEnableUser() ?
+						(this.state.user.isDisabled ?
+							<button className="primary" onClick={this.handleEnableClicked}>
+								{languageService.translate("User.Enable")}
+							</button> :
+							<button className="primary" onClick={this.handleDisableClicked}>
+								{languageService.translate("User.Disable")}
+							</button>)
+						: ""
+				);
+			} else {
+				return <Loading width={50} height={50} type={"balls"} />;
+			}
+		}
+	}
+
 	render() {
 		return (
 			<Layout ref={this.notifRef}>
@@ -368,7 +401,7 @@ class User extends React.Component {
 							<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/edit"}>
 								<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 								{languageService.translate("Edit")}
-							</Link>:
+							</Link> :
 							""
 						}
 					</div>
@@ -383,9 +416,51 @@ class User extends React.Component {
 							</Link>:
 							""
 					}
+
+					{this.renderActionButtons()}
 				</div>
 			</Layout>
 		);
+	}
+
+	handleDisableClicked() {
+
+		this.setState({
+			enableDisableButtonEnabled: false
+		});
+
+		userService.disableUser(this.state.user.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("User.DisableSuccessMessage"), isSuccess: true });
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					enableDisableButtonEnabled: true
+				});
+			});
+	}
+
+	handleEnableClicked() {
+		this.setState({
+			enableDisableButtonEnabled: false
+		});
+		userService.enableUser(this.state.user.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("User.EnableSuccessMessage"), isSuccess: true });
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					enableDisableButtonEnabled: true
+				});
+			});
 	}
 }
 

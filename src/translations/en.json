@@ -25,7 +25,11 @@
     "WorkerBadge": "Member",
     "Loading": "Loading user...",
     "ChangePassword": "Change password",
-    "SendLearningDayAsEvent": "Send learning days as events to email"
+    "SendLearningDayAsEvent": "Send learning days as events to email",
+    "Enable": "Enable",
+    "Disable": "Disable",
+    "EnableSuccessMessage": "User has been enabled.",
+    "DisableSuccessMessage": "User has been disabled."
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -101,7 +105,8 @@
     "EmailAddress": "Email address",
     "Password": "Password",
     "Button": "Login",
-    "IncorrectUsernameOrPassword": "Incorrect email address or password."
+    "IncorrectUsernameOrPassword": "Incorrect email address or password.",
+    "UserIsDisabled": "Unfortunately, user is disabled."
   },
   "NotFound": {
     "Title": "Page not found",
