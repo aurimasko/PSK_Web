@@ -59,13 +59,13 @@ class ObjectivesHistoryModal extends React.Component {
 				<div>
 					<div>
 						<span className="bold">{languageService.translate("ObjectiveChangeHistory.OldStatus")}: </span>
-						{histItem.oldState}
+						{histItem.oldState ? languageService.translate("Objectives." + histItem.oldState) : "-"}
 					</div>
 				</div>
 				<div>
 					<div>
 						<span className="bold">{languageService.translate("ObjectiveChangeHistory.NewStatus")}: </span>
-						{histItem.newState}
+						{languageService.translate("Objectives." + histItem.newState)}
 					</div>
 				</div>
 			</div>
