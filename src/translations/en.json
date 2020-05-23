@@ -24,7 +24,8 @@
     "AdminBadge": "Admin",
     "WorkerBadge": "Member",
     "Loading": "Loading user...",
-    "ChangePassword": "Change password"
+    "ChangePassword": "Change password",
+    "SendLearningDayAsEvent": "Send learning days as events to email"
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -38,7 +39,9 @@
     "EmailAddress": "Email address",
     "FirstName": "First name",
     "LastName": "Last name",
-    "ChangeEmailAddressWarning": "Changing email address will change username and cause a relogin!"
+    "ChangeEmailAddressWarning": "Changing email address will change username and cause a relogin!",
+    "SendLearningDayByEmail": "Send learning day as event by email",
+    "SuccessMessage": "Changes have been saved."
   },
   "AccessDenied": {
     "Title": "Access denied",
@@ -192,5 +195,7 @@
   "Update": "Update",
   "Add": "Add",
   "Create": "Create",
-  "NoChanges": "No changes"
+  "NoChanges": "No changes",
+  "False": "No",
+  "True": "Yes"
 }

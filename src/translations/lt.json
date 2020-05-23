@@ -24,7 +24,8 @@
     "AdminBadge": "Administratorius",
     "WorkerBadge": "Darbuotojas",
     "Loading": "Užkraunamas vartotojas...",
-    "ChangePassword": "Keisti slaptažodį"
+    "ChangePassword": "Keisti slaptažodį",
+    "SendLearningDayAsEvent": "Siųsti mokymosi dienas el.paštu"
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
@@ -38,7 +39,9 @@
     "EmailAddress": "El. pašto adresas",
     "FirstName": "Vardas",
     "LastName": "Pavardė",
-    "ChangeEmailAddressWarning": "Keičiant el.pašto adresą bus pakeistas prisijungimo vardas ir jūs turėsite prisijungti iš naujo!"
+    "ChangeEmailAddressWarning": "Keičiant el.pašto adresą bus pakeistas prisijungimo vardas ir jūs turėsite prisijungti iš naujo!",
+    "SendLearningDayByEmail": "Siųsti mokymosi dieną el.paštu",
+    "SuccessMessage": "Pakeitimai išsaugoti."
   },
   "AccessDenied": {
     "Title": "Neturite teisių pasiekti šį puslapį",
@@ -192,5 +195,7 @@
   "Update": "Atnaujinti",
   "Add": "Pridėti",
   "Create": "Sukurti",
-  "NoChanges": "Nėra pakeitimų"
+  "NoChanges": "Nėra pakeitimų",
+  "False": "Ne",
+  "True": "Taip"
 }

@@ -295,6 +295,9 @@ class User extends React.Component {
 					<div>
 						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 					</div>
+					<div>
+						<strong>{languageService.translate("User.SendLearningDayAsEvent")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+					</div>
 				</>
 			);
 		}
@@ -309,6 +312,9 @@ class User extends React.Component {
 					</div>
 					<div>
 						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter} {this.renderChangeLearningDayLimitButton()}
+					</div>
+					<div>
+						<strong>{languageService.translate("User.SendLearningDayAsEvent")}: </strong> {this.state.user.sendLearningDaysByEmail ? languageService.translate("True") : languageService.translate("False")}
 					</div>
 				</>
 			);

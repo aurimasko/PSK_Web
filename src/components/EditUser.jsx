@@ -19,12 +19,14 @@ class EditUser extends React.Component {
 			newEmail: null,
 			newFirstName: null,
 			newLastName: null,
+			newSendLearningDayByEmail: false,
 			isUpdateButtonEnabled: true
 		}
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
+		this.handleSendLearningDayByEmailChange = this.handleSendLearningDayByEmailChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -46,7 +48,8 @@ class EditUser extends React.Component {
 			user: auth.user,
 			newEmail: auth.user.username,
 			newFirstName: auth.user.firstName,
-			newLastName: auth.user.lastName
+			newLastName: auth.user.lastName,
+			newSendLearningDayByEmail: auth.user.sendLearningDaysByEmail 
 		});
 	}
 
@@ -108,6 +111,10 @@ class EditUser extends React.Component {
 								{languageService.translate("EditUser.LastName")}
 							<input required type="text" value={this.state.newLastName} onChange={this.handleLastNameChange} />
 							</label>
+							<label>
+								{languageService.translate("EditUser.SendLearningDayByEmail")}
+								<input type="checkbox" checked={this.state.newSendLearningDayByEmail} onChange={this.handleSendLearningDayByEmailChange} />
+							</label>
 							<hr />
 
 							{this.renderUpdateButton()}
@@ -130,12 +137,17 @@ class EditUser extends React.Component {
 		this.setState({ newLastName: event.target.value });
 	}
 
+	handleSendLearningDayByEmailChange(event) {
+		this.setState({ newSendLearningDayByEmail: event.target.checked });
+	}
+
 	handleSubmit(event) {
 		//create copy
 		let userToUpdate = Object.assign({}, this.state.user);
 		userToUpdate.firstName = this.state.newFirstName;
 		userToUpdate.lastName = this.state.newLastName;
 		userToUpdate.username = this.state.newEmail;
+		userToUpdate.sendLearningDaysByEmail = this.state.newSendLearningDayByEmail;
 
 		this.setState({
 			isUpdateButtonEnabled: false
@@ -162,7 +174,10 @@ class EditUser extends React.Component {
 
 					this.getData();
 
+					this.notifRef.current.addNotification({ text: languageService.translate("EditUser.SuccessMessage"), isSuccess: true });
+
 					//TODO: Add proper handling of concurrency exception
+
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
