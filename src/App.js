@@ -28,6 +28,7 @@ import Objectives from "./components/Objectives";
 import AddObjective from "./components/AddObjective";
 import ChangeSuperVisor from "./components/ChangeSuperVisor";
 import ChangeLearningDayLimit from "./components/ChangeLearningDayLimit";
+import ChangeTeamLearningDayLimit from "./components/Team/ChangeTeamLearningDayLimit";
 
 function App() {
 	return (
@@ -40,6 +41,7 @@ function App() {
 				<AuthRoute path="/user/:id/team/calendar" component={CalendarTeamView} />
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
+				<AuthRoute path="/user/:id/team/changelimit" component={ChangeTeamLearningDayLimit} />
 				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id/changerole" component={ChangeRole} />

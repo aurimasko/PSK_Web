@@ -165,6 +165,36 @@ class Team extends React.Component {
 		}
 	}
 
+	renderObjectiveAndLimitButtons() {
+		//only team leader can add team objectives and change team limit
+		if (this.state.leader.id !== auth.user.id) {
+			return "";
+		}
+
+		if (this.state.teamMembers === null || (this.state.teamMembers !== null && this.state.teamMembers.length === 0)) {
+			return (
+				<>
+					<Link className="button disabled">
+						{languageService.translate("Team.AddObjective")}
+					</Link>
+					<Link className="button disabled">
+						{languageService.translate("Team.ChangeLimit")}
+					</Link>
+				</>);
+
+		} else {
+			return (
+				<>
+					<Link className="button" to={"team/addObjective"}>
+						{languageService.translate("Team.AddObjective")}
+					</Link>
+					<Link className="button" to={"team/changelimit"}>
+						{languageService.translate("Team.ChangeLimit")}
+					</Link>
+				</>);
+		}
+	}
+
 	render() {
 		if (this.state.leader == null) {
 			return (
@@ -199,6 +229,7 @@ class Team extends React.Component {
 						{this.renderTeamMembers()}
 
 						{this.renderAddNewTeamMemberButton()}
+						{this.renderObjectiveAndLimitButtons()}
 
 					</div>
 					

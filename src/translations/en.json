@@ -58,7 +58,9 @@
     "Members": "Members",
     "AddNewTeamMember": "Add new member",
     "Calendar": "Calendar",
-    "LearnedTopics": "Learned topics"
+    "LearnedTopics": "Learned topics",
+    "AddObjective": "Add new objective",
+    "ChangeLimit": "Change learning day per quarter limit"
   },
   "AddTeamMember": {
     "Title": "Add new team member",
@@ -190,8 +192,14 @@
   "ChangeLearningDayLimit": {
     "Title": "Change {name} learning day limit",
     "LearningDayLimit": "Learning day limit",
+    "WarningMessage": "Changing learning day limit to 0 will cause a default learning day limit to be applied.",
     "SuccessMessage": "Learning day limit has been changed successfully.",
     "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!"
+  },
+  "ChangeTeamLearningDayLimit": {
+    "Title": "Change your team learning day limit per quarter",
+    "LearningDayLimit": "Learning day limit",
+    "SuccessMessage": "Learning day limit has been changed successfully."
   },
   "Edit": "Edit",
   "None": "None",

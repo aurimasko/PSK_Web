@@ -58,7 +58,9 @@
     "Members": "Nariai",
     "AddNewTeamMember": "Pridėti naują narį",
     "Calendar": "Kalendorius",
-    "LearnedTopics": "Išmoktos temos"
+    "LearnedTopics": "Išmoktos temos",
+    "AddObjective": "Pridėti naują tikslą",
+    "ChangeLimit": "Pakeisti mokymosi dienų limitą"
   },
   "AddTeamMember": {
     "Title": "Pridėti naują komandos narį",
@@ -190,8 +192,14 @@
   "ChangeLearningDayLimit": {
     "Title": "Pakeisti {name} mokymosi dienų limitą",
     "LearningDayLimit": "Mokymosi dienų limitas",
+    "WarningMessage": "Pakeitus mokymosi dienų limitą į 0 bus taikomas numatytasis mokymosi dienų limitas.",
     "SuccessMessage": "Mokymosi dienų limitas pakeistas.",
     "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!"
+  },
+  "ChangeTeamLearningDayLimit": {
+    "Title": "Keisti savo komandos mokymosi dienų limitą",
+    "LearningDayLimit": "Naujas mokymosi dienų limitas",
+    "SuccessMessage": "Mokymosi dienų limitas pakeistas."
   },
   "Edit": "Redaguoti",
   "None": "Nėra",
