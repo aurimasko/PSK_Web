@@ -48,5 +48,5 @@ export const objectiveService = {
 				)
 			}
 		).then(response => { return response.json(); });
-	},
+	}
 }

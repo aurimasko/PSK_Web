@@ -185,7 +185,7 @@ class Team extends React.Component {
 		} else {
 			return (
 				<>
-					<Link className="button" to={"team/addObjective"}>
+					<Link className="button" to={"team/addobjective"}>
 						{languageService.translate("Team.AddObjective")}
 					</Link>
 					<Link className="button" to={"team/changelimit"}>

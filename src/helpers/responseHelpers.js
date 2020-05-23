@@ -5,6 +5,9 @@ export const responseHelpers = {
 		if (!data.errorMessages)
 			data.errorMessages = [];
 
+		if (!data.errorCodes)
+			data.errorCodes = [];
+
 		if (data.errorMessages.length === 0) {
 			if (data.errorCodes.indexOf("ConcurrencyException") !== -1) {
 				//Add proper message for concurrency error

@@ -56,5 +56,30 @@ export const teamService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async createTeamObjective(topicId, deadline, roleId) {
+
+		let query = "";
+
+		if (roleId)
+			query = "?roleId=" + roleId;
+
+		return await fetch(
+			endPoints.teamAPIBaseEndPoint + "/Objective" + query,
+			{
+				method: 'post',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Content-Type": "application/json-patch+json",
+					"Accept-Language": languageService.getLanguage()
+				}),
+				body: JSON.stringify(
+					{
+						topicId: topicId,
+						deadline: deadline
+					}
+				)
+			}
+		).then(response => { return response.json(); });
 	}
 }

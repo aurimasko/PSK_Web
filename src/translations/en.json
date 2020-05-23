@@ -201,6 +201,13 @@
     "LearningDayLimit": "Learning day limit",
     "SuccessMessage": "Learning day limit has been changed successfully."
   },
+  "AddTeamObjective": {
+    "Title": "Add new team objective",
+    "Topic": "Topic",
+    "SuccessMessage": "Team objective added successfully.",
+    "Deadline": "Deadline",
+    "Role": "Role"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

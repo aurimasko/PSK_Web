@@ -201,6 +201,13 @@
     "LearningDayLimit": "Naujas mokymosi dienų limitas",
     "SuccessMessage": "Mokymosi dienų limitas pakeistas."
   },
+  "AddTeamObjective": {
+    "Title": "Pridėti naują tikslą komandai",
+    "Topic": "Tema",
+    "SuccessMessage": "Tikslas pridėtas komandai.",
+    "Deadline": "Pabaigos data",
+    "Role": "Rolė"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
