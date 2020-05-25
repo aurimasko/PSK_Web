@@ -125,7 +125,7 @@ class DayContentSidebar extends React.Component {
 						{this.renderSelect()}
 						<label>
 							{languageService.translate("CreateLearningDay.Comment")}					
-							<textarea onChange={this.handleCommentChange}></textarea>
+							<textarea value={this.state.comment} onChange={this.handleCommentChange}></textarea>
 						</label>
 
 						<div className="flex-spacer" />
