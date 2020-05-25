@@ -187,11 +187,8 @@ class User extends React.Component {
 	}
 
 	canDisableEnableUser() {
-		//only super visor can enable or disable user
-		if (this.state.user.superVisorId === auth.user.id)
-			return true;
-		else
-			return false;
+		//any user, that can access, can enable/disable
+		return true;
 	}
 	
 	renderMainButtons() {
