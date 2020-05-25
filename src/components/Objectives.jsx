@@ -80,16 +80,12 @@ class Objectives extends React.Component {
 	}
 
 	renderAddButton() {
-		//current user cannot create objectives for himself
-		if (auth.user.id === this.state.user.id) {
-			return "";
-		} else {
-			return (
-				<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-					{languageService.translate("Objectives.AddNew")}
-				</Link>
-			);
-		}
+		//any user that can access can add
+		return (
+			<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+				{languageService.translate("Objectives.AddNew")}
+			</Link>
+		);
 	}
 
 	render() {
