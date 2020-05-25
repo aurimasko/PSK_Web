@@ -1,7 +1,6 @@
 import React from 'react';
 import Layout from "./Layout";
 import { userService } from "../services/userService.js";
-import { roleService } from "../services/roleService.js";
 import { auth } from "../services/auth.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
@@ -10,20 +9,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { languageService } from "../services/languageService.js";
 
-class ChangeRole extends React.Component {
+class ChangeLearningDayLimit extends React.Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			user: null,
-			newRoleId: null,
-			isChangeButtonEnabled: true,
-			roles: null,
-			userRole: null
+			newLearningDayLimit: null,
+			isChangeButtonEnabled: true
 		}
 
-		this.handleRoleChange = this.handleRoleChange.bind(this);
+		this.handleLearningDayLimitChange = this.handleLearningDayLimitChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -44,42 +41,13 @@ class ChangeRole extends React.Component {
 		let result = await userService.fetchUserById(id);
 		if (result.isSuccess === true) {
 			this.setState({
-				user: result.content[0]
+				user: result.content[0],
+				newLearningDayLimit: result.content[0].learningDayLimitPerQuarter
 			});
 
-			this.getRole(result.content[0].roleId);
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 			return;
-		}
-
-		let rolesResult = await roleService.fetchRoles();
-		if (rolesResult.isSuccess === true) {
-			this.setState({
-				roles: rolesResult.content
-			});
-		} else {
-			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(rolesResult) });
-			return;
-
-		}
-	}
-
-	async getRole(roleId) {
-		if (roleId) {
-			let result = await roleService.fetchRole(roleId);
-			if (result.isSuccess === true) {
-				this.setState({
-					userRole: result.content[0],
-					newRoleId: result.content[0].id
-				});
-			} else {
-				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
-			}
-		} else {
-			this.setState({
-				userRole: {}
-			});
 		}
 	}
 
@@ -96,7 +64,7 @@ class ChangeRole extends React.Component {
 	}
 
 	render() {
-		if (this.state.user == null || this.state.userRole == null || this.state.roles == null) {
+		if (this.state.user == null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -106,9 +74,9 @@ class ChangeRole extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
-						
+
 						<div className="flex-right">
-						
+
 							<div className="flex-down margin-right-16 margin-left-8">
 								<div className="flex-spacer"></div>
 								<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
@@ -116,27 +84,20 @@ class ChangeRole extends React.Component {
 								</Link>
 								<div className="flex-spacer"></div>
 							</div>
-							
-							
+
+
 							<h1>
-								{languageService.translate("ChangeRole.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
+								{languageService.translate("ChangeLearningDayLimit.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
 							</h1>
 						</div>
-						
+
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 
 							<label>
-								{languageService.translate("ChangeRole.PickRole")}:
-								<select value={this.state.newRoleId} onChange={this.handleRoleChange}>
-									<option key="" value="">{languageService.translate("None")}</option>
-									{
-										this.state.roles.map((role) => {
-											return (
-												<option key={role.id} value={role.id}>{role.name}</option>
-											);
-										})
-									}
-								</select>
+								{languageService.translate("ChangeLearningDayLimit.LearningDayLimit")}
+								
+								{/*if admin show warning message*/!this.state.user.superVisorId ? <div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.AdminWarningMessage")} </div> : <div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.WarningMessage")} </div>}
+								<input required type="number" value={this.state.newLearningDayLimit} onChange={this.handleLearningDayLimitChange} />
 							</label>
 							<hr />
 							{this.renderChangeButton()}
@@ -147,8 +108,8 @@ class ChangeRole extends React.Component {
 		}
 	}
 
-	handleRoleChange(event) {
-		this.setState({ newRoleId: event.target.value });
+	handleLearningDayLimitChange(event) {
+		this.setState({ newLearningDayLimit: event.target.value });
 	}
 
 	handleSubmit(event) {
@@ -156,26 +117,20 @@ class ChangeRole extends React.Component {
 			isChangeButtonEnabled: false
 		});
 
-		let newRoleId = this.state.newRoleId;
 		let userToUpdate = this.state.user;
 
-		if (newRoleId === "")
-			newRoleId = null;
-
-		userToUpdate.roleId = newRoleId;
+		userToUpdate.learningDayLimitPerQuarter = this.state.newLearningDayLimit;
 
 		userService.updateUser(userToUpdate)
 			.then((data) => {
 				if (data.isSuccess) {
-					this.notifRef.current.addNotification({ text: languageService.translate("ChangeRole.SuccessMessage"), isSuccess: true });
-
-					//If current user, change auth.user property
-					//Will only happen to admin, since he can only change his own role
-					if (this.state.user.id === auth.user.id) {
-						auth.user.roleId = newRoleId;
-					}
-
+					this.notifRef.current.addNotification({ text: languageService.translate("ChangeLearningDayLimit.SuccessMessage"), isSuccess: true });
 					let thisUp = this;
+
+					//if admin, update the auth user
+					if (auth.user.id === this.state.user.id) {
+						auth.user = data.content[0];
+					}
 
 					//Give some time to read message
 					setTimeout(function () {
@@ -194,4 +149,4 @@ class ChangeRole extends React.Component {
 	}
 }
 
-export default ChangeRole;
+export default ChangeLearningDayLimit;

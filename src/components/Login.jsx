@@ -81,6 +81,8 @@ class Login extends React.Component {
 				} else {
 					if (response === "NotFound" || response === "UsernameOrPasswordIsIncorrect") {
 						this.notifRef.current.addNotification({ text: languageService.translate("Login.IncorrectUsernameOrPassword") });
+					} else if (response === "UserIsDisabled") {
+						this.notifRef.current.addNotification({ text: languageService.translate("Login.UserIsDisabled") });
 					} else {
 						this.notifRef.current.addNotification({ text: response });
 					}

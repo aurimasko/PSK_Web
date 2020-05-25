@@ -24,7 +24,12 @@
     "AdminBadge": "Administratorius",
     "WorkerBadge": "Darbuotojas",
     "Loading": "Užkraunamas vartotojas...",
-    "ChangePassword": "Keisti slaptažodį"
+    "ChangePassword": "Keisti slaptažodį",
+    "SendLearningDayAsEvent": "Siųsti mokymosi dienas el.paštu",
+    "Enable": "Aktyvuoti",
+    "Disable": "Deaktyvuoti",
+    "EnableSuccessMessage": "Vartotojas aktyvuotas.",
+    "DisableSuccessMessage": "Vartotojas deaktyvuotas."
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
@@ -37,7 +42,10 @@
     "Title": "Redaguoti {name}",
     "EmailAddress": "El. pašto adresas",
     "FirstName": "Vardas",
-    "LastName": "Pavardė"
+    "LastName": "Pavardė",
+    "ChangeEmailAddressWarning": "Keičiant el.pašto adresą bus pakeistas prisijungimo vardas ir jūs turėsite prisijungti iš naujo!",
+    "SendLearningDayByEmail": "Siųsti mokymosi dieną el.paštu",
+    "SuccessMessage": "Pakeitimai išsaugoti."
   },
   "AccessDenied": {
     "Title": "Neturite teisių pasiekti šį puslapį",
@@ -50,7 +58,9 @@
     "Members": "Nariai",
     "AddNewTeamMember": "Pridėti naują narį",
     "Calendar": "Kalendorius",
-    "LearnedTopics": "Išmoktos temos"
+    "LearnedTopics": "Išmoktos temos",
+    "AddObjective": "Pridėti naują tikslą",
+    "ChangeLimit": "Pakeisti mokymosi dienų limitą"
   },
   "AddTeamMember": {
     "Title": "Pridėti naują komandos narį",
@@ -97,7 +107,8 @@
     "EmailAddress": "El.pašto adresas",
     "Password": "Slaptažodis",
     "Button": "Prisijungti",
-    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis."
+    "IncorrectUsernameOrPassword": "Neteisingas el. paštas arba slaptažodis.",
+    "UserIsDisabled": "Apgailestaujame, tačiau vartotojas yra deaktyvuotas."
   },
   "NotFound": {
     "Title": "Puslapis nerastas",
@@ -156,7 +167,9 @@
     "History": "Keitimo istorija",
     "Accept": "Priimti",
     "Decline": "Atmesti",
-    "Complete": "Užbaigti"
+    "Complete": "Užbaigti",
+    "Deadline": "Užbaigimo data",
+    "Creator": "Priskyrė"
   },
   "ObjectiveChangeHistory": {
     "Title": "Tikslo keitimo istorija",
@@ -168,7 +181,32 @@
   "AddObjective": {
     "Title": "Pridėti naują tikslą",
     "Topic": "Tema",
-    "SuccessMessage": "Tikslas pridėtas."
+    "SuccessMessage": "Tikslas pridėtas.",
+    "Deadline": "Pabaigos data"
+  },
+  "ChangeSuperVisor": {
+    "Title": "Pakeisti {name} vadovą",
+    "PickSuperVisor": "Pasirinkite naują vadovą",
+    "SuccessMessage": "Vadovas pakeistas."
+  },
+  "ChangeLearningDayLimit": {
+    "Title": "Pakeisti {name} mokymosi dienų limitą",
+    "LearningDayLimit": "Mokymosi dienų limitas",
+    "WarningMessage": "Pakeitus mokymosi dienų limitą į 0 bus taikomas numatytasis mokymosi dienų limitas.",
+    "SuccessMessage": "Mokymosi dienų limitas pakeistas.",
+    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!"
+  },
+  "ChangeTeamLearningDayLimit": {
+    "Title": "Keisti savo komandos mokymosi dienų limitą",
+    "LearningDayLimit": "Naujas mokymosi dienų limitas",
+    "SuccessMessage": "Mokymosi dienų limitas pakeistas."
+  },
+  "AddTeamObjective": {
+    "Title": "Pridėti naują tikslą komandai",
+    "Topic": "Tema",
+    "SuccessMessage": "Tikslas pridėtas komandai.",
+    "Deadline": "Pabaigos data",
+    "Role": "Rolė"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",
@@ -177,5 +215,7 @@
   "Update": "Atnaujinti",
   "Add": "Pridėti",
   "Create": "Sukurti",
-  "NoChanges": "Nėra pakeitimų"
+  "NoChanges": "Nėra pakeitimų",
+  "False": "Ne",
+  "True": "Taip"
 }

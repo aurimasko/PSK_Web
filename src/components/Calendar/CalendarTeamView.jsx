@@ -126,7 +126,7 @@ class CalendarTeamView extends React.Component {
 		}
 
 		var calendarButtons = calendarButtonParent.childNodes;
-		if (calendarButtons.length == 0) {
+		if (calendarButtons.length === 0) {
 			return;
 		}
 

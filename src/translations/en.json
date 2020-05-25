@@ -24,7 +24,12 @@
     "AdminBadge": "Admin",
     "WorkerBadge": "Member",
     "Loading": "Loading user...",
-    "ChangePassword": "Change password"
+    "ChangePassword": "Change password",
+    "SendLearningDayAsEvent": "Send learning days as events to email",
+    "Enable": "Enable",
+    "Disable": "Disable",
+    "EnableSuccessMessage": "User has been enabled.",
+    "DisableSuccessMessage": "User has been disabled."
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -37,7 +42,10 @@
     "Title": "Edit {name}",
     "EmailAddress": "Email address",
     "FirstName": "First name",
-    "LastName": "Last name"
+    "LastName": "Last name",
+    "ChangeEmailAddressWarning": "Changing email address will change username and cause a relogin!",
+    "SendLearningDayByEmail": "Send learning day as event by email",
+    "SuccessMessage": "Changes have been saved."
   },
   "AccessDenied": {
     "Title": "Access denied",
@@ -50,7 +58,9 @@
     "Members": "Members",
     "AddNewTeamMember": "Add new member",
     "Calendar": "Calendar",
-    "LearnedTopics": "Learned topics"
+    "LearnedTopics": "Learned topics",
+    "AddObjective": "Add new objective",
+    "ChangeLimit": "Change learning day per quarter limit"
   },
   "AddTeamMember": {
     "Title": "Add new team member",
@@ -97,7 +107,8 @@
     "EmailAddress": "Email address",
     "Password": "Password",
     "Button": "Login",
-    "IncorrectUsernameOrPassword": "Incorrect email address or password."
+    "IncorrectUsernameOrPassword": "Incorrect email address or password.",
+    "UserIsDisabled": "Unfortunately, user is disabled."
   },
   "NotFound": {
     "Title": "Page not found",
@@ -156,7 +167,9 @@
     "History": "Change history",
     "Accept": "Accept",
     "Decline": "Decline",
-    "Complete": "Complete"
+    "Complete": "Complete",
+    "Deadline": "Deadline",
+    "Creator": "Creator"
   },
   "ObjectiveChangeHistory": {
     "Title": "Objective change history",
@@ -168,7 +181,32 @@
   "AddObjective": {
     "Title": "Add new objective",
     "Topic": "Topic",
-    "SuccessMessage": "Objective added successfully."
+    "SuccessMessage": "Objective added successfully.",
+    "Deadline": "Deadline"
+  },
+  "ChangeSuperVisor": {
+    "Title": "Change {name} supervisor",
+    "PickSuperVisor": "Pick supervisor",
+    "SuccessMessage": "Supervisor changed successfully."
+  },
+  "ChangeLearningDayLimit": {
+    "Title": "Change {name} learning day limit",
+    "LearningDayLimit": "Learning day limit",
+    "WarningMessage": "Changing learning day limit to 0 will cause a default learning day limit to be applied.",
+    "SuccessMessage": "Learning day limit has been changed successfully.",
+    "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!"
+  },
+  "ChangeTeamLearningDayLimit": {
+    "Title": "Change your team learning day limit per quarter",
+    "LearningDayLimit": "Learning day limit",
+    "SuccessMessage": "Learning day limit has been changed successfully."
+  },
+  "AddTeamObjective": {
+    "Title": "Add new team objective",
+    "Topic": "Topic",
+    "SuccessMessage": "Team objective added successfully.",
+    "Deadline": "Deadline",
+    "Role": "Role"
   },
   "Edit": "Edit",
   "None": "None",
@@ -177,5 +215,7 @@
   "Update": "Update",
   "Add": "Add",
   "Create": "Create",
-  "NoChanges": "No changes"
+  "NoChanges": "No changes",
+  "False": "No",
+  "True": "Yes"
 }

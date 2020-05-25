@@ -29,7 +29,7 @@ export const objectiveService = {
 			}
 		).then(response => { return response.json(); });
 	},
-	async createObjective(objectiveHaverId, topicId) {
+	async createObjective(objectiveHaverId, topicId, deadline) {
 		return await fetch(
 			endPoints.objectiveAPIBaseEndPoint,
 			{
@@ -42,10 +42,11 @@ export const objectiveService = {
 				body: JSON.stringify(
 					{
 						objectiveHaverId: objectiveHaverId,
-						topicId: topicId
+						topicId: topicId,
+						deadline: deadline
 					}
 				)
 			}
 		).then(response => { return response.json(); });
-	},
+	}
 }

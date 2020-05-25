@@ -18,10 +18,13 @@ class User extends React.Component {
 		this.state = {
 			role: null,
 			user: null,
-			superVisor: null
+			superVisor: null,
+			enableDisableButtonEnabled: true
 		};
 		
 		this.notifRef = React.createRef();
+		this.handleEnableClicked = this.handleEnableClicked.bind(this);
+		this.handleDisableClicked = this.handleDisableClicked.bind(this);
 	}
 	
 	async componentDidMount() {
@@ -86,7 +89,7 @@ class User extends React.Component {
 		if (this.state.role.id) {
 			return (
 				<h4>
-					{languageService.translate("User.Role")}: <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link>
+					{languageService.translate("User.Role")}: {auth.user.isSuperVisor ? <Link className="" to={"/role/" + this.state.role.id}>{this.state.role.name}</Link> : <>{this.state.role.name}</>}
 					{this.canChangeRole() ?
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
@@ -173,6 +176,23 @@ class User extends React.Component {
 		}
 		else return false;
 	}
+
+	canChangeLearningDayLimit() {
+		//if supervisor of user or admin (he can change himself)
+		if (this.state.user.superVisorId === auth.user.id ||
+			!auth.user.superVisorId)
+			return true;
+		else
+			return false;
+	}
+
+	canDisableEnableUser() {
+		//only super visor can enable or disable user
+		if (this.state.user.superVisorId === auth.user.id)
+			return true;
+		else
+			return false;
+	}
 	
 	renderMainButtons() {
 		if (this.state.user === null) {
@@ -186,16 +206,16 @@ class User extends React.Component {
 					</Link>
 					
 					<Link className="button disabled">
-					<div className="w100 margin-vertical-16">
-						<FontAwesomeIcon icon={faTasks} size="3x" />
-					</div>
+						<div className="w100 margin-vertical-16">
+							<FontAwesomeIcon icon={faTasks} size="3x" />
+						</div>
 						{languageService.translate("User.Objectives")}
 					</Link>
 					
 					<Link className="button disabled">
-					<div className="w100 margin-vertical-16">
-						<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
-					</div>
+						<div className="w100 margin-vertical-16">
+							<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
+						</div>
 						{languageService.translate("User.LearnedTopics")}
 					</Link>
 					
@@ -236,6 +256,19 @@ class User extends React.Component {
 			);
 		}
 	}
+
+	renderChangeLearningDayLimitButton() {
+		if (this.canChangeLearningDayLimit()) {
+			return (
+				<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
+					<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+					{languageService.translate("Edit")}
+				</Link>
+			);
+		} else {
+			return "";
+		}
+	}
 	
 	renderAttributes() {
 		
@@ -255,7 +288,7 @@ class User extends React.Component {
 		} else if (this.state.user.isSuperVisor) {
 			return <span className="badge">{languageService.translate("User.SuperVisorBadge")}</span>;
 		} else {
-			return <span className="badge">{languageService.translate("User.MemberBadge")}</span>;
+			return <span className="badge">{languageService.translate("User.WorkerBadge")}</span>;
 		}
 	}
 	
@@ -273,6 +306,9 @@ class User extends React.Component {
 					<div>
 						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
 					</div>
+					<div>
+						<strong>{languageService.translate("User.SendLearningDayAsEvent")}: </strong> <span className="inline-block"><Loading width={16} height={16} type={"spin"} /></span>
+					</div>
 				</>
 			);
 		}
@@ -286,13 +322,38 @@ class User extends React.Component {
 						<strong>{languageService.translate("User.RegistrationDate")}: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
 					</div>
 					<div>
-						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter}
+						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter} {this.renderChangeLearningDayLimitButton()}
+					</div>
+					<div>
+						<strong>{languageService.translate("User.SendLearningDayAsEvent")}: </strong> {this.state.user.sendLearningDaysByEmail ? languageService.translate("True") : languageService.translate("False")}
 					</div>
 				</>
 			);
 		}
 	}
-	
+
+	renderActionButtons() {
+		if (this.state.user === null) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			if (this.state.enableDisableButtonEnabled) {
+				return (
+					this.canDisableEnableUser() ?
+						(this.state.user.isDisabled ?
+							<button className="primary" onClick={this.handleEnableClicked}>
+								{languageService.translate("User.Enable")}
+							</button> :
+							<button className="primary" onClick={this.handleDisableClicked}>
+								{languageService.translate("User.Disable")}
+							</button>)
+						: ""
+				);
+			} else {
+				return <Loading width={50} height={50} type={"balls"} />;
+			}
+		}
+	}
+
 	render() {
 		return (
 			<Layout ref={this.notifRef}>
@@ -340,7 +401,7 @@ class User extends React.Component {
 							<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/edit"}>
 								<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 								{languageService.translate("Edit")}
-							</Link>:
+							</Link> :
 							""
 						}
 					</div>
@@ -355,9 +416,52 @@ class User extends React.Component {
 							</Link>:
 							""
 					}
+
+					{this.renderActionButtons()}
 				</div>
 			</Layout>
 		);
+	}
+
+	handleDisableClicked() {
+
+		this.setState({
+			enableDisableButtonEnabled: false
+		});
+
+		userService.disableUser(this.state.user.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("User.DisableSuccessMessage"), isSuccess: true });
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					enableDisableButtonEnabled: true
+				});
+			});
+	}
+
+	handleEnableClicked() {
+		this.setState({
+			enableDisableButtonEnabled: false
+		});
+
+		userService.enableUser(this.state.user.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("User.EnableSuccessMessage"), isSuccess: true });
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					enableDisableButtonEnabled: true
+				});
+			});
 	}
 }
 

@@ -112,9 +112,6 @@ class Role extends React.Component {
 								<h1>
 									{languageService.translate("Role.Title", { name: this.state.role.name })}
 								</h1>
-								<h5>
-									{languageService.translate("Role.CreationDate")}: {moment.utc(this.state.role.creationDate).local().format('YYYY-MM-DD hh:mm')}
-								</h5>
 								{this.renderRoleUsers()}
 							</div>
 

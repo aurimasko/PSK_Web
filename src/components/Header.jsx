@@ -34,7 +34,27 @@ class Header extends React.Component {
 		this.handleUseLogout = this.handleUseLogout.bind(this);
 		this.handleLanguageChange = this.handleLanguageChange.bind(this);
 	}
-	
+
+	renderRolesButton() {
+		if (!auth.user.isSuperVisor) {
+			return "";
+		} else {
+			return (
+				<Link
+					className={
+						this.state.hamburgerActive ?
+							"button primary collapse uncollapse" :
+							"button primary collapse"
+					}
+					to={"/roles"}
+					onClick={this.handleUseOther}
+				>
+					<FontAwesomeIcon icon={faTags} /> {languageService.translate("Header.Roles")}
+				</Link>
+			);
+		}
+	}
+
 	render() {
 		return (
 			<header className={this.props.noScroll ? "no-scroll" : ""}>
@@ -81,18 +101,8 @@ class Header extends React.Component {
 				>
 					<FontAwesomeIcon icon={faClipboardList} /> {languageService.translate("Header.Topics")}
 				</Link>
-				
-				<Link
-					className={
-						this.state.hamburgerActive ?
-							"button primary collapse uncollapse" :
-							"button primary collapse"
-					}
-					to={"/roles"}
-					onClick={this.handleUseOther}
-				>
-					<FontAwesomeIcon icon={faTags} /> {languageService.translate("Header.Roles")}	
-				</Link>
+
+				{this.renderRolesButton()}
 				
 				
 				<Link

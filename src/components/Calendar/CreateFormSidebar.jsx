@@ -20,7 +20,8 @@ class DayContentSidebar extends React.Component {
 			//editing stuff
 			isEditing: props.isEditing,
 			learningDayId: props.learningDayId,
-			learningDayForEditing: null
+			learningDayForEditing: null,
+			showSelect: true
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -60,7 +61,7 @@ class DayContentSidebar extends React.Component {
 					let learningDay = learningDayResult.content[0];
 					this.setState({
 						learningDayForEditing: learningDay,
-						comment: learningDay.comment,
+						comment: learningDay.comments,
 						selectedTopics: result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1)
 					});
 
@@ -85,6 +86,29 @@ class DayContentSidebar extends React.Component {
 		}
 	}
 
+	renderSelect() {
+		if (!this.state.showSelect) {
+			return "";
+		} else {
+			return (
+				<label>
+					{languageService.translate("CreateLearningDay.SelectToAddMore")}
+					<select value={0} onChange={this.handleTopicAdd}>
+						<option key="" value="">{languageService.translate("None")}</option>
+						{
+							//filter out selected topics out of dropdown
+							this.state.topics.filter(t => this.state.selectedTopics.indexOf(t) === -1).map((topic) => {
+								return (
+									<option key={topic.id} value={topic.id}>{topic.name}</option>
+								);
+							})
+						}
+					</select>
+				</label>
+			);
+		}
+	}
+
 	render() {
 		//if editing, wait for learning day to load
 		if (this.state.topics === null || (this.state.isEditing && this.state.learningDayForEditing === null)) {
@@ -98,20 +122,7 @@ class DayContentSidebar extends React.Component {
 						{languageService.translate("CreateLearningDay.Topics")}
 						{this.renderSelectedTopics()}
 
-						<label>
-							{languageService.translate("CreateLearningDay.SelectToAddMore")}
-							<select value={0} onChange={this.handleTopicAdd}>
-								<option key="" value="">{languageService.translate("None")}</option>
-								{
-									//filter out selected topics out of dropdown
-									this.state.topics.filter(t => this.state.selectedTopics.indexOf(t) == -1).map((topic) => {
-										return (
-											<option key={topic.id} value={topic.id}>{topic.name}</option>
-										);
-									})
-								}
-							</select>
-						</label>
+						{this.renderSelect()}
 						<label>
 							{languageService.translate("CreateLearningDay.Comment")}					
 							<textarea onChange={this.handleCommentChange}></textarea>
@@ -166,16 +177,15 @@ class DayContentSidebar extends React.Component {
 		if (newTopics.filter(t => t.id === event.target.value).length > 0)
 			return;
 
-		//if there are already four topics, do not allow to add
-		if (newTopics.length == 4) {
-			this.notifRef.current.addNotification({ text: languageService.translate("CreateLearningDay.Max4Topics") });
-			return;
-		}
-
 		let topicObj = this.state.topics.filter(t => t.id === event.target.value)[0];
 		newTopics.push(topicObj);
 		
-		this.setState({ selectedTopics: newTopics});
+		this.setState({ selectedTopics: newTopics });
+
+		//if there are 4 topics already, hide select
+		if (newTopics.length === 4) {
+			this.setState({ showSelect: false });
+		}
 	}
 	
 	handleTopicRemove(index, e) {
@@ -184,7 +194,13 @@ class DayContentSidebar extends React.Component {
 		let newTopics = this.state.selectedTopics;
 		newTopics.splice(index, 1);
 		
-		this.setState({ selectedTopics: newTopics});
+		this.setState({ selectedTopics: newTopics });
+
+		//if there are less then 4 topics, display select
+		//if there are 4 topics already, hide select
+		if (newTopics.length < 4) {
+			this.setState({ showSelect: true });
+		}
 	}
 	
 	handleSubmit(event) {
@@ -203,7 +219,7 @@ class DayContentSidebar extends React.Component {
 		if (this.state.isEditing) {
 			//create copy
 			let learningDayToUpdate = Object.assign({}, this.state.learningDayForEditing);
-			learningDayToUpdate.comment = this.state.comment;
+			learningDayToUpdate.comments = this.state.comment;
 			learningDayToUpdate.topicsId = topicIds;
 
 
