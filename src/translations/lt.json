@@ -196,7 +196,8 @@
     "LearningDayLimit": "Mokymosi dienų limitas",
     "WarningMessage": "Pakeitus mokymosi dienų limitą į 0 bus taikomas numatytasis mokymosi dienų limitas.",
     "SuccessMessage": "Mokymosi dienų limitas pakeistas.",
-    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!"
+    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!",
+    "RemoveSuccessMessage": "Mokymosi limitas panaikintas."
   },
   "ChangeTeamLearningDayLimit": {
     "Title": "Keisti savo komandos mokymosi dienų limitą",
@@ -219,5 +220,6 @@
   "Create": "Sukurti",
   "NoChanges": "Nėra pakeitimų",
   "False": "Ne",
-  "True": "Taip"
+  "True": "Taip",
+  "Remove": "Panaikinti"
 }

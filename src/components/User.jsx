@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
+import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck, faRemoveFormat, faCross, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 import { roleService } from "../services/roleService.js";
@@ -25,6 +25,7 @@ class User extends React.Component {
 		this.notifRef = React.createRef();
 		this.handleEnableClicked = this.handleEnableClicked.bind(this);
 		this.handleDisableClicked = this.handleDisableClicked.bind(this);
+		this.handleRemoveLearningDayLimitClicked = this.handleRemoveLearningDayLimitClicked.bind(this);
 	}
 	
 	async componentDidMount() {
@@ -257,10 +258,16 @@ class User extends React.Component {
 	renderChangeLearningDayLimitButton() {
 		if (this.canChangeLearningDayLimit()) {
 			return (
-				<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
-					<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-					{languageService.translate("Edit")}
-				</Link>
+				<>
+					<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
+						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+						{languageService.translate("Edit")}
+					</Link>
+					<Link className="unbold margin-right-32 margin-top-8" onClick={this.handleRemoveLearningDayLimitClicked}>
+						<FontAwesomeIcon className="margin-right-4" icon={faWindowClose} />
+						{languageService.translate("Remove")}
+					</Link>
+				</>
 			);
 		} else {
 			return "";
@@ -459,6 +466,28 @@ class User extends React.Component {
 					enableDisableButtonEnabled: true
 				});
 			});
+	}
+
+	handleRemoveLearningDayLimitClicked(event) {
+		let userToUpdate = this.state.user;
+
+		userToUpdate.learningDayLimitPerQuarter = 0;
+
+		userService.updateUser(userToUpdate)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.notifRef.current.addNotification({ text: languageService.translate("ChangeLearningDayLimit.RemoveSuccessMessage"), isSuccess: true });
+					this.getData()
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					isChangeButtonEnabled: true
+				});
+			});
+
+		event.preventDefault();
 	}
 }
 

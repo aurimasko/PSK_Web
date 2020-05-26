@@ -196,7 +196,8 @@
     "LearningDayLimit": "Learning day limit",
     "WarningMessage": "Changing learning day limit to 0 will cause a default learning day limit to be applied.",
     "SuccessMessage": "Learning day limit has been changed successfully.",
-    "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!"
+    "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!",
+    "RemoveSuccessMessage": "Learning day limit removed."
   },
   "ChangeTeamLearningDayLimit": {
     "Title": "Change your team learning day limit per quarter",
@@ -219,5 +220,6 @@
   "Create": "Create",
   "NoChanges": "No changes",
   "False": "No",
-  "True": "Yes"
+  "True": "Yes",
+  "Remove": "Remove"
 }
