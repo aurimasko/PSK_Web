@@ -148,8 +148,8 @@ class Header extends React.Component {
 					"button primary collapse uncollapse" :
 					"button primary collapse"
 			} value={this.state.language} onChange={this.handleLanguageChange} style={{width: "auto"}}>
-				<option key="en" value="en">English</option>
-				<option key="lt" value="lt">Lithuanian</option>
+				<option key="en" value="en">{languageService.translate("Header.EnglishLanguage")}</option>
+				<option key="lt" value="lt">{languageService.translate("Header.LithuanianLanguage")}</option>
 			</select>
 		);
 	}
