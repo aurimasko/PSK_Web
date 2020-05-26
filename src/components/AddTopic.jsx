@@ -2,8 +2,11 @@ import React from 'react';
 import Layout from "./Layout";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";
+import { Link } from "react-router-dom";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 class AddTopic extends React.Component {
 
@@ -62,8 +65,18 @@ class AddTopic extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/topics"}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
 
-						<h1 className="margin-bottom-8">{languageService.translate("AddTopic.Title")}</h1>
+
+							<h1 className="margin-bottom-8">{languageService.translate("AddTopic.Title")}</h1>
+						</div>
 
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							<label>

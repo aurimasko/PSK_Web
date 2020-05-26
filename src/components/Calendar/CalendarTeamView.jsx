@@ -42,7 +42,7 @@ class CalendarTeamView extends React.Component {
 		
 		const today = new Date();
 		today.setHours(0,0,0,0);
-		
+
 		this.state = {
 			day: today,
 			team: null,
@@ -54,7 +54,9 @@ class CalendarTeamView extends React.Component {
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),		
 			sidebarSelectedUser: null,
-			currentLearningDayId: null,
+			//currentLearningDayId: null,
+			currentLearningDay: null,
+			currentLearningDays: null,
 			currentLearningDaysUserIds: null,
 			filteredCurrentLearningDaysUserIds: null
 		};
@@ -70,7 +72,12 @@ class CalendarTeamView extends React.Component {
 	
 	
 	async componentDidMount() {
-		this.getData(this.state.startDate, this.state.endDate);
+		await this.getData(this.state.startDate, this.state.endDate);
+
+		//call manually, to handle current date
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		this.handleDaySelect({ start: today });
 	}
 
 	async componentDidUpdate(prevProps) {
@@ -84,19 +91,19 @@ class CalendarTeamView extends React.Component {
 		const result = await teamService.fetchLearningDaysByLeaderId(id, startDate, endDate);
 		if (result.isSuccess === true) {
 			let learningDays = result.content.learningDays;
-			let currentLearningDay = learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
-			let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
+			//let currentLearningDay = learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
+			//let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 			const filteredLearningDays = learningDays.filter((d) => this.state.filteredTeammates.indexOf(d.employeeId) === -1);
-			let filteredCurrentLearningDayUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
+		    //let filteredCurrentLearningDayUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
 
 			this.setState({
 				team: result.content,
-				learningDays: result.content.learningDays,
+				learningDays: learningDays,
 				filteredLearningDays: filteredLearningDays,
 				events: filteredLearningDays.map(function (value) { return value.date }),
-				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
-				currentLearningDaysUserIds: currentLearningDaysUserIds,
-				filteredCurrentLearningDaysUserIds: filteredCurrentLearningDayUserIds
+				//currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null,
+				//currentLearningDaysUserIds: currentLearningDaysUserIds,
+				//filteredCurrentLearningDaysUserIds: filteredCurrentLearningDayUserIds
 			});
 
 			const teamResult = await teamService.fetchTeamByLeaderId(id);
@@ -225,10 +232,11 @@ class CalendarTeamView extends React.Component {
 		
 		if (this.state.sidebarSelectedUser !== null) {
 			return (
-				<DayContentSidebar date={this.state.day} user={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose} currentLearningDayId={this.state.currentLearningDayId} notifRef={this.notifRef} isTeam={false}/>
+				<DayContentSidebar date={this.state.day} user={this.state.sidebarSelectedUser} handleUserClose={this.handleUserClose} currentLearningDayId={this.state.currentLearningDay.id} notifRef={this.notifRef} isTeam={false} />
 			);
 		}
-		else if (this.dateNotEmpty(this.state.day)) {
+		//else if (this.dateNotEmpty(this.state.day)) {
+		else if (this.state.filteredCurrentLearningDaysUserIds && this.state.filteredCurrentLearningDaysUserIds.length > 0) {
 			return <UserListSidebar date={this.state.day} currentLearningDayUserIds={this.state.filteredCurrentLearningDaysUserIds} notifRef={this.notifRef} handleSelectUser={this.handleSelectUser} />;
 		}
 		else {
@@ -254,22 +262,26 @@ class CalendarTeamView extends React.Component {
 	}
 	
 	dateNotEmpty(date) {
-		
-		for (const eventDay of this.state.events) {
-			
-			let eventDateObj = new Date(Date.parse(eventDay))
-			eventDateObj.setHours(0,0,0,0);
-			
-			if (date.getTime() === eventDateObj.getTime()) {
+
+		let learningDayDates = this.state.filteredLearningDays.map((d) => {
+			let date = d.date;
+			let dateDate = new Date(Date.parse(date));
+			dateDate.setHours(0, 0, 0, 0);
+			return dateDate;
+		});
+
+		let dateDate = new Date(Date.parse(date));
+		dateDate.setHours(0, 0, 0, 0);
+
+		for (const ld of learningDayDates) {
+			if (ld.getTime() === dateDate.getTime())
 				return true;
-			}
 		}
-		
+
 		return false;
 	}
 	
 	handleToggleTeammate(id, isFiltered) {
-		
 		if (isFiltered !== true && isFiltered !== true) {
 			// isFiltered is not bool, so just toggle whatever value is in the state
 			isFiltered = !this.state.filteredTeammates.includes(id);
@@ -321,9 +333,9 @@ class CalendarTeamView extends React.Component {
 	}
 	
 	handleSelectUser(user) {
-		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD") &&
+		let currentLearningDay = this.state.currentLearningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD") &&
 			d.employeeId === user.id);
-		this.setState({ sidebarSelectedUser: user, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null});
+		this.setState({ sidebarSelectedUser: user, currentLearningDay: currentLearningDay[0]});
 	}
 	
 	handleUserClose() {
@@ -335,7 +347,7 @@ class CalendarTeamView extends React.Component {
 		let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 		const filteredCurrentLearningDaysUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
 
-		this.setState({ day: slotInfo.start, sidebarSelectedUser: null, currentLearningDaysUserIds: currentLearningDaysUserIds, filteredCurrentLearningDaysUserIds: filteredCurrentLearningDaysUserIds});
+		this.setState({ day: slotInfo.start, sidebarSelectedUser: null, currentLearningDays: currentLearningDay, currentLearningDaysUserIds: currentLearningDaysUserIds, filteredCurrentLearningDaysUserIds: filteredCurrentLearningDaysUserIds });
 	}
 
 	handleDateRangeChange(range) {

@@ -2,8 +2,11 @@ import React from 'react';
 import Layout from "./Layout";
 import { topicService } from "../services/topicService.js";
 import Loading from "../components/Loading";
+import { Link } from "react-router-dom";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 class EditTopic extends React.Component {
 
@@ -88,7 +91,18 @@ class EditTopic extends React.Component {
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
 
-						<h1 className="margin-bottom-8">{languageService.translate("EditTopic.Title", { name: this.state.topic.name })}</h1>
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/topic/" + this.state.topic.id}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
+
+
+							<h1 className="margin-bottom-8">{languageService.translate("EditTopic.Title", { name: this.state.topic.name })}</h1>
+						</div>
 
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 

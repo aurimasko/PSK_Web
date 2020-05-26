@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
 import { topicChangesService } from "../services/topicChangesService.js";
@@ -154,8 +156,19 @@ class Topic extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/topics"}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
 
-						<h1>{this.state.topic.name}</h1>
+
+							<h1>{this.state.topic.name}</h1>
+						</div>
+
 						<Link className="button" to={"/topic/" + this.state.topic.id + "/edit"}>
 							<button>{languageService.translate("Edit")}</button>
 						</Link>
