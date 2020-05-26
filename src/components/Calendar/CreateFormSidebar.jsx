@@ -59,10 +59,12 @@ class DayContentSidebar extends React.Component {
 				var learningDayResult = await learningDayService.fetchLearningDaysById(this.state.learningDayId);
 				if (learningDayResult.isSuccess === true) {
 					let learningDay = learningDayResult.content[0];
+					let selectedTopics = result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1);
 					this.setState({
 						learningDayForEditing: learningDay,
 						comment: learningDay.comments,
-						selectedTopics: result.content.filter(t => learningDay.topicsId.indexOf(t.id) > -1)
+						selectedTopics: selectedTopics,
+						showSelect: selectedTopics.length < 4
 					});
 
 				} else {
