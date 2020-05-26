@@ -130,7 +130,7 @@ class Topic extends React.Component {
 			return this.state.topicChanges.map((topicChange) => {
 				return (
 					<tr>
-						<td>{moment.utc(topicChange.creationDate).local().format('YYYY-MM-DD')}</td>
+						<td>{moment.utc(topicChange.creationDate).local().format('YYYY-MM-DD hh:mm:ss')}</td>
 						<td>{topicChange.creator.firstName} {topicChange.creator.lastName}</td>
 						<td>{topicChange.oldName}</td>
 						<td>{topicChange.newName}</td>

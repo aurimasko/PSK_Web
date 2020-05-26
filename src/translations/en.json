@@ -31,7 +31,8 @@
     "Enable": "Enable",
     "Disable": "Disable",
     "EnableSuccessMessage": "User has been enabled.",
-    "DisableSuccessMessage": "User has been disabled."
+    "DisableSuccessMessage": "User has been disabled.",
+    "SuperVisor": "Supervisor"
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -216,7 +217,10 @@
     "Explanation": "The data that you tried to change has been already changed by another user. Please choose how would you like to continue.",
     "Overwrite": "Overwrite changes",
     "UpdateFields": "Update my form fields",
-    "CompareChanges": "Compare changes"
+    "CompareChanges": "Compare changes",
+    "FieldsHaveBeenUpdated": "Fields have been updated",
+    "ValueFromDatabase": "New value",
+    "ValuesFromDatabaseLoaded": "New values have been loaded."
   },
   "Edit": "Edit",
   "None": "None",

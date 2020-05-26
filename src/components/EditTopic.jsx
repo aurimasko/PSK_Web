@@ -7,6 +7,7 @@ import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import ConcurrencyErrorModal from './ConcurrencyErrorModal';
 
 class EditTopic extends React.Component {
 
@@ -19,12 +20,22 @@ class EditTopic extends React.Component {
 			newReferences: "",
 			newParentTopicId: "",
 			isUpdateButtonEnabled: true,
-			topics: null
+			topics: null,
+			//for concurrency
+			isConcurrencyModalActive: false,
+			concurrencyTopic: null,
+			concurrencyName: "",
+			concurrencyReferences: "",
+			concurrencyParentTopic: null,
+			concurrencyTopicHasChanged: false
 		}
 
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.handleReferencesChange = this.handleReferencesChange.bind(this);
 		this.handleParentTopicIdChange = this.handleParentTopicIdChange.bind(this);
+		this.handleConcurrencyOverwrite = this.handleConcurrencyOverwrite.bind(this);
+		this.handleConcurrencyUpdateFields = this.handleConcurrencyUpdateFields.bind(this);
+		this.handleConcurrencyCompareChanges = this.handleConcurrencyCompareChanges.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -109,12 +120,22 @@ class EditTopic extends React.Component {
 							<label>
 								{languageService.translate("EditTopic.Name")}
 								<input required type="text" value={this.state.newName} onChange={this.handleNameChange} />
+								{this.state.concurrencyName ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyName}
+									</div>
+									: ""}
 							</label>
 							<label>
 								{languageService.translate("EditTopic.References")}
-								<textarea type="text" onChange={this.handleReferencesChange} >
+								<textarea type="text" onChange={this.handleReferencesChange}>
 									{this.state.newReferences}
 								</textarea>
+								{this.state.concurrencyReferences ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyReferences}
+									</div>
+									: ""}
 							</label>
 							<label>
 								{languageService.translate("EditTopic.ParentTopic")}
@@ -128,12 +149,29 @@ class EditTopic extends React.Component {
 										})
 									}
 								</select>
+								{this.state.concurrencyTopicHasChanged ?
+									(this.state.concurrencyParentTopic ? 
+										<div style={{ color: "red" }}>
+											{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyParentTopic.name}
+										</div> :
+										<div style={{ color: "red" }}>
+											{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {languageService.translate("None")}
+										</div>) :
+									""}
 							</label>
 							<hr />
 
 							{this.renderUpdateButton()}
 						</form>
 					</div>
+
+					<ConcurrencyErrorModal
+						isEnabled={this.state.isConcurrencyModalActive}
+						handleOverwrite={this.handleConcurrencyOverwrite}
+						handleUpdateFields={this.handleConcurrencyUpdateFields}
+						handleCompareChanges={this.handleConcurrencyCompareChanges}
+					/>
+
 				</Layout>
 			);
 		}
@@ -149,6 +187,62 @@ class EditTopic extends React.Component {
 
 	handleParentTopicIdChange(event) {
 		this.setState({ newParentTopicId: event.target.value });
+	}
+
+	handleConcurrencyCompareChanges(event) {
+
+		let topic = this.state.concurrencyTopic;
+		let originalTopic = this.state.topic;
+
+		this.setState({
+			concurrencyName: originalTopic === topic.name ? "" : topic.name,
+			concurrencyReferences: originalTopic.references === topic.references ? "" : topic.references,
+			concurrencyParentTopic: originalTopic.parentTopicId === topic.parentTopicId ? null : (topic.parentTopicId ? this.state.topics.filter((t) => t.id === topic.parentTopicId) : null),
+			isConcurrencyModalActive: false,
+			concurrencyTopicHasChanged: originalTopic.parentTopicId !== topic.parentTopicId
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.ValuesFromDatabaseLoaded"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyUpdateFields(event) {
+
+		let topic = this.state.concurrencyTopic;
+
+		this.setState({
+			topic: topic,
+			concurrencyTopic: null,
+			newName: topic.name,
+			newReferences: topic.references,
+			newParentTopicId: topic.parentId,
+			isConcurrencyModalActive: false
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.FieldsHaveBeenUpdated"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyOverwrite(event) {
+
+		let concurrencyTopic = this.state.concurrencyTopic;
+		let topicCurrent = this.state.topic;
+
+		//update row version
+		topicCurrent.rowVersion = concurrencyTopic.rowVersion;
+
+		this.setState({
+			topic: topicCurrent,
+			concurrencyTopic: null,
+			isConcurrencyModalActive: false
+		});
+
+		//manually submit form
+		this.handleSubmit(event);
+
+		event.preventDefault();
 	}
 
 	handleSubmit(event) {
@@ -178,7 +272,16 @@ class EditTopic extends React.Component {
 						thisUp.props.history.push("/topic/" + topicReturned.id);
 					}, 1000);
 				} else {
-					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+
+					//handle concurrency error
+					if (data.errorCodes && data.errorCodes.indexOf("ConcurrencyException") > -1) {
+						this.setState({
+							isConcurrencyModalActive: true,
+							concurrencyTopic: data.content
+						});
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
 				}
 
 				this.setState({

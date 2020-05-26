@@ -134,7 +134,7 @@ class User extends React.Component {
 		if (this.canChangeSupervisor()) {
 			return (
 				<div>
-					<strong>Supervisor: { this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : "" }</strong>
+					<strong>{languageService.translate("User.SuperVisor")}: { this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : "" }</strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 						{languageService.translate("Edit")}
