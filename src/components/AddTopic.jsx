@@ -127,6 +127,13 @@ class AddTopic extends React.Component {
 						references: "",
 						parentTopicId: ""
 					});
+
+					let thisUp = this;
+					//Give some time to read message
+					setTimeout(function () {
+						thisUp.props.history.push("/topics");
+					}, 1000);
+
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}

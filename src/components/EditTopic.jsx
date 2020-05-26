@@ -155,8 +155,14 @@ class EditTopic extends React.Component {
 					this.setState({
 						topic: topicReturned
 					});
+
 					this.notifRef.current.addNotification({ text: languageService.translate("EditTopic.SuccessMessage"), isSuccess: true });
-					this.props.history.push("/topic/" + topicReturned.id + "/edit");
+
+					let thisUp = this;
+					//Give some time to read message
+					setTimeout(function () {
+						thisUp.props.history.push("/topic/" + topicReturned.id);
+					}, 1000);
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}
