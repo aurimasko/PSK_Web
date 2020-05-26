@@ -211,6 +211,13 @@
     "Deadline": "Pabaigos data",
     "Role": "Rolė"
   },
+  "ConcurrencyErrorModal": {
+    "Title": "Duomenys dar nepakeisti",
+    "Explanation": "Duomenys kurios norite keisti jau buvo pakeisti kito darbuotojo. Pasirinkite ką norite daryti.",
+    "Overwrite": "Užrašyti ant viršaus",
+    "UpdateFields": "Atnaujinti mano formos laukus",
+    "CompareChanges": "Palyginti pakeitimus"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

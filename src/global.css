@@ -631,6 +631,11 @@ canvas {
 	margin-bottom: 16px;
 }
 
+.margin-vertical-8 {
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
 .margin-left-32 {
 	margin-left: 32px;
 }

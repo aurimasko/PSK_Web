@@ -196,34 +196,25 @@ class User extends React.Component {
 		if (this.state.user === null) {
 			return (
 				<div className="grid gaps">
-					<Link className="button disabled">
-						<div className="w100 margin-vertical-16">
-							<FontAwesomeIcon icon={faCalendarAlt} size="3x" />
-						</div>
+					<Link className="button disabled align-left" to="#">
+						<FontAwesomeIcon className="margin-right-8" icon={faCalendarAlt} />
 						{languageService.translate("User.Calendar")}
 					</Link>
 					
-					<Link className="button disabled">
-						<div className="w100 margin-vertical-16">
-							<FontAwesomeIcon icon={faTasks} size="3x" />
-						</div>
+					<Link className="button disabled align-left" to="#">
+						<FontAwesomeIcon className="margin-right-8" icon={faTasks} />
 						{languageService.translate("User.Objectives")}
 					</Link>
 					
-					<Link className="button disabled">
-						<div className="w100 margin-vertical-16">
-							<FontAwesomeIcon icon={faClipboardCheck} size="3x" />
-						</div>
+					<Link className="button disabled align-left" to="#">
+						<FontAwesomeIcon className="margin-right-8" icon={faClipboardCheck} />
 						{languageService.translate("User.LearnedTopics")}
 					</Link>
 					
-					<Link className="button disabled">
-						<div className="w100 margin-vertical-16">
-							<FontAwesomeIcon icon={faUsers} size="3x" />
-						</div>
+					<Link className="button disabled align-left" to="#">
+						<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
 						{languageService.translate("User.Team")}
 					</Link>
-					
 				</div>
 			);
 		}
@@ -249,7 +240,6 @@ class User extends React.Component {
 						<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
 						{languageService.translate("User.Team")}
 					</Link>
-					
 				</div>
 			);
 		}

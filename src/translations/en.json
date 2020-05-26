@@ -211,6 +211,13 @@
     "Deadline": "Deadline",
     "Role": "Role"
   },
+  "ConcurrencyErrorModal": {
+    "Title": "Data is not saved yet",
+    "Explanation": "The data that you tried to change has been already changed by another user. Please choose how would you like to continue.",
+    "Overwrite": "Overwrite changes",
+    "UpdateFields": "Update my form fields",
+    "CompareChanges": "Compare changes"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
