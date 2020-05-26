@@ -1,6 +1,8 @@
 import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
 import { topicChangesService } from "../services/topicChangesService.js";
@@ -52,7 +54,7 @@ class Topic extends React.Component {
 		if (result.isSuccess === true) {
 			let topicChanges = result.content;
 			//sort by date
-			let sortedTopicChanges = topicChanges.sort((a, b) => b.creationDate - a.creationDate);
+			let sortedTopicChanges = topicChanges.sort((a, b) => moment.utc(b.creationDate) - moment.utc(a.creationDate));
 			this.setState({
 				topicChanges: sortedTopicChanges
 			});
@@ -128,7 +130,7 @@ class Topic extends React.Component {
 			return this.state.topicChanges.map((topicChange) => {
 				return (
 					<tr>
-						<td>{moment.utc(topicChange.creationDate).local().format('YYYY-MM-DD hh:mm')}</td>
+						<td>{moment.utc(topicChange.creationDate).local().format('YYYY-MM-DD hh:mm:ss')}</td>
 						<td>{topicChange.creator.firstName} {topicChange.creator.lastName}</td>
 						<td>{topicChange.oldName}</td>
 						<td>{topicChange.newName}</td>
@@ -154,12 +156,23 @@ class Topic extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 					<div className="container wide">
+						<div className="flex-right">
+							<div className="flex-down margin-right-16 margin-left-8">
+								<div className="flex-spacer"></div>
+								<Link className="button back-button" to={"/topics"}>
+									<FontAwesomeIcon icon={faArrowLeft} />
+								</Link>
+								<div className="flex-spacer"></div>
+							</div>
 
-						<h1>{this.state.topic.name}</h1>
+
+							<h1>{this.state.topic.name}</h1>
+						</div>
+
 						<Link className="button" to={"/topic/" + this.state.topic.id + "/edit"}>
 							<button>{languageService.translate("Edit")}</button>
 						</Link>
-						<h3>{languageService.translate("Topic.CreatedOn")}: {moment.utc(this.state.topic.creationDate).local().format('YYYY-MM-DD HH:mm')}</h3>
+						<h3>{languageService.translate("Topic.CreatedOn")}: {moment.utc(this.state.topic.creationDate).format('YYYY-MM-DD HH:mm')}</h3>
 						{this.renderTopicParent()}
 
 						<p className="margin-top-16">

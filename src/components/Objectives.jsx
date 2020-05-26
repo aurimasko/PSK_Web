@@ -80,16 +80,12 @@ class Objectives extends React.Component {
 	}
 
 	renderAddButton() {
-		//current user cannot create objectives for himself
-		if (auth.user.id === this.state.user.id) {
-			return "";
-		} else {
-			return (
-				<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-					{languageService.translate("Objectives.AddNew")}
-				</Link>
-			);
-		}
+		//any user that can access can add
+		return (
+			<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+				{languageService.translate("Objectives.AddNew")}
+			</Link>
+		);
 	}
 
 	render() {
@@ -267,7 +263,7 @@ class Objectives extends React.Component {
 		let result = await objectiveChangeService.fetchObjectiveChangesForObjective(id);
 		if (result.isSuccess === true) {
 			let selectedObjective = this.state.objectives.find(x => x.id === id);
-			let historyList = result.content.sort((a, b) => b.creationDate - a.creationDate);
+			let historyList = result.content.sort((a, b) => moment.utc(b.creationDate) - moment.utc(a.creationDate));
 
 			//add creation record if doesn't exists
 			var filteredHistoryList = historyList.filter((h) => h.oldState === null);
@@ -275,8 +271,8 @@ class Objectives extends React.Component {
 			let finalHistoryList = [];
 			if (filteredHistoryList.length === 0) {
 				let creationRecord = {
-					oldState: "-",
-					newState: languageService.translate("Objectives.Created"),
+					oldState: null,
+					newState: "Created",
 					objectiveId: id,
 					creationDate: selectedObjective.creationDate,
 					creator: selectedObjective.creator

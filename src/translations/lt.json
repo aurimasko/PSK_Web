@@ -4,7 +4,9 @@
     "Topics": "Temos",
     "Roles": "Rolės",
     "Logout": "Atsijungti",
-    "Back": "Grįžti"
+    "Back": "Grįžti",
+    "EnglishLanguage": "Anglų",
+    "LithuanianLanguage": "Lietuvių"
   },
   "Footer": {
     "About": "Apie",
@@ -29,7 +31,8 @@
     "Enable": "Aktyvuoti",
     "Disable": "Deaktyvuoti",
     "EnableSuccessMessage": "Vartotojas aktyvuotas.",
-    "DisableSuccessMessage": "Vartotojas deaktyvuotas."
+    "DisableSuccessMessage": "Vartotojas deaktyvuotas.",
+    "SuperVisor": "Komandos vadovas"
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
@@ -194,7 +197,8 @@
     "LearningDayLimit": "Mokymosi dienų limitas",
     "WarningMessage": "Pakeitus mokymosi dienų limitą į 0 bus taikomas numatytasis mokymosi dienų limitas.",
     "SuccessMessage": "Mokymosi dienų limitas pakeistas.",
-    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!"
+    "AdminWarningMessage": "Mokymosi dienų limito keitimas pakeis VISŲ darbuotojų (globaliai) mokymosi dienų limitą!",
+    "RemoveSuccessMessage": "Mokymosi limitas panaikintas."
   },
   "ChangeTeamLearningDayLimit": {
     "Title": "Keisti savo komandos mokymosi dienų limitą",
@@ -213,7 +217,10 @@
     "Explanation": "Duomenys kurios norite keisti jau buvo pakeisti kito darbuotojo. Pasirinkite ką norite daryti.",
     "Overwrite": "Užrašyti ant viršaus",
     "UpdateFields": "Atnaujinti mano formos laukus",
-    "CompareChanges": "Palyginti pakeitimus"
+    "CompareChanges": "Palyginti pakeitimus",
+    "FieldsHaveBeenUpdated": "Formos laukai buvo atnaujinti",
+    "ValueFromDatabase": "Nauja reikšmė",
+    "ValuesFromDatabaseLoaded": "Naujos reikšmės užkrautos"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",
@@ -224,5 +231,6 @@
   "Create": "Sukurti",
   "NoChanges": "Nėra pakeitimų",
   "False": "Ne",
-  "True": "Taip"
+  "True": "Taip",
+  "Remove": "Panaikinti"
 }

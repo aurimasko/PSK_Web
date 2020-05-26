@@ -64,7 +64,7 @@ class ChangeTeamLearningDayLimit extends React.Component {
 							{languageService.translate("ChangeTeamLearningDayLimit.LearningDayLimit")}
 
 							<div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.WarningMessage")} </div>
-							<input required type="number" value={this.state.newLearningDayLimit} onChange={this.handleLearningDayLimitChange} />
+							<input required type="number" min="1" max="6" value={this.state.newLearningDayLimit} onChange={this.handleLearningDayLimitChange} />
 						</label>
 						<hr />
 						{this.renderChangeButton()}
