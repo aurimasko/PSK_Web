@@ -131,14 +131,23 @@ class User extends React.Component {
 			);
 		}
 
-		if (this.canChangeSupervisor()) {
+		//if can edit and has supervisor, display it
+		if (this.state.user.superVisorId && this.canChangeSupervisor()) {
 			return (
 				<div>
-					<strong>{languageService.translate("User.SuperVisor")}: { this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : "" }</strong>
+					<strong>{languageService.translate("User.SuperVisor")}: {this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : ""}</strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 						{languageService.translate("Edit")}
 					</Link>
+				</div>
+			);
+		}
+		//if only has supervisor
+		else if (this.state.user.superVisorId) {
+			return (
+				<div>
+					<strong>{languageService.translate("User.SuperVisor")}: { this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : "" }</strong>
 				</div>
 			);
 		} else {
