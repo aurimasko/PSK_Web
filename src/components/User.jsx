@@ -56,7 +56,6 @@ class User extends React.Component {
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
-		
 	}
 
 	async getRole(roleId) {

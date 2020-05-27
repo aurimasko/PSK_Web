@@ -50,7 +50,7 @@ class ObjectivesHistoryModal extends React.Component {
 				
 				<div>
 					<span className="bold">{languageService.translate("ObjectiveChangeHistory.Date")}: </span>
-					{moment.utc(histItem.creationDate).local().format('YYYY-MM-DD hh:mm')}
+					{moment.utc(histItem.creationDate).local().format('YYYY-MM-DD HH:mm')}
 				</div>
 				<div>
 					<span className="bold">{languageService.translate("ObjectiveChangeHistory.User")}: </span>
