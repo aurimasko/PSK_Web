@@ -237,6 +237,9 @@
     "TimesLearned" : "Iš viso mokytasi kartų",
     "LastTime": "Paskutinio mokymosi data"
   },
+  "WhoLearnedTopicTeams": {
+    "Title": "Komandos kurios mokėsi {topicName}"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
