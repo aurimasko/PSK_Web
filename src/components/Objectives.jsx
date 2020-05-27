@@ -88,7 +88,7 @@ class Objectives extends React.Component {
 	renderAddButton() {
 		//any user that can access can add
 		return (
-			<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+			<Link className="button primary margin-top-32 margin-bottom-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
 				{languageService.translate("Objectives.AddNew")}
 			</Link>
 		);
