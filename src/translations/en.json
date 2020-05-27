@@ -32,7 +32,8 @@
     "Disable": "Disable",
     "EnableSuccessMessage": "User has been enabled.",
     "DisableSuccessMessage": "User has been disabled.",
-    "SuperVisor": "Supervisor"
+    "SuperVisor": "Supervisor",
+    "6Analysis": "6 Analysis"
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -234,8 +235,12 @@
   },
   "WhoLearnedTopicTeamMembers": {
     "Title": "Users who were learning {topicName}",
-    "TimesLearned" : "Total times learned",
-    "LastTime": "Last time learned on"
+    "TimesLearned": "Total times learned",
+    "LastTime": "Last time learned on",
+    "SelectTopic": "Please select a topic.",
+    "NoUsersToShow": "No users found.",
+    "Topic": "Topic",
+    "TitleTopic": "6 analysis"
   },
   "Edit": "Edit",
   "None": "None",
