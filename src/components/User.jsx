@@ -49,6 +49,12 @@ class User extends React.Component {
 		} else {
 			let result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
+
+				if (result.content.length === 0) {
+					this.props.history.push("/notfound");
+					return;
+				}
+
 				this.setState({
 					user: result.content[0]
 				});
@@ -198,7 +204,10 @@ class User extends React.Component {
 
 	canDisableEnableUser() {
 		//any user, that can access, can enable/disable
-		return true;
+		//except for current user
+		if(auth.user.id !== this.state.user.id)
+			return true;
+		return false;
 	}
 	
 	renderMainButtons() {
