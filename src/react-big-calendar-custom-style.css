@@ -22,14 +22,19 @@
 }
 
 .rbc-today {
-	background-color: var(--color-bg-danger);
+	/*background-color: var(--color-bg-danger);*/
+	outline-color: var(--color-bg-primary);
+	outline-style: dashed;
+	outline-width: thick;
 }
 
 .rbc-today:hover {
-	background-color: var(--color-bg-danger-hover);
+	/*background-color: var(--color-bg-danger-hover);*/
+	outline-color: var(--color-bg-primary-hover);
 }
 .rbc-today:active {
-	background-color: var(--color-bg-danger-active);
+	/*background-color: var(--color-bg-danger-active);*/
+	outline-color: var(--color-bg-primary-active);
 }
 
 
@@ -85,6 +90,7 @@
 	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-active);
 }
 
+/*
 .rbc-day-bg.rbc-today.selected {
 	background-color: var(--color-bg-danger);
 	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary);
@@ -99,6 +105,7 @@
 	background-color: var(--color-bg-danger-active);
 	box-shadow: inset 0px 0px 0px 6px var(--color-bg-primary-active);
 }
+*/
 
 .rbc-day-bg.rbc-off-range-bg.selected {
 	background-color: #252525;
@@ -127,11 +134,15 @@
 }
 
 .rbc-date-cell.rbc-now a {
-	color: var(--color-fg-primary);
+	font-weight: normal;
 	
-	/*text-decoration-line: underline;
-	text-decoration-style: solid;
-	text-decoration-thickness: 2px;*/
+	/*
+		color: var(--color-fg-primary);
+		
+		text-decoration-line: underline;
+		text-decoration-style: solid;
+		text-decoration-thickness: 2px;
+	*/
 }
 
 

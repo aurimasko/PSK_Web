@@ -145,7 +145,8 @@
     "Next": ">",
     "Teammates": "Teammates",
     "TeamMembers": "Team members",
-    "ToggleEveryone": "Toggle everyone"
+    "ToggleEveryone": "Toggle everyone",
+    "GoToTeamPage": "Go to this team's page"
   },
   "CreateLearningDay": {
     "Topics": "Learning day topics",
@@ -222,6 +223,14 @@
     "FieldsHaveBeenUpdated": "Fields have been updated",
     "ValueFromDatabase": "New value",
     "ValuesFromDatabaseLoaded": "New values have been loaded."
+  },
+  "CalendarLegend": {
+    "Title": "Legend",
+    "Empty": "Empty day",
+    "Current": "Current date",
+    "OffRange": "Day of another month",
+    "Selected": "Selected day",
+    "Event": "Day with event"
   },
   "Edit": "Edit",
   "None": "None",

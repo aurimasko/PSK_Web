@@ -9,12 +9,14 @@ import { auth } from "../../services/auth.js";
 import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+import { faSquare, faCheckSquare, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { languageService } from "../../services/languageService.js";
+import { Link } from "react-router-dom";
 
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import UserListSidebar from "./UserListSidebar";
-import { languageService } from "../../services/languageService.js";
+import CalendarLegend from "./CalendarLegend";
 
 moment.locale(languageService.getLanguage());
 const localizer = momentLocalizer(moment);
@@ -94,7 +96,7 @@ class CalendarTeamView extends React.Component {
 			//let currentLearningDay = learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			//let currentLearningDaysUserIds = currentLearningDay.map((ld) => { return ld.employeeId; });
 			const filteredLearningDays = learningDays.filter((d) => this.state.filteredTeammates.indexOf(d.employeeId) === -1);
-		    //let filteredCurrentLearningDayUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
+			//let filteredCurrentLearningDayUserIds = currentLearningDaysUserIds.filter((u) => this.state.filteredTeammates.indexOf(u) === -1);
 
 			this.setState({
 				team: result.content,
@@ -154,9 +156,9 @@ class CalendarTeamView extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 
-					<div className="calendar-layout">
+					<div className="team-calendar-layout">
 						
-						<div className="cal-side-panel flex-down">
+						<div className="team-cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{languageService.translate("TeamCalendar.TeamMembers")}:
 							</h1>
@@ -167,29 +169,43 @@ class CalendarTeamView extends React.Component {
 							<button className="primary" onClick={this.handleToggleEveryone}>{languageService.translate("TeamCalendar.ToggleEveryone")}</button>
 						</div>
 						
-						<div className="flex-spacer" />
+						
+						<div className="cal-main-area">
+							
+							<div className="flex-spacer" />
+							
+							<div className="cal-main-panel-width">
+								
+								<Link className="cal-main-panel block" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id + "/team/calendar"}>
+									<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
+									{languageService.translate("TeamCalendar.GoToTeamPage")}
+								</Link>
+								
+								<div className="cal-main-panel">
+									<Calendar
+										localizer={localizer}
+										views={{ month: true }}
+										events={[]}
+										style={{ height: 500 }}
 
-						<div className="cal-main-panel">
+										dayPropGetter={(date) => this.setDayStyle(date)}
 
-							<Calendar
-								localizer={localizer}
-								views={{ month: true }}
-								events={[]}
-								style={{ height: 500 }}
-
-								dayPropGetter={(date) => this.setDayStyle(date)}
-
-								selectable='ignoreEvents'
-								//selectable='true'
-								onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
-								onRangeChange={(range) => this.handleDateRangeChange(range)}
-							/>
-
+										selectable='ignoreEvents'
+										//selectable='true'
+										onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
+										onRangeChange={(range) => this.handleDateRangeChange(range)}
+									/>
+								</div>
+								
+								<CalendarLegend />
+							</div>
+							
+							<div className="flex-spacer" />
+							
 						</div>
+						
 
-						<div className="flex-spacer" />
-
-						<div className="cal-side-panel flex-down">
+						<div className="team-cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{formatDate(this.state.day)}
 							</h1>
