@@ -121,7 +121,7 @@ class CalendarUserView extends React.Component {
 	
 	
 	render() {
-		if (this.state.events === null) {
+		if (this.state.events === null || this.state.currentLearningDay === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
