@@ -205,6 +205,7 @@ class Team extends React.Component {
 		} else {
 			return (
 				<Layout ref={this.notifRef}>
+					{this.renderButtons()}
 					<div className="container wide">
 
 						<div className="flex-right">
@@ -226,14 +227,12 @@ class Team extends React.Component {
 
 						</div>
 
-						{this.renderTeamMembers()}
-
 						{this.renderAddNewTeamMemberButton()}
 						{this.renderObjectiveAndLimitButtons()}
 
+						{this.renderTeamMembers()}
+
 					</div>
-					
-					{this.renderButtons()}
 					
 				</Layout>
 			);
