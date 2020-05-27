@@ -176,7 +176,7 @@ class CalendarTeamView extends React.Component {
 							
 							<div className="cal-main-panel-width">
 								
-								<Link className="cal-main-panel block" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id + "/team/calendar"}>
+								<Link className="cal-main-panel block" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id + "/team"}>
 									<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
 									{languageService.translate("TeamCalendar.GoToTeamPage")}
 								</Link>
