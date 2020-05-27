@@ -40,30 +40,23 @@ class User extends React.Component {
 	
 	async getData() {
 		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
-		if (id === auth.user.id) {
+		let result = await userService.fetchUserById(id);
+		if (result.isSuccess === true) {
+
+			if (result.content.length === 0) {
+				this.props.history.push("/notfound");
+				return;
+			}
+
 			this.setState({
-				user: auth.user
+				user: result.content[0]
 			});
 
-			this.getRole(auth.user.roleId);
+			this.getRole(result.content[0].roleId);
 		} else {
-			let result = await userService.fetchUserById(id);
-			if (result.isSuccess === true) {
-
-				if (result.content.length === 0) {
-					this.props.history.push("/notfound");
-					return;
-				}
-
-				this.setState({
-					user: result.content[0]
-				});
-
-				this.getRole(result.content[0].roleId);
-			} else {
-				this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
-			}
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
+		
 	}
 
 	async getRole(roleId) {
