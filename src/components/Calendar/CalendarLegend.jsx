@@ -9,31 +9,31 @@ class CalendarLegend extends React.Component {
 		return (
 			<div className="cal-main-panel">
 				
-				<h3 className="margin-bottom-16">Legend</h3>
+				<h3 className="margin-bottom-16">{languageService.translate("CalendarLegend.Title")}</h3>
 				
 				<div>
 					<div className="cal-legend-box rbc-day-bg-static">01</div>
-					Empty day
+					{languageService.translate("CalendarLegend.Empty")}
 				</div>
 			
 				<div>
 					<div className="cal-legend-box rbc-day-bg-static rbc-today-static">01</div>
-					Current date
+					{languageService.translate("CalendarLegend.Current")}
 				</div>
 				
 				<div>
 					<div className="cal-legend-box rbc-day-bg-static rbc-off-range-bg-static">01</div>
-					Day of another month
+					{languageService.translate("CalendarLegend.OffRange")}
 				</div>
 			
 				<div>
 					<div className="cal-legend-box rbc-day-bg-static selected-static">01</div>
-					Selected day
+					{languageService.translate("CalendarLegend.Selected")}
 				</div>
 				
 				<div>
 					<div className="cal-legend-box rbc-day-bg-static not-empty-static">01</div>
-					Day with event
+					{languageService.translate("CalendarLegend.Event")}
 				</div>
 				
 			</div>

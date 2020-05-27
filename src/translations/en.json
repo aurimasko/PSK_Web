@@ -224,6 +224,14 @@
     "ValueFromDatabase": "New value",
     "ValuesFromDatabaseLoaded": "New values have been loaded."
   },
+  "CalendarLegend": {
+    "Title": "Legend",
+    "Empty": "Empty day",
+    "Current": "Current date",
+    "OffRange": "Day of another month",
+    "Selected": "Selected day",
+    "Event": "Day with event"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

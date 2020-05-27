@@ -224,6 +224,14 @@
     "ValueFromDatabase": "Nauja reikšmė",
     "ValuesFromDatabaseLoaded": "Naujos reikšmės užkrautos"
   },
+  "CalendarLegend": {
+    "Title": "Paaiškinimas",
+    "Empty": "Tuščia diena",
+    "Current": "Šios dienos data",
+    "OffRange": "Kito mėnesio diena",
+    "Selected": "Pasirinkta diena",
+    "Event": "Diena su įvykiu"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
