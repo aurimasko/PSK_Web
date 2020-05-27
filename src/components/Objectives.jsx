@@ -154,7 +154,7 @@ class Objectives extends React.Component {
 					
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
-						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD')}
+						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD hh:mm:ss')}
 					</div>
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Status")}: </span>
