@@ -32,7 +32,8 @@
     "Disable": "Deaktyvuoti",
     "EnableSuccessMessage": "Vartotojas aktyvuotas.",
     "DisableSuccessMessage": "Vartotojas deaktyvuotas.",
-    "SuperVisor": "Komandos vadovas"
+    "SuperVisor": "Komandos vadovas",
+    "6Analysis": "6 pjūvis"
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
@@ -63,7 +64,8 @@
     "Calendar": "Kalendorius",
     "LearnedTopics": "Išmoktos temos",
     "AddObjective": "Pridėti naują tikslą",
-    "ChangeLimit": "Pakeisti mokymosi dienų limitą"
+    "ChangeLimit": "Pakeisti mokymosi dienų limitą",
+    "7Analysis": "7 pjūvis"
   },
   "AddTeamMember": {
     "Title": "Pridėti naują komandos narį",
@@ -234,11 +236,19 @@
   },
   "WhoLearnedTopicTeamMembers": {
     "Title": "Komandos nariai kurie mokėsi {topicName}",
-    "TimesLearned" : "Iš viso mokytasi kartų",
-    "LastTime": "Paskutinio mokymosi data"
+    "TimesLearned": "Iš viso mokytasi kartų",
+    "LastTime": "Paskutinio mokymosi data",
+    "SelectTopic": "Pasirinkite temą",
+    "NoUsersToShow": "Nėra ką rodyti",
+    "Topic": "Tema",
+    "TitleTopic": "6 pjūvis"
   },
   "WhoLearnedTopicTeams": {
-    "Title": "Komandos kurios mokėsi {topicName}"
+    "Title": "Komandos kurios mokėsi {topicName}",
+    "SelectTopic": "Pasirinkite temą",
+    "NoUsersToShow": "Nėra ką rodyti",
+    "Topic": "Tema",
+    "TitleTopic": "7 pjūvis"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",

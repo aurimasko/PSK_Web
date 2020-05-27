@@ -32,7 +32,8 @@
     "Disable": "Disable",
     "EnableSuccessMessage": "User has been enabled.",
     "DisableSuccessMessage": "User has been disabled.",
-    "SuperVisor": "Supervisor"
+    "SuperVisor": "Supervisor",
+    "6Analysis": "6 Analysis"
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -63,7 +64,8 @@
     "Calendar": "Calendar",
     "LearnedTopics": "Learned topics",
     "AddObjective": "Add new objective",
-    "ChangeLimit": "Change learning day per quarter limit"
+    "ChangeLimit": "Change learning day per quarter limit",
+    "7Analysis": "7 analysis"
   },
   "AddTeamMember": {
     "Title": "Add new team member",
@@ -234,11 +236,19 @@
   },
   "WhoLearnedTopicTeamMembers": {
     "Title": "Users who were learning {topicName}",
-    "TimesLearned" : "Total times learned",
-    "LastTime": "Last time learned on"
+    "TimesLearned": "Total times learned",
+    "LastTime": "Last time learned on",
+    "SelectTopic": "Please select a topic.",
+    "NoUsersToShow": "No users found.",
+    "Topic": "Topic",
+    "TitleTopic": "6 analysis"
   },
   "WhoLearnedTopicTeams": {
-    "Title": "Teams who were learning {topicName}"
+    "Title": "Teams who were learning {topicName}",
+    "SelectTopic": "Please select a topic.",
+    "NoUsersToShow": "No users found.",
+    "Topic": "Topic",
+    "TitleTopic": "7 analysis"
   },
   "Edit": "Edit",
   "None": "None",

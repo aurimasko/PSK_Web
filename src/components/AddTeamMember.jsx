@@ -4,6 +4,9 @@ import { userService } from "../services/userService.js";
 import Loading from "../components/Loading";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 class AddTeamMember extends React.Component {
 
@@ -40,8 +43,18 @@ class AddTeamMember extends React.Component {
 			<Layout ref={this.notifRef}>
 				<div className="container wide">
 
-					<h1 className="margin-bottom-8">{languageService.translate("AddTeamMember.Title")}</h1>
+					<div className="flex-right">
+						<div className="flex-down margin-right-16 margin-left-8">
+							<div className="flex-spacer"></div>
+							<Link className="button back-button" to={"/user/me/team"}>
+								<FontAwesomeIcon icon={faArrowLeft} />
+							</Link>
+							<div className="flex-spacer"></div>
+						</div>
 
+
+						<h1 className="margin-bottom-8">{languageService.translate("AddTeamMember.Title")}</h1>
+					</div>
 					<form className="flex-down" onSubmit={this.handleSubmit}>
 						<label>
 							{languageService.translate("AddTeamMember.EmailAddress")}
@@ -92,6 +105,13 @@ class AddTeamMember extends React.Component {
 						firstName: "",
 						lastName: ""
 					});
+
+					let thisUp = this;
+					//Give some time to read message
+					setTimeout(function () {
+						thisUp.props.history.push("/user/me/team");
+					}, 1000);
+
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
 				}

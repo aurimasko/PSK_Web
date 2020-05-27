@@ -250,6 +250,13 @@ class User extends React.Component {
 						<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
 						{languageService.translate("User.Team")}
 					</Link>
+
+					{this.state.user.id === auth.user.id ?
+						<Link className="button align-left" to={"/user/me/wholearnedtopicteammembers"}>
+							<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
+							{languageService.translate("User.6Analysis")}
+						</Link> : ""}
+
 				</div>
 			);
 		}
