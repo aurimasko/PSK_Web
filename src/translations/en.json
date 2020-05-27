@@ -232,6 +232,11 @@
     "Selected": "Selected day",
     "Event": "Day with event"
   },
+  "WhoLearnedTopicTeamMembers": {
+    "Title": "Users who were learning {topicName}",
+    "TimesLearned" : "Total times learned",
+    "LastTime": "Last time learned on"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
