@@ -84,14 +84,15 @@ class TopicsView extends React.Component {
 						<h1 className="margin-bottom-16">
 							{languageService.translate("Topics.Title")}:
 						</h1>
-						
-						{this.renderNestedTopics(this.state.formattedTopicData)}
-						{this.renderFailedTopics()}
-						
+
 						<Link className="button primary margin-top-16" to={"/topic/add"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPlus} />
 							{languageService.translate("Add")}
 						</Link>
+
+						{this.renderNestedTopics(this.state.formattedTopicData)}
+						{this.renderFailedTopics()}
+						
 					</div>
 				</Layout>
 			);
