@@ -70,7 +70,8 @@
     "SuccessMessage": "Team member added successfully. An email with further instructions was sent to him."
   },
   "Topics": {
-    "Title": "Temos"
+    "Title": "Topics",
+    "FailedTopics": "Topics that cannot be shown in a nested list"
   },
   "AddTopic": {
     "Title": "Add new topic",

@@ -70,7 +70,8 @@
     "SuccessMessage": "Komandos narys pridėtas sėkmingai. Jam išsiųstas laiškas su prisijungimo duomenimis."
   },
   "Topics": {
-    "Title": "Temos"
+    "Title": "Temos",
+    "FailedTopics": "Temos kurių neįmanoma pavaizduoti sąrašu"
   },
   "AddTopic": {
     "Title": "Pridėti naują temą",
