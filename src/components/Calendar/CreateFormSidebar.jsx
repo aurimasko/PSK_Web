@@ -6,6 +6,7 @@ import { topicService } from "../../services/topicService.js";
 import { learningDayService } from "../../services/learningDayService.js";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
 import { languageService } from "../../services/languageService.js";
+import ConcurrencyErrorModal from '../ConcurrencyErrorModal';
 
 class DayContentSidebar extends React.Component {
 	
@@ -21,12 +22,21 @@ class DayContentSidebar extends React.Component {
 			isEditing: props.isEditing,
 			learningDayId: props.learningDayId,
 			learningDayForEditing: null,
-			showSelect: true
+			showSelect: true,
+			//concurrency stuff
+			isConcurrencyModalActive: false,
+			concurrencyLearningDay: null,
+			concurrencyTopics: null,
+			concurrencyComments: ""
+
 		};
 		
 		this.handleCommentChange = this.handleCommentChange.bind(this);
 		this.handleTopicAdd = this.handleTopicAdd.bind(this);
 		this.handleTopicRemove = this.handleTopicRemove.bind(this);
+		this.handleConcurrencyOverwrite = this.handleConcurrencyOverwrite.bind(this);
+		this.handleConcurrencyUpdateFields = this.handleConcurrencyUpdateFields.bind(this);
+		this.handleConcurrencyCompareChanges = this.handleConcurrencyCompareChanges.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = props.notifRef;
@@ -106,6 +116,11 @@ class DayContentSidebar extends React.Component {
 							})
 						}
 					</select>
+					{this.state.concurrencyTopics ?
+						<div style={{ color: "red" }}>
+							{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.topics.filter((t) => this.state.concurrencyTopics.indexOf(t.id) > -1).map((t) => t.name + " ")}
+						</div>
+						: ""}
 				</label>
 			);
 		}
@@ -128,6 +143,11 @@ class DayContentSidebar extends React.Component {
 						<label>
 							{languageService.translate("CreateLearningDay.Comment")}					
 							<textarea value={this.state.comment} onChange={this.handleCommentChange}></textarea>
+							{this.state.concurrencyComments ?
+								<div style={{ color: "red" }}>
+									{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyComments}
+								</div>
+								: ""}
 						</label>
 
 						<div className="flex-spacer" />
@@ -135,7 +155,12 @@ class DayContentSidebar extends React.Component {
 						<hr />
 						{this.renderSaveButton()}
 					</form>
-
+					<ConcurrencyErrorModal
+						isEnabled={this.state.isConcurrencyModalActive}
+						handleOverwrite={this.handleConcurrencyOverwrite}
+						handleUpdateFields={this.handleConcurrencyUpdateFields}
+						handleCompareChanges={this.handleConcurrencyCompareChanges}
+					/>
 
 				</>
 			);
@@ -204,6 +229,78 @@ class DayContentSidebar extends React.Component {
 			this.setState({ showSelect: true });
 		}
 	}
+
+	handleConcurrencyCompareChanges(event) {
+
+		let learningDay = this.state.concurrencyLearningDay;
+		let concurrencyTopics = learningDay.topicsId;
+		let selectedTopics = this.state.selectedTopics.map((t) => t.id);
+
+		//to avoid errors
+		if (!concurrencyTopics)
+			concurrencyTopics = [];
+
+		let hasTopicsChanged = false;
+
+		//compare lists
+		for (let i = 0; i < concurrencyTopics.length; i++)
+			if (selectedTopics.indexOf(concurrencyTopics[i]) == -1) {
+				hasTopicsChanged = true;
+				break;
+			}
+
+
+		this.setState({
+			concurrencyComments: this.state.comment === learningDay.comments ? "" : learningDay.comments,
+			concurrencyTopics: hasTopicsChanged ? concurrencyTopics : null,
+			isConcurrencyModalActive: false
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.ValuesFromDatabaseLoaded"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyUpdateFields(event) {
+
+		let learningDay = this.state.concurrencyLearningDay;
+		let selectedTopics = this.state.topics.filter(t => learningDay.topicsId.indexOf(t.id) > -1);
+		this.setState({
+			learningDayForEditing: learningDay,
+			concurrencyLearningDay: null,
+			comment: learningDay.comments,
+			selectedTopics: selectedTopics,
+			showSelect: selectedTopics.length < 4,
+			isConcurrencyModalActive: false,
+			//clear fields
+			concurrencyComments: "",
+			concurrencyTopics: null
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.FieldsHaveBeenUpdated"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyOverwrite(event) {
+
+		let concurrencyLearningDay = this.state.concurrencyLearningDay;
+		let currentLearningDay = this.state.learningDayForEditing;
+
+		//update row version
+		currentLearningDay.rowVersion = concurrencyLearningDay.rowVersion;
+
+		this.setState({
+			learningDayForEditing: currentLearningDay,
+			concurrencyLearningDay: null,
+			isConcurrencyModalActive: false
+		});
+
+		//manually submit form
+		this.handleSubmit(event);
+
+		event.preventDefault();
+	}
 	
 	handleSubmit(event) {
 		event.preventDefault();
@@ -231,7 +328,15 @@ class DayContentSidebar extends React.Component {
 						this.notifRef.current.addNotification({ text: languageService.translate("CreateLearningDay.UpdateSuccessMessage"), isSuccess: true });
 						this.props.handleExitEditMode();
 					} else {
-						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+						//handle concurrency error
+						if (data.errorCodes && data.errorCodes.indexOf("ConcurrencyException") > -1) {
+							this.setState({
+								isConcurrencyModalActive: true,
+								concurrencyLearningDay: data.content
+							});
+						} else {
+							this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+						}
 					}
 
 					this.setState({

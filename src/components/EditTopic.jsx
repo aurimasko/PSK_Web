@@ -217,7 +217,12 @@ class EditTopic extends React.Component {
 			newName: topic.name,
 			newReferences: topic.references,
 			newParentTopicId: topic.parentId,
-			isConcurrencyModalActive: false
+			isConcurrencyModalActive: false,
+			//clear fields
+			concurrencyName: "",
+			concurrencyReferences: "",
+			concurrencyParentTopic: null,
+			concurrencyTopicHasChanged: false
 		});
 
 		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.FieldsHaveBeenUpdated"), isSuccess: true });
