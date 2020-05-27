@@ -232,6 +232,11 @@
     "Selected": "Pasirinkta diena",
     "Event": "Diena su įvykiu"
   },
+  "WhoLearnedTopicTeamMembers": {
+    "Title": "Komandos nariai kurie mokėsi {topicName}",
+    "TimesLearned" : "Iš viso mokytasi kartų",
+    "LastTime": "Paskutinio mokymosi data"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
