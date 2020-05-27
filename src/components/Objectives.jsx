@@ -72,7 +72,7 @@ class Objectives extends React.Component {
 		let result = await objectiveService.fetchObjectivesByUserId(id);
 		if (result.isSuccess === true) {
 			this.setState({
-				objectives: result.content.sort((a, b) => b.creationDate - a.creationDate)
+				objectives: result.content.sort((a, b) => moment.utc(b.creationDate) - moment.utc(a.creationDate))
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
