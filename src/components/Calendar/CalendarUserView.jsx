@@ -51,7 +51,7 @@ class CalendarUserView extends React.Component {
 			startDate: moment(today).startOf('month').subtract(7, 'days'),
 			endDate: moment(today).endOf('month').add(7, 'days'),
 			isCreating: false,
-			currentLearningDayId: null,
+			currentLearningDay: null,
 			isCurrentUser: false
 		};
 		
@@ -65,7 +65,12 @@ class CalendarUserView extends React.Component {
 	
 	
 	async componentDidMount() {
-		this.getData(this.state.startDate, this.state.endDate);
+		await this.getData(this.state.startDate, this.state.endDate);
+
+		//call manually, to handle current date
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		this.handleDaySelect({ start: today });
 	}
 
 	async componentDidUpdate(prevProps) {
@@ -79,14 +84,13 @@ class CalendarUserView extends React.Component {
 		this.setState({
 			isCurrentUser: id === auth.user.id
 		});
+
 		const result = await learningDayService.fetchLearningDaysByUserIdWithPeriod(id, startDate, endDate);
 		if (result.isSuccess === true) {
 
-			let currentLearningDay = result.content.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(this.state.day).format("YYYY-MM-DD"));
 			this.setState({
 				learningDays: result.content,
-				events: result.content.map(function (value) { return value.date }),
-				currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null
+				events: result.content.map(function (value) { return value.date })
 			});
 			this.initUI();
 		} else {
@@ -186,23 +190,35 @@ class CalendarUserView extends React.Component {
 		if (this.dateNotEmpty(this.state.day) && this.state.isCreating) {
 			return (
 				<>
-					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true} learningDayId={this.state.currentLearningDayId}/>
+					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true} learningDayId={this.state.currentLearningDay.id}/>
 				</>
 			);
 		}
 
 		if (this.dateNotEmpty(this.state.day)) {
-			if (this.state.isCurrentUser) {
+
+			//normalize dates
+			let selectedDate = this.state.day;
+			let selectedDateDate = new Date(Date.parse(selectedDate));
+			selectedDateDate.setHours(0, 0, 0, 0);
+
+			let currentDate = new Date();
+			let currentDateDate = new Date(Date.parse(currentDate));
+			currentDateDate.setHours(0, 0, 0, 0);
+
+			//check if current day or future day, otherwise don't allow to edit
+			//same day is still allowed, so compare only year-month-day
+			if (this.state.isCurrentUser && selectedDateDate >= currentDateDate) {
 				return (
 					<>
-						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
 						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>{languageService.translate("Edit")}</button>
 					</>
 				);
 			} else {
 				return (
 					<>
-						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDayId} />
+						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
 					</>
 				);
 			}
@@ -243,10 +259,22 @@ class CalendarUserView extends React.Component {
 	}
 	
 	dateNotEmpty(date) {
-		
+
+		if (this.state.currentLearningDay) {
+			let currentLearningDayDate = new Date(Date.parse(this.state.currentLearningDay.date));
+			currentLearningDayDate.setHours(0, 0, 0, 0);
+
+			let dateDate = new Date(Date.parse(date));
+			dateDate.setHours(0, 0, 0, 0);
+
+			if (currentLearningDayDate.getTime() === dateDate.getTime()) {
+				return true;
+			}
+		}
+
 		for (const eventDay of this.state.events) {
 			
-			let eventDateObj = new Date(Date.parse(eventDay))
+			let eventDateObj = new Date(Date.parse(eventDay));
 			eventDateObj.setHours(0,0,0,0);
 			
 			if (date.getTime() === eventDateObj.getTime()) {
@@ -258,7 +286,7 @@ class CalendarUserView extends React.Component {
 	}
 	
 	handleEnterEditMode() {
-		this.setState({isCreating: true});
+		this.setState({ isCreating: true });
 	}
 	
 	handleExitEditMode() {
@@ -268,7 +296,7 @@ class CalendarUserView extends React.Component {
 	
 	handleDaySelect(slotInfo) {
 		let currentLearningDay = this.state.learningDays.filter(d => moment(d.date).format("YYYY-MM-DD") === moment(slotInfo.start).format("YYYY-MM-DD"));
-		this.setState({ day: slotInfo.start, isCreating: false, currentLearningDayId: currentLearningDay.length > 0 ? currentLearningDay[0].id : null });
+		this.setState({ day: slotInfo.start, isCreating: false, currentLearningDay: currentLearningDay[0] });
 	}
 
 	handleDateRangeChange(range) {

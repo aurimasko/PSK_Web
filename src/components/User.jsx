@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck } from '@fortawesome/free-solid-svg-icons'
+import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck, faRemoveFormat, faCross, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 import { roleService } from "../services/roleService.js";
@@ -25,6 +25,7 @@ class User extends React.Component {
 		this.notifRef = React.createRef();
 		this.handleEnableClicked = this.handleEnableClicked.bind(this);
 		this.handleDisableClicked = this.handleDisableClicked.bind(this);
+		this.handleRemoveLearningDayLimitClicked = this.handleRemoveLearningDayLimitClicked.bind(this);
 	}
 	
 	async componentDidMount() {
@@ -48,6 +49,12 @@ class User extends React.Component {
 		} else {
 			let result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
+
+				if (result.content.length === 0) {
+					this.props.history.push("/notfound");
+					return;
+				}
+
 				this.setState({
 					user: result.content[0]
 				});
@@ -130,14 +137,23 @@ class User extends React.Component {
 			);
 		}
 
-		if (this.canChangeSupervisor()) {
+		//if can edit and has supervisor, display it
+		if (this.state.user.superVisorId && this.canChangeSupervisor()) {
 			return (
 				<div>
-					<strong>Supervisor: </strong>
+					<strong>{languageService.translate("User.SuperVisor")}: {this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : ""}</strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
 						{languageService.translate("Edit")}
 					</Link>
+				</div>
+			);
+		}
+		//if only has supervisor
+		else if (this.state.user.superVisorId) {
+			return (
+				<div>
+					<strong>{languageService.translate("User.SuperVisor")}: { this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : "" }</strong>
 				</div>
 			);
 		} else {
@@ -187,11 +203,11 @@ class User extends React.Component {
 	}
 
 	canDisableEnableUser() {
-		//only super visor can enable or disable user
-		if (this.state.user.superVisorId === auth.user.id)
+		//any user, that can access, can enable/disable
+		//except for current user
+		if(auth.user.id !== this.state.user.id)
 			return true;
-		else
-			return false;
+		return false;
 	}
 	
 	renderMainButtons() {
@@ -249,12 +265,30 @@ class User extends React.Component {
 
 	renderChangeLearningDayLimitButton() {
 		if (this.canChangeLearningDayLimit()) {
-			return (
-				<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
-					<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-					{languageService.translate("Edit")}
-				</Link>
-			);
+			//if not admin, admin cannot remove learning day limit
+			if (this.state.user.superVisorId) {
+				return (
+					<>
+						<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
+							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+							{languageService.translate("Edit")}
+						</Link>
+						<Link className="unbold margin-right-32 margin-top-8" onClick={this.handleRemoveLearningDayLimitClicked}>
+							<FontAwesomeIcon className="margin-right-4" icon={faWindowClose} />
+							{languageService.translate("Remove")}
+						</Link>
+					</>
+				);
+			} else {
+				return (
+					<>
+						<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
+							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
+							{languageService.translate("Edit")}
+						</Link>
+					</>
+				);
+			}
 		} else {
 			return "";
 		}
@@ -452,6 +486,28 @@ class User extends React.Component {
 					enableDisableButtonEnabled: true
 				});
 			});
+	}
+
+	handleRemoveLearningDayLimitClicked(event) {
+		let userToUpdate = this.state.user;
+
+		userToUpdate.learningDayLimitPerQuarter = 0;
+
+		userService.updateUser(userToUpdate)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.notifRef.current.addNotification({ text: languageService.translate("ChangeLearningDayLimit.RemoveSuccessMessage"), isSuccess: true });
+					this.getData()
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+				}
+
+				this.setState({
+					isChangeButtonEnabled: true
+				});
+			});
+
+		event.preventDefault();
 	}
 }
 

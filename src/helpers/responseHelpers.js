@@ -1,23 +1,26 @@
 export const responseHelpers = {
 	convertErrorArrayToString(data) {
 
+		let errorMessages = data.errorMessages || data.ErrorMessages;
+		let errorCodes = data.errorCodes || data.ErrorCodes;
+
 		//to avoid errors
-		if (!data.errorMessages)
-			data.errorMessages = [];
+		if (!errorMessages)
+			errorMessages = [];
 
-		if (!data.errorCodes)
-			data.errorCodes = [];
+		if (!errorCodes)
+			errorCodes = [];
 
-		if (data.errorMessages.length === 0) {
-			if (data.errorCodes.indexOf("ConcurrencyException") !== -1) {
+		if (errorMessages.length === 0) {
+			if (errorCodes.indexOf("ConcurrencyException") !== -1) {
 				//Add proper message for concurrency error
-				data.errorMessages.push("Entity has already been changed.");
+				errorMessages.push("Entity has already been changed.");
 			//When no error is returned, show generic message
 			} else {
-				data.errorMessages.push("An error has occurred.");
+				errorMessages.push("An error has occurred.");
 			}
 		}
 
-		return data.errorMessages.join(" <br/> ");
+		return errorMessages.join(" <br/> ");
 	}
 }

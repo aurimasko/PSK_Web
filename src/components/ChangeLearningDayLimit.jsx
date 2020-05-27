@@ -96,8 +96,8 @@ class ChangeLearningDayLimit extends React.Component {
 							<label>
 								{languageService.translate("ChangeLearningDayLimit.LearningDayLimit")}
 								
-								{/*if admin show warning message*/!this.state.user.superVisorId ? <div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.AdminWarningMessage")} </div> : <div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.WarningMessage")} </div>}
-								<input required type="number" value={this.state.newLearningDayLimit} onChange={this.handleLearningDayLimitChange} />
+								{/*if admin show warning message*/!this.state.user.superVisorId ? <div className="container" style={{ color: "red" }}> {languageService.translate("ChangeLearningDayLimit.AdminWarningMessage")} </div> : "" }
+								<input required type="number" min="1" max="6" value={this.state.newLearningDayLimit} onChange={this.handleLearningDayLimitChange} />
 							</label>
 							<hr />
 							{this.renderChangeButton()}

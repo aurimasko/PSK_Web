@@ -57,6 +57,12 @@ class Objectives extends React.Component {
 		} else {
 			let result = await userService.fetchUserById(id);
 			if (result.isSuccess === true) {
+
+				if (result.content.length === 0) {
+					this.props.history.push("/notfound");
+					return;
+				}
+
 				this.setState({
 					user: result.content[0]
 				});
@@ -72,7 +78,7 @@ class Objectives extends React.Component {
 		let result = await objectiveService.fetchObjectivesByUserId(id);
 		if (result.isSuccess === true) {
 			this.setState({
-				objectives: result.content.sort((a, b) => b.creationDate - a.creationDate)
+				objectives: result.content.sort((a, b) => moment.utc(b.creationDate) - moment.utc(a.creationDate))
 			});
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
@@ -80,16 +86,12 @@ class Objectives extends React.Component {
 	}
 
 	renderAddButton() {
-		//current user cannot create objectives for himself
-		if (auth.user.id === this.state.user.id) {
-			return "";
-		} else {
-			return (
-				<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
-					{languageService.translate("Objectives.AddNew")}
-				</Link>
-			);
-		}
+		//any user that can access can add
+		return (
+			<Link className="button primary margin-top-32" to={"/user/" + this.state.user.id + "/objectives/add"}>
+				{languageService.translate("Objectives.AddNew")}
+			</Link>
+		);
 	}
 
 	render() {
@@ -113,10 +115,8 @@ class Objectives extends React.Component {
 								{languageService.translate("Objectives.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
 							</h1>
 						</div>
-
-						{this.renderObjectivesList()}
-
 						{this.renderAddButton()}
+						{this.renderObjectivesList()}
 					</div>
 
 					<ObjectiveHistoryModal
@@ -267,7 +267,7 @@ class Objectives extends React.Component {
 		let result = await objectiveChangeService.fetchObjectiveChangesForObjective(id);
 		if (result.isSuccess === true) {
 			let selectedObjective = this.state.objectives.find(x => x.id === id);
-			let historyList = result.content.sort((a, b) => b.creationDate - a.creationDate);
+			let historyList = result.content.sort((a, b) => moment.utc(b.creationDate) - moment.utc(a.creationDate));
 
 			//add creation record if doesn't exists
 			var filteredHistoryList = historyList.filter((h) => h.oldState === null);
@@ -275,8 +275,8 @@ class Objectives extends React.Component {
 			let finalHistoryList = [];
 			if (filteredHistoryList.length === 0) {
 				let creationRecord = {
-					oldState: "-",
-					newState: languageService.translate("Objectives.Created"),
+					oldState: null,
+					newState: "Created",
 					objectiveId: id,
 					creationDate: selectedObjective.creationDate,
 					creator: selectedObjective.creator

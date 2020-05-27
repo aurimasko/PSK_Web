@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { languageService } from "../services/languageService.js";
+import ConcurrencyErrorModal from './ConcurrencyErrorModal';
 
 class EditUser extends React.Component {
 
@@ -20,13 +21,24 @@ class EditUser extends React.Component {
 			newFirstName: null,
 			newLastName: null,
 			newSendLearningDayByEmail: false,
-			isUpdateButtonEnabled: true
+			isUpdateButtonEnabled: true,
+			//for concurrency
+			isConcurrencyModalActive: false,
+			concurrencyUser: null,
+			concurrencyEmail: "",
+			concurrencyFirstName: "",
+			concurrencyLastName: "",
+			concurrencyNewSendLearningDayByEmail: false,
+			concurrencyNewSendLearningDayByEmailChanged: false
 		}
 
 		this.handleEmailChange = this.handleEmailChange.bind(this);
 		this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
 		this.handleLastNameChange = this.handleLastNameChange.bind(this);
 		this.handleSendLearningDayByEmailChange = this.handleSendLearningDayByEmailChange.bind(this);
+		this.handleConcurrencyOverwrite = this.handleConcurrencyOverwrite.bind(this);
+		this.handleConcurrencyUpdateFields = this.handleConcurrencyUpdateFields.bind(this);
+		this.handleConcurrencyCompareChanges = this.handleConcurrencyCompareChanges.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 
 		this.notifRef = React.createRef();
@@ -102,24 +114,53 @@ class EditUser extends React.Component {
 									{languageService.translate("EditUser.ChangeEmailAddressWarning")}
 								</div>
 								<input required type="email" value={this.state.newEmail} onChange={this.handleEmailChange} />
+								{this.state.concurrencyEmail ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyEmail}
+									</div>
+									: ""}
 							</label>
 							<label>
 								{languageService.translate("EditUser.FirstName")}
-							<input required type="text" value={this.state.newFirstName} onChange={this.handleFirstNameChange} />
+								<input required type="text" value={this.state.newFirstName} onChange={this.handleFirstNameChange} />
+								{this.state.concurrencyFirstName ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyFirstName}
+									</div>
+									: ""}
 							</label>
 							<label>
 								{languageService.translate("EditUser.LastName")}
-							<input required type="text" value={this.state.newLastName} onChange={this.handleLastNameChange} />
+								<input required type="text" value={this.state.newLastName} onChange={this.handleLastNameChange} />
+								{this.state.concurrencyLastName ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyLastName}
+									</div>
+									: ""}
 							</label>
 							<label>
 								{languageService.translate("EditUser.SendLearningDayByEmail")}
 								<input type="checkbox" checked={this.state.newSendLearningDayByEmail} onChange={this.handleSendLearningDayByEmailChange} />
+								{this.state.concurrencyNewSendLearningDayByEmailChanged ?
+									<div style={{ color: "red" }}>
+										{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.concurrencyNewSendLearningDayByEmail ? languageService.translate("True") : languageService.translate("False")}
+									</div>
+									: ""}
 							</label>
 							<hr />
 
 							{this.renderUpdateButton()}
 						</form>
 					</div>
+
+
+					<ConcurrencyErrorModal
+						isEnabled={this.state.isConcurrencyModalActive}
+						handleOverwrite={this.handleConcurrencyOverwrite}
+						handleUpdateFields={this.handleConcurrencyUpdateFields}
+						handleCompareChanges={this.handleConcurrencyCompareChanges}
+					/>
+
 				</Layout>
 			);
 		}
@@ -139,6 +180,69 @@ class EditUser extends React.Component {
 
 	handleSendLearningDayByEmailChange(event) {
 		this.setState({ newSendLearningDayByEmail: event.target.checked });
+	}
+
+	handleConcurrencyCompareChanges(event) {
+
+		let user = this.state.concurrencyUser;
+
+		this.setState({
+			concurrencyFirstName: this.state.newFirstName === user.firstName ? "" : user.firstName,
+			concurrencyLastName: this.state.newLastName === user.lastName ? "" : user.lastName,
+			concurrencyEmail: this.state.newEmail === user.username ? "" : user.username,
+			concurrencyNewSendLearningDayByEmail: this.state.newSendLearningDayByEmail === user.sendLearningDaysByEmail ? this.state.newSendLearningDayByEmail : user.sendLearningDaysByEmail,
+			concurrencyNewSendLearningDayByEmailChanged: this.state.newSendLearningDayByEmail !== user.sendLearningDaysByEmail,
+			isConcurrencyModalActive: false
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.ValuesFromDatabaseLoaded"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyUpdateFields(event) {
+
+		let user = this.state.concurrencyUser;
+
+		this.setState({
+			user: user,
+			concurrencyUser: null,
+			newEmail: user.username,
+			newFirstName: user.firstName,
+			newLastName: user.lastName,
+			newSendLearningDayByEmail: user.sendLearningDaysByEmail,
+			isConcurrencyModalActive: false,
+			//clear fields
+			concurrencyEmail: "",
+			concurrencyFirstName: "",
+			concurrencyLastName: "",
+			concurrencyNewSendLearningDayByEmail: false,
+			concurrencyNewSendLearningDayByEmailChanged: false
+		});
+
+		this.notifRef.current.addNotification({ text: languageService.translate("ConcurrencyErrorModal.FieldsHaveBeenUpdated"), isSuccess: true });
+
+		event.preventDefault();
+	}
+
+	handleConcurrencyOverwrite(event) {
+
+		let concurrencyUser = this.state.concurrencyUser;
+		let currentUser = this.state.user;
+
+		//update row version
+		currentUser.rowVersion = concurrencyUser.rowVersion;
+
+		this.setState({
+			user: currentUser,
+			concurrencyUser: null,
+			isConcurrencyModalActive: false
+		});
+
+		//manually submit form
+		this.handleSubmit(event);
+
+		event.preventDefault();
 	}
 
 	handleSubmit(event) {
@@ -179,7 +283,15 @@ class EditUser extends React.Component {
 					//TODO: Add proper handling of concurrency exception
 
 				} else {
-					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					//handle concurrency error
+					if (data.errorCodes && data.errorCodes.indexOf("ConcurrencyException") > -1) {
+						this.setState({
+							isConcurrencyModalActive: true,
+							concurrencyUser: data.content
+						});
+					} else {
+						this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					}
 				}
 
 				this.setState({

@@ -4,7 +4,9 @@
     "Topics": "Topics",
     "Roles": "Roles",
     "Logout": "Logout",
-    "Back": "Back"
+    "Back": "Back",
+    "EnglishLanguage": "English",
+    "LithuanianLanguage": "Lithuanian"
   },
   "Footer": {
     "About": "About",
@@ -29,7 +31,8 @@
     "Enable": "Enable",
     "Disable": "Disable",
     "EnableSuccessMessage": "User has been enabled.",
-    "DisableSuccessMessage": "User has been disabled."
+    "DisableSuccessMessage": "User has been disabled.",
+    "SuperVisor": "Supervisor"
   },
   "ChangePassword": {
     "Title": "Change password",
@@ -195,7 +198,8 @@
     "LearningDayLimit": "Learning day limit",
     "WarningMessage": "Changing learning day limit to 0 will cause a default learning day limit to be applied.",
     "SuccessMessage": "Learning day limit has been changed successfully.",
-    "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!"
+    "AdminWarningMessage": "Changing learning day limit will cause learning day limit of all USERS (globally) to change!",
+    "RemoveSuccessMessage": "Learning day limit removed."
   },
   "ChangeTeamLearningDayLimit": {
     "Title": "Change your team learning day limit per quarter",
@@ -214,7 +218,10 @@
     "Explanation": "The data that you tried to change has been already changed by another user. Please choose how would you like to continue.",
     "Overwrite": "Overwrite changes",
     "UpdateFields": "Update my form fields",
-    "CompareChanges": "Compare changes"
+    "CompareChanges": "Compare changes",
+    "FieldsHaveBeenUpdated": "Fields have been updated",
+    "ValueFromDatabase": "New value",
+    "ValuesFromDatabaseLoaded": "New values have been loaded."
   },
   "Edit": "Edit",
   "None": "None",
@@ -225,5 +232,6 @@
   "Create": "Create",
   "NoChanges": "No changes",
   "False": "No",
-  "True": "Yes"
+  "True": "Yes",
+  "Remove": "Remove"
 }
