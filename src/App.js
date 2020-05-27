@@ -30,11 +30,20 @@ import ChangeSuperVisor from "./components/ChangeSuperVisor";
 import ChangeLearningDayLimit from "./components/ChangeLearningDayLimit";
 import ChangeTeamLearningDayLimit from "./components/Team/ChangeTeamLearningDayLimit";
 import AddTeamObjective from "./components/Team/AddTeamObjective";
+import TeamTopicsLearnedAndPlanned from "./components/TeamTopicsLearnedAndPlanned";
+import WhoLearnedTopicTeams from "./components/WhoLearnedTopicTeams";
+import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers";
+
 
 function App() {
 	return (
 		<Router>
 			<Switch>
+				
+				<AuthRoute path="/user/:id/team/topicslearnedandplanned" component={TeamTopicsLearnedAndPlanned} />
+				<AuthRoute path="/user/:id/team/wholearnedtopicteams/:topicId" component={WhoLearnedTopicTeams} />
+				<AuthRoute path="/user/:id/team/wholearnedtopicteammembers/:topicId" component={WhoLearnedTopicTeamMembers} />
+				
 				<AuthRoute path="/user/:id/calendar" component={CalendarUserView} />
 				<AuthRoute path="/user/:id/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/objectives/add" component={AddObjective} />
