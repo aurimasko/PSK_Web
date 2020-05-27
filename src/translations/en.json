@@ -64,7 +64,8 @@
     "Calendar": "Calendar",
     "LearnedTopics": "Learned topics",
     "AddObjective": "Add new objective",
-    "ChangeLimit": "Change learning day per quarter limit"
+    "ChangeLimit": "Change learning day per quarter limit",
+    "7Analysis": "7 analysis"
   },
   "AddTeamMember": {
     "Title": "Add new team member",
@@ -243,7 +244,11 @@
     "TitleTopic": "6 analysis"
   },
   "WhoLearnedTopicTeams": {
-    "Title": "Teams who were learning {topicName}"
+    "Title": "Teams who were learning {topicName}",
+    "SelectTopic": "Please select a topic.",
+    "NoUsersToShow": "No users found.",
+    "Topic": "Topic",
+    "TitleTopic": "7 analysis"
   },
   "Edit": "Edit",
   "None": "None",

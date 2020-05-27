@@ -41,7 +41,7 @@ function App() {
 			<Switch>
 				
 				<AuthRoute path="/user/:id/team/topicslearnedandplanned" component={TeamTopicsLearnedAndPlanned} />
-				<AuthRoute path="/user/:id/team/wholearnedtopicteams/:topicId" component={WhoLearnedTopicTeams} />
+				<AuthRoute path="/user/:id/team/wholearnedtopicteams" component={WhoLearnedTopicTeams} />
 				<AuthRoute path="/user/:id/wholearnedtopicteammembers" component={WhoLearnedTopicTeamMembers} />
 				
 				<AuthRoute path="/user/:id/calendar" component={CalendarUserView} />

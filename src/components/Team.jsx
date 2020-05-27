@@ -159,6 +159,14 @@ class Team extends React.Component {
 							{languageService.translate("Team.LearnedTopics")}
 						</Link>
 
+						{this.props.match.params.id === auth.user.id ? <Link className="button" to={"/user/me/team/wholearnedtopicteams"}>
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faClipboardList} size="4x" />
+							</div>
+							{languageService.translate("Team.7Analysis
+								")}
+						</Link> : ""}
+
 					</div>
 				</div>
 			);

@@ -64,7 +64,8 @@
     "Calendar": "Kalendorius",
     "LearnedTopics": "Išmoktos temos",
     "AddObjective": "Pridėti naują tikslą",
-    "ChangeLimit": "Pakeisti mokymosi dienų limitą"
+    "ChangeLimit": "Pakeisti mokymosi dienų limitą",
+    "7Analysis": "7 pjūvis"
   },
   "AddTeamMember": {
     "Title": "Pridėti naują komandos narį",
@@ -243,7 +244,11 @@
     "TitleTopic": "6 pjūvis"
   },
   "WhoLearnedTopicTeams": {
-    "Title": "Komandos kurios mokėsi {topicName}"
+    "Title": "Komandos kurios mokėsi {topicName}",
+    "SelectTopic": "Pasirinkite temą",
+    "NoUsersToShow": "Nėra ką rodyti",
+    "Topic": "Tema",
+    "TitleTopic": "7 pjūvis"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",

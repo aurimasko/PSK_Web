@@ -16,5 +16,17 @@ export const analysisService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async fetchLearnedTopicTeam(topicId) {
+		return await fetch(
+			endPoints.analysisAPIBaseEndPoint + "/LearningTopic/Team/" + topicId,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
 	}
 }
