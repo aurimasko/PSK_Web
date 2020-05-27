@@ -104,7 +104,7 @@ class WhoLearnedTopicTeams extends React.Component {
 						<>
 							<div className="flex-right">
 								<h1>
-									{languageService.translate("WhoLearnedTopicTeams.Title", { topicName: this.props.match.params.topicId })}
+									{languageService.translate("WhoLearnedTopicTeams.Title", { topicName: this.state.selectedTopic.name })}
 								</h1>
 							</div>
 							{this.renderTeamList()}
