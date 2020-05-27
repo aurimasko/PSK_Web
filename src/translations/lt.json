@@ -242,6 +242,9 @@
     "Topic": "Tema",
     "TitleTopic": "6 pjūvis"
   },
+  "WhoLearnedTopicTeams": {
+    "Title": "Komandos kurios mokėsi {topicName}"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

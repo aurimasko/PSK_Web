@@ -242,6 +242,9 @@
     "Topic": "Topic",
     "TitleTopic": "6 analysis"
   },
+  "WhoLearnedTopicTeams": {
+    "Title": "Teams who were learning {topicName}"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
