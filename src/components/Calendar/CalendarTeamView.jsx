@@ -10,11 +10,12 @@ import Loading from "../Loading";
 import { responseHelpers } from "../../helpers/responseHelpers.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
+import { languageService } from "../../services/languageService.js";
 
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import UserListSidebar from "./UserListSidebar";
-import { languageService } from "../../services/languageService.js";
+import CalendarLegend from "./CalendarLegend";
 
 moment.locale(languageService.getLanguage());
 const localizer = momentLocalizer(moment);
@@ -154,9 +155,9 @@ class CalendarTeamView extends React.Component {
 			return (
 				<Layout ref={this.notifRef}>
 
-					<div className="calendar-layout">
+					<div className="team-calendar-layout">
 						
-						<div className="cal-side-panel flex-down">
+						<div className="team-cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{languageService.translate("TeamCalendar.TeamMembers")}:
 							</h1>
@@ -169,27 +170,29 @@ class CalendarTeamView extends React.Component {
 						
 						<div className="flex-spacer" />
 
-						<div className="cal-main-panel">
-
+						<div className="team-cal-main-panel">
+						
 							<Calendar
 								localizer={localizer}
 								views={{ month: true }}
 								events={[]}
 								style={{ height: 500 }}
-
+								
 								dayPropGetter={(date) => this.setDayStyle(date)}
-
+								
 								selectable='ignoreEvents'
 								//selectable='true'
 								onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
 								onRangeChange={(range) => this.handleDateRangeChange(range)}
 							/>
-
+							
+							<CalendarLegend />
+							
 						</div>
 
 						<div className="flex-spacer" />
 
-						<div className="cal-side-panel flex-down">
+						<div className="team-cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{formatDate(this.state.day)}
 							</h1>

@@ -10,12 +10,13 @@ import Loading from "../Loading";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { languageService } from "../../services/languageService.js";
 
 import EmptySidebar from "./EmptySidebar";
 import DayContentSidebar from "./DayContentSidebar";
 import CreateFormSidebar from "./CreateFormSidebar";
-import { responseHelpers } from "../../helpers/responseHelpers.js";
-import { languageService } from "../../services/languageService.js";
+import CalendarLegend from "./CalendarLegend";
 
 moment.locale(languageService.getLanguage());
 const localizer = momentLocalizer(moment);
@@ -132,34 +133,44 @@ class CalendarUserView extends React.Component {
 				<Layout ref={this.notifRef}>
 
 					<div className="calendar-layout">
+						
+						<div className="cal-main-area">
+							
+							<div className="flex-spacer" />
+							
+							<div className="cal-main-panel-width">
+								
+								{this.props.match.params.id !== "me" && this.props.match.params.id !== auth.user.id ?
+									<Link className="cal-main-panel block" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}>
+										<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
+										{languageService.translate("UserCalendar.GoToUsersPage")}
+									</Link> : ""
+								}
+								
+								<div className="cal-main-panel">
+									<Calendar
+										localizer={localizer}
+										views={{ month: true }}
+										events={[]}
+										style={{ height: 500 }}
 
-						<div className="flex-spacer" />
+										dayPropGetter={(date) => this.setDayStyle(date)}
 
-						<div className="cal-main-panel">
-
-							{this.props.match.params.id !== "me" && this.props.match.params.id !== auth.user.id ?
-								<Link className="margin-bottom-16" to={"/user/" + this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id}>
-									<FontAwesomeIcon className="margin-right-8" icon={faAngleLeft} />
-									{languageService.translate("UserCalendar.GoToUsersPage")}
-								</Link> : ""
-							}
-							<Calendar
-								localizer={localizer}
-								views={{ month: true }}
-								events={[]}
-								style={{ height: 500 }}
-
-								dayPropGetter={(date) => this.setDayStyle(date)}
-
-								selectable='ignoreEvents'
-								//selectable='true'
-								onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
-								onRangeChange={(range) => this.handleDateRangeChange(range)}
-							/>
+										selectable='ignoreEvents'
+										//selectable='true'
+										onSelectSlot={(slotInfo) => this.handleDaySelect(slotInfo)}
+										onRangeChange={(range) => this.handleDateRangeChange(range)}
+									/>
+								</div>
+								
+								<CalendarLegend />
+							</div>
+							
+							<div className="flex-spacer" />
 							
 						</div>
 						
-						<div className="flex-spacer" />
+						
 						
 						<div className="cal-side-panel flex-down">
 							<h1 className="center unbold">
