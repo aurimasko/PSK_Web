@@ -339,7 +339,7 @@ p {
 	
 	.cal-main-panel-width {
 		flex-grow: 100;
-		max-width: 1200px;
+		max-width: 1300px;
 	}
 	
 	.cal-side-panel {
@@ -721,6 +721,68 @@ button.danger:hover, input.danger:hover, a.button.danger:hover {
 button.danger:active, input.danger:active, a.button.danger:active {
 	background-color: var(--color-bg-danger-active);
 	text-decoration: none;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+
+/* Select tag : */
+
+
+select {
+	display: block;
+	
+	font-size: 20px;
+	
+	color: var(--color-fg-regular);
+	background-color: #00000000;
+	
+	padding: 12px 32px 12px 12px;
+	
+	width: 100%;
+	margin: 0;
+	
+	border: 2px solid var(--color-fg-regular);
+	
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	
+	background-image: url("/angle-down-solid-regular.png");
+	background-repeat: no-repeat;
+	background-position: right .7em top 50%, 0 0;
+	background-size: .65em auto;
+}
+
+select:hover {
+	background-color: var(--color-bg-surface-hover);
+}
+
+select:active {
+	background-color: var(--color-bg-surface-active);
+}
+
+
+select.primary {
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary);
+	border: none;
+	background-image: url("/angle-down-solid-primary-light.png");
+}
+
+select.primary:hover {
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary-hover);
+}
+
+select.primary:active {
+	color: var(--color-fg-primary);
+	background-color: var(--color-bg-primary-active);
+}
+
+select option {
+	font-weight:normal;
 }
 
 
