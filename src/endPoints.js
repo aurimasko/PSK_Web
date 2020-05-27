@@ -9,6 +9,7 @@ const topicAPIBaseEndPoint = apiBaseEndPoint + "/Topics";
 const topicChangesAPIBaseEndPoint = apiBaseEndPoint + "/TopicChanges";
 const objectiveAPIBaseEndPoint = apiBaseEndPoint + "/Objective";
 const objectiveChangesAPIBaseEndPoint = apiBaseEndPoint + "/ObjectiveChange";
+const analysisAPIBaseEndPoint = apiBaseEndPoint + "/Analysis";
 
 module.exports = {
     identityAPITokenEndPoint: identityAPITokenEndPoint,
@@ -19,5 +20,6 @@ module.exports = {
     topicAPIBaseEndPoint: topicAPIBaseEndPoint,
     topicChangesAPIBaseEndPoint: topicChangesAPIBaseEndPoint,
     objectiveAPIBaseEndPoint: objectiveAPIBaseEndPoint,
-    objectiveChangesAPIBaseEndPoint: objectiveChangesAPIBaseEndPoint
+    objectiveChangesAPIBaseEndPoint: objectiveChangesAPIBaseEndPoint,
+    analysisAPIBaseEndPoint: analysisAPIBaseEndPoint
 }

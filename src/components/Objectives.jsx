@@ -96,7 +96,11 @@ class Objectives extends React.Component {
 
 	render() {
 		if (this.state.user === null || this.state.objectives === null) {
-			return <Loading />
+			return (
+				<Layout ref={this.notifRef}>
+					<Loading showText={true} />
+				</Layout>
+			);
 		} else {
 			return (
 				<Layout ref={this.notifRef}>
