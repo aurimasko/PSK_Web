@@ -118,7 +118,7 @@ class DayContentSidebar extends React.Component {
 					</select>
 					{this.state.concurrencyTopics ?
 						<div style={{ color: "red" }}>
-							{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.topics.filter((t) => this.state.concurrencyTopics.indexOf(t.id) > -1).map((t) => t.name)}
+							{languageService.translate("ConcurrencyErrorModal.ValueFromDatabase")} : {this.state.topics.filter((t) => this.state.concurrencyTopics.indexOf(t.id) > -1).map((t) => t.name + " ")}
 						</div>
 						: ""}
 				</label>
@@ -234,24 +234,24 @@ class DayContentSidebar extends React.Component {
 
 		let learningDay = this.state.concurrencyLearningDay;
 		let concurrencyTopics = learningDay.topicsId;
-		let selectedTopics = this.state.selectedTopics;
+		let selectedTopics = this.state.selectedTopics.map((t) => t.id);
 
 		//to avoid errors
 		if (!concurrencyTopics)
 			concurrencyTopics = [];
 
 		let hasTopicsChanged = false;
-		
+
 		//compare lists
 		for (let i = 0; i < concurrencyTopics.length; i++)
-			if (!selectedTopics.includes(concurrencyTopics[i])) {
+			if (selectedTopics.indexOf(concurrencyTopics[i]) == -1) {
 				hasTopicsChanged = true;
 				break;
 			}
 
 
 		this.setState({
-			concurrencyComments: this.state.comment === learningDay.comment ? "" : learningDay.comment,
+			concurrencyComments: this.state.comment === learningDay.comments ? "" : learningDay.comments,
 			concurrencyTopics: hasTopicsChanged ? concurrencyTopics : null,
 			isConcurrencyModalActive: false
 		});
