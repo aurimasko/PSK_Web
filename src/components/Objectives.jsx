@@ -115,10 +115,8 @@ class Objectives extends React.Component {
 								{languageService.translate("Objectives.Title", { name: this.state.user.firstName + " " + this.state.user.lastName })}
 							</h1>
 						</div>
-
-						{this.renderObjectivesList()}
-
 						{this.renderAddButton()}
+						{this.renderObjectivesList()}
 					</div>
 
 					<ObjectiveHistoryModal
