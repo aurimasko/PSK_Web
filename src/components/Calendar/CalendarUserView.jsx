@@ -121,7 +121,7 @@ class CalendarUserView extends React.Component {
 	
 	
 	render() {
-		if (this.state.events === null || this.state.currentLearningDay === null) {
+		if (this.state.events === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -188,39 +188,47 @@ class CalendarUserView extends React.Component {
 
 		//editing
 		if (this.dateNotEmpty(this.state.day) && this.state.isCreating) {
-			return (
-				<>
-					<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true} learningDayId={this.state.currentLearningDay.id}/>
-				</>
-			);
-		}
-
-		if (this.dateNotEmpty(this.state.day)) {
-
-			//normalize dates
-			let selectedDate = this.state.day;
-			let selectedDateDate = new Date(Date.parse(selectedDate));
-			selectedDateDate.setHours(0, 0, 0, 0);
-
-			let currentDate = new Date();
-			let currentDateDate = new Date(Date.parse(currentDate));
-			currentDateDate.setHours(0, 0, 0, 0);
-
-			//check if current day or future day, otherwise don't allow to edit
-			//same day is still allowed, so compare only year-month-day
-			if (this.state.isCurrentUser && selectedDateDate >= currentDateDate) {
-				return (
-					<>
-						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
-						<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>{languageService.translate("Edit")}</button>
-					</>
-				);
+			if (this.state.currentLearningDay === null) {
+				return <Loading />;
 			} else {
 				return (
 					<>
-						<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
+						<CreateFormSidebar handleExitEditMode={this.handleExitEditMode} notifRef={this.notifRef} date={this.state.day} isEditing={true} learningDayId={this.state.currentLearningDay.id} />
 					</>
 				);
+			}
+		}
+
+		if (this.dateNotEmpty(this.state.day)) {
+			if (this.state.currentLearningDay === null) {
+				return <Loading />;
+			}else {
+				//normalize dates
+				let selectedDate = this.state.day;
+				let selectedDateDate = new Date(Date.parse(selectedDate));
+				selectedDateDate.setHours(0, 0, 0, 0);
+
+				let currentDate = new Date();
+				let currentDateDate = new Date(Date.parse(currentDate));
+				currentDateDate.setHours(0, 0, 0, 0);
+
+				//check if current day or future day, otherwise don't allow to edit
+				//same day is still allowed, so compare only year-month-day
+				if (this.state.isCurrentUser && selectedDateDate >= currentDateDate) {
+					return (
+						<>
+							<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
+							<button className="primary margin-top-24" onClick={this.handleEnterEditMode}>{languageService.translate("Edit")}</button>
+						</>
+					);
+
+				} else {
+					return (
+						<>
+							<DayContentSidebar date={this.state.day} notifRef={this.notifRef} currentLearningDayId={this.state.currentLearningDay.id} />
+						</>
+					);
+				}
 			}
 		}
 		else {

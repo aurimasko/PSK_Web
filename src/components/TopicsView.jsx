@@ -85,7 +85,7 @@ class TopicsView extends React.Component {
 							{languageService.translate("Topics.Title")}:
 						</h1>
 
-						<Link className="button primary margin-top-16" to={"/topic/add"}>
+						<Link className="button primary margin-top-16 margin-bottom-16" to={"/topic/add"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPlus} />
 							{languageService.translate("Add")}
 						</Link>
