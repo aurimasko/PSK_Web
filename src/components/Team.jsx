@@ -163,8 +163,7 @@ class Team extends React.Component {
 							<div className="w100 margin-vertical-16">
 								<FontAwesomeIcon icon={faClipboardList} size="4x" />
 							</div>
-							{languageService.translate("Team.7Analysis
-								")}
+							{languageService.translate("Team.7Analysis")}
 						</Link> : ""}
 
 					</div>
