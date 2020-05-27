@@ -145,7 +145,8 @@
     "Next": ">",
     "Teammates": "Teammates",
     "TeamMembers": "Team members",
-    "ToggleEveryone": "Toggle everyone"
+    "ToggleEveryone": "Toggle everyone",
+    "GoToTeamPage": "Go to this team's page"
   },
   "CreateLearningDay": {
     "Topics": "Learning day topics",

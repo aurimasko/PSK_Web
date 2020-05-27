@@ -145,7 +145,8 @@
     "Next": ">",
     "Teammates": "Komandos nariai",
     "TeamMembers": "Komandos nariai",
-    "ToggleEveryone": "Pažymėti visus"
+    "ToggleEveryone": "Pažymėti visus",
+    "GoToTeamPage": "Eiti į šios komandos puslapį"
   },
   "CreateLearningDay": {
     "Topics": "Mokymosi dienos temos",
