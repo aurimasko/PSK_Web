@@ -1,14 +1,14 @@
 import React from 'react';
-import Layout from "./Layout";
+import Layout from "../Layout";
 import { Link } from "react-router-dom";
-import Loading from "../components/Loading";
-import { topicService } from "../services/topicService.js";
-import { responseHelpers } from "../helpers/responseHelpers.js";
-import { languageService } from "../services/languageService.js";
+import Loading from "../../components/Loading";
+import { topicService } from "../../services/topicService.js";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { languageService } from "../../services/languageService.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons'
-import { topicFormatHelpers } from "../helpers/topicFormatHelpers.js";
-
+import { topicFormatHelpers } from "../../helpers/topicFormatHelpers.js";
+import NestedTopicList from "./NestedTopicList";
 
 class TopicsView extends React.Component {
 	
@@ -50,7 +50,7 @@ class TopicsView extends React.Component {
 	
 	
 	render() {
-		if (this.state.originalTopicData == null) {
+		if (this.state.originalTopicData === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -68,9 +68,8 @@ class TopicsView extends React.Component {
 							<FontAwesomeIcon className="margin-right-4" icon={faPlus} />
 							{languageService.translate("Add")}
 						</Link>
-
-						{this.renderNestedTopics(this.state.formattedTopicData)}
-						{this.renderFailedTopics()}
+						
+						<NestedTopicList topics={this.state.originalTopicData} />
 						
 					</div>
 				</Layout>

@@ -14,7 +14,7 @@ import CalendarTeamView from "./components/Calendar/CalendarTeamView";
 import Role from "./components/Role";
 import RolesList from "./components/RolesList";
 import Topic from "./components/Topic";
-import TopicsView from "./components/TopicsView";
+import TopicsView from "./components/Topics/TopicsView";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AccessDenied from "./components/AccessDenied";
@@ -30,7 +30,7 @@ import ChangeSuperVisor from "./components/ChangeSuperVisor";
 import ChangeLearningDayLimit from "./components/ChangeLearningDayLimit";
 import ChangeTeamLearningDayLimit from "./components/Team/ChangeTeamLearningDayLimit";
 import AddTeamObjective from "./components/Team/AddTeamObjective";
-import TeamTopicsLearnedAndPlanned from "./components/TeamTopicsLearnedAndPlanned";
+import TeamLearningPlan from "./components/Topics/TeamLearningPlan";
 import WhoLearnedTopicTeams from "./components/WhoLearnedTopicTeams";
 import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers";
 import About from "./components/About";
@@ -44,7 +44,7 @@ function App() {
 		<Router>
 			<Switch>
 				
-				<AuthRoute path="/user/:id/team/topicslearnedandplanned" component={TeamTopicsLearnedAndPlanned} />
+				<AuthRoute path="/user/:id/team/learningplan" component={TeamLearningPlan} />
 				<AuthRoute path="/user/:id/team/wholearnedtopicteams" component={WhoLearnedTopicTeams} />
 				<AuthRoute path="/user/:id/wholearnedtopicteammembers" component={WhoLearnedTopicTeamMembers} />
 				

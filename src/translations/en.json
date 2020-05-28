@@ -270,6 +270,10 @@
     "Title": "Help",
     "HelpText": "If you have any questions you can contactus us through this email address:"
   },
+  "TeamLearningPlan": {
+    "Learned": "Learned topic list",
+    "Planned": "Planned topics"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",

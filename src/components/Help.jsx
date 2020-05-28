@@ -26,7 +26,7 @@ class About extends React.Component {
 					</div>
 					
 					<p className="margin-16 margin-bottom-8">
-						{languageService.translate("Help.HelpText")} <a className="" href="confictura@gmail.com">confictura@gmail.com</a>
+						{languageService.translate("Help.HelpText")} <a className="" href="confiktura@gmail.com">confiktura@gmail.com</a>
 					</p>
 					
 					
