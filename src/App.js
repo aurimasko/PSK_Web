@@ -35,6 +35,7 @@ import WhoLearnedTopicTeams from "./components/WhoLearnedTopicTeams";
 import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers";
 import About from "./components/About";
 import Help from "./components/Help";
+import UserLearningPath from "./components/LearningPath/UserLearningPath";
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
 				<AuthRoute path="/user/:id/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/objectives/add" component={AddObjective} />
 				<AuthRoute path="/user/:id/objectives" component={Objectives} />
+				<AuthRoute path="/user/:id/learningpath" component={UserLearningPath} />
 				<AuthRoute path="/user/:id/team/calendar" component={CalendarTeamView} />
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
