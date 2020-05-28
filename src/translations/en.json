@@ -101,7 +101,11 @@
   "Topic": {
     "CreatedOn": "Created on",
     "ParentTopic": "Parent topic",
-    "ChangesJournal": "Changes journal"
+    "ChangesJournal": "Changes journal",
+    "LearnTopic": "Learn",
+    "UnlearnTopic": "Forget",
+    "LearnSuccessMessage": "Topic learned.",
+    "UnlearnSuccessMessage": "Topic unlearned."
   },
   "TopicChangesJournal": {
     "Date": "Date",

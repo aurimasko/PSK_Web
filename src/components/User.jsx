@@ -347,7 +347,7 @@ class User extends React.Component {
 						<strong>{languageService.translate("User.EmailAddress")}: </strong> {this.state.user.username}
 					</div>
 					<div>
-						<strong>{languageService.translate("User.RegistrationDate")}: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD hh:mm')}
+						<strong>{languageService.translate("User.RegistrationDate")}: </strong> {moment.utc(this.state.user.creationDate).local().format('YYYY-MM-DD HH:mm')}
 					</div>
 					<div>
 						<strong>{languageService.translate("User.LearningDayLimit")}: </strong> {this.state.user.learningDayLimitPerQuarter} {this.renderChangeLearningDayLimitButton()}
