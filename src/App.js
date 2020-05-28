@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import AuthRoute from "./components/AuthRoute";
-import User from "./components/User";
+import User from "./components/User/User";
 import Team from "./components/Team";
 import CalendarUserView from "./components/Calendar/CalendarUserView";
 import CalendarTeamView from "./components/Calendar/CalendarTeamView";
@@ -19,7 +19,7 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AccessDenied from "./components/AccessDenied";
 import AddTeamMember from "./components/AddTeamMember";
-import EditUser from "./components/EditUser";
+import EditUser from "./components/User/EditUser";
 import ChangePassword from "./components/ChangePassword";
 import ChangeRole from "./components/ChangeRole";
 import AddTopic from "./components/AddTopic";
