@@ -211,7 +211,7 @@ class CalendarUserView extends React.Component {
 		}
 
 		if (this.dateNotEmpty(this.state.day)) {
-			if (this.state.currentLearningDay === null) {
+			if (this.state.currentLearningDay === undefined || this.state.currentLearningDay === null) {
 				return <Loading />;
 			}else {
 				//normalize dates
@@ -310,7 +310,8 @@ class CalendarUserView extends React.Component {
 	
 	handleExitEditMode() {
 		this.setState({ isCreating: false });
-		this.getData(this.state.startDate, this.state.endDate);
+		this.getData(this.state.startDate, this.state.endDate)
+			.then(() => this.handleDaySelect({ start: this.state.day }));
 	}
 	
 	handleDaySelect(slotInfo) {
@@ -323,7 +324,8 @@ class CalendarUserView extends React.Component {
 			startDate: range.start,
 			endDate: range.end
 		});
-		this.getData(range.start, range.end);
+		this.getData(range.start, range.end)
+			.then(() => this.handleDaySelect({ start: this.state.day }));
 	}
 }
 
