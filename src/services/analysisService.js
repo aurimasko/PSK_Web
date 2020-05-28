@@ -28,5 +28,17 @@ export const analysisService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async fetchTopicsUser(userId) {
+		return await fetch(
+			endPoints.analysisAPIBaseEndPoint + "/UserTopics?userId" + userId,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
 	}
 }
