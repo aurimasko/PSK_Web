@@ -53,7 +53,6 @@ class TeamLearningPlan extends React.Component {
 		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
 		let result = await analysisService.fetchTopicsTeam(id);
 		if (result.isSuccess === true) {
-			alert(result.content.planningToLearnTopics.map((s) => s.topic.id));
 			this.setState({
 				learnedTopicsIds: result.content.planningToLearnTopics.map((s) => s.topic.id),
 				plannedTopics: result.content.planningToLearnTopics.map((s) => s.topic)
