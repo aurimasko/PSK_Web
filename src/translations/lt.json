@@ -100,7 +100,11 @@
   "Topic": {
     "CreatedOn": "Sukūrimo data",
     "ParentTopic": "Tėvinė tema",
-    "ChangesJournal": "Pakeitimų žurnalas"
+    "ChangesJournal": "Pakeitimų žurnalas",
+    "LearnTopic": "Išmokti",
+    "UnlearnTopic": "Pamiršti",
+    "LearnSuccessMessage": "Tema išmokta.",
+    "UnlearnSuccessMessage": "Tema pamiršta."
   },
   "TopicChangesJournal": {
     "Date": "Data",

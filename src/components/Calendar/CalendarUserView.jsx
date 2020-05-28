@@ -169,9 +169,7 @@ class CalendarUserView extends React.Component {
 							<div className="flex-spacer" />
 							
 						</div>
-						
-						
-						
+
 						<div className="cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{formatDate(this.state.day)}
@@ -324,8 +322,7 @@ class CalendarUserView extends React.Component {
 			startDate: range.start,
 			endDate: range.end
 		});
-		this.getData(range.start, range.end)
-			.then(() => this.handleDaySelect({ start: this.state.day }));
+		this.getData(range.start, range.end);
 	}
 }
 

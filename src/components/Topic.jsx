@@ -2,9 +2,10 @@ import React from 'react';
 import Layout from "./Layout";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import Loading from "../components/Loading";
 import { topicService } from "../services/topicService.js";
+import { learnedTopicService } from "../services/learnedTopicService.js";
 import { topicChangesService } from "../services/topicChangesService.js";
 import { responseHelpers } from "../helpers/responseHelpers.js";
 import moment from 'moment';
@@ -19,10 +20,14 @@ class Topic extends React.Component {
 		this.state = {
 			topic: null,
 			parentTopic: null,
-			topicChanges: null
+			topicChanges: null,
+			isTopicLearned: null,
+			learnedTopic: null
 		};
 
 		this.notifRef = React.createRef();
+		this.handleLearnTopicClicked = this.handleLearnTopicClicked.bind(this);
+		this.handleUnlearnTopicClicked = this.handleUnlearnTopicClicked.bind(this);
 	}
 
 	async componentDidMount() {
@@ -44,6 +49,7 @@ class Topic extends React.Component {
 			});
 			this.getParentTopic(result.content[0].parentId);
 			this.getTopicChanges(result.content[0].id);
+			this.getLearnedTopic(result.content[0].id);
 		} else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
@@ -77,6 +83,25 @@ class Topic extends React.Component {
 			this.setState({
 				parentTopic: {}
 			});
+		}
+	}
+
+	async getLearnedTopic(id) {
+		let result = await learnedTopicService.fetchLearnedTopic(id);
+		if (result.isSuccess === true) {
+			let content = result.content;
+			if (content === null || content.length === 0) {
+				this.setState({
+					isTopicLearned: false
+				});
+			} else {
+				this.setState({
+					isTopicLearned: true,
+					learnedTopic: result.content[0]
+				});
+			}
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 
@@ -144,6 +169,23 @@ class Topic extends React.Component {
 		}
 	}
 
+	renderLearnedTopic() {
+		if (this.state.isTopicLearned === null) {
+			return <Loading width={50} height={50} type={"balls"} />;
+		} else {
+			if (this.state.isTopicLearned === true) {
+				return (<Link className="unbold margin-right-32 margin-top-8" onClick={this.handleUnlearnTopicClicked}>
+					<FontAwesomeIcon className="margin-right-4" icon={faWindowClose} />
+					{languageService.translate("Topic.UnlearnTopic")}
+				</Link>);
+			} else {
+				return (<Link className="unbold margin-right-32 margin-top-8" onClick={this.handleLearnTopicClicked}>
+					<FontAwesomeIcon className="margin-right-4" icon={faWindowClose} />
+					{languageService.translate("Topic.LearnTopic")}
+				</Link>);
+			}
+		}
+	}
 
 	render() {
 		if (this.state.topic == null) {
@@ -165,8 +207,8 @@ class Topic extends React.Component {
 								<div className="flex-spacer"></div>
 							</div>
 
-
 							<h1>{this.state.topic.name}</h1>
+							{this.renderLearnedTopic()}
 						</div>
 
 						<Link className="button" to={"/topic/" + this.state.topic.id + "/edit"}>
@@ -187,6 +229,50 @@ class Topic extends React.Component {
 				</Layout>
 			);
 		}
+	}
+
+	handleLearnTopicClicked() {
+		this.setState({
+			isTopicLearned: null
+		});
+
+		learnedTopicService.learnTopic(new Date(), this.state.topic.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("Topic.LearnSuccessMessage"), isSuccess: true });
+					this.setState({
+						isTopicLearned: true
+					});
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					this.setState({
+						isTopicLearned: false
+					});
+				}
+			});
+	}
+
+	handleUnlearnTopicClicked() {
+		this.setState({
+			isTopicLearned: null
+		});
+
+		learnedTopicService.unlearnTopic(this.state.learnedTopic.id)
+			.then((data) => {
+				if (data.isSuccess) {
+					this.getData();
+					this.notifRef.current.addNotification({ text: languageService.translate("Topic.UnlearnSuccessMessage"), isSuccess: true });
+					this.setState({
+						isTopicLearned: false
+					});
+				} else {
+					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					this.setState({
+						isTopicLearned: true
+					});
+				}
+			});
 	}
 }
 
