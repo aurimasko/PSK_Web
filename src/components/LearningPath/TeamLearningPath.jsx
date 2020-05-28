@@ -3,9 +3,11 @@ import Graph from 'vis-react';
 import Layout from "../Layout";
 import Loading from "../../components/Loading";
 import { topicFormatHelpers } from "../../helpers/topicFormatHelpers.js";
+import { analysisService } from "../../services/analysisService.js";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { auth } from "../../services/auth.js";
 
-
-class TopicsView extends React.Component {
+class TeamLearningPath extends React.Component {
 	
 	constructor(props) {
 		
@@ -14,7 +16,7 @@ class TopicsView extends React.Component {
 		let style = window.getComputedStyle(document.documentElement);
 		
 		this.state = {
-			topics: null,
+			summaries: null,
 			options: {
 				autoResize: true,
 				height: "100%",
@@ -60,6 +62,28 @@ class TopicsView extends React.Component {
 		
 		this.handleClick = this.handleClick.bind(this);
 	}
+
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		let result = await analysisService.fetchTopicsTeam(id);
+		if (result.isSuccess === true) {
+			this.setState({
+				summaries: result.content.learnedTopicsSummary
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
 	
 	mapTopicsToGraph() {
 		
@@ -68,23 +92,23 @@ class TopicsView extends React.Component {
 		let edges = [];
 		let userNodes = [];
 		
-		const topicNodes = this.state.topics.map( (topic) => {
+		const topicNodes = this.state.summaries.map( (summary) => {
 			
-			if (topic.parentId !== null) {
-				edges.push({ from: topic.id, to: topic.parentId });
+			if (summary.topic.parentId !== null) {
+				edges.push({ from: summary.topic.id, to: summary.topic.parentId });
 			}
 			
-			let name = topic.name;
+			let name = summary.topic.name;
 			if (name.length > 38) {
 				name = name.slice(0, 35) + "...";
 			}
 			
 			let thisTopicNode = {
-				id: topic.id,
+				id: summary.topic.id,
 				label: name
 			};
 			
-			if (topic.learned) {
+			if (summary.topic.learned) {
 				thisTopicNode.color = {
 					background: style.getPropertyValue("--color-bg-primary"),
 					hover: style.getPropertyValue("--color-bg-primary-hover"),
@@ -97,19 +121,19 @@ class TopicsView extends React.Component {
 			}
 			
 			if (
-					topic.members !== undefined &&
-					topic.members !== null &&
-					topic.members.length > 0
+					summary.members !== undefined &&
+					summary.members !== null &&
+					summary.members.length > 0
 				) {
 				
 				let memberListString = "";
 				
-				topic.members.forEach((member) => {
+				summary.members.forEach((member) => {
 					memberListString = memberListString + "👤 " + member.firstName + " " + member.lastName + "\n";
 				});
 				
 				userNodes.push({
-					id: topic.id + "_USERS",
+					id: summary.topic.id + "_USERS",
 					label: memberListString.trim(),
 					color: {
 						border: style.getPropertyValue("--color-bg-empty"),
@@ -119,9 +143,10 @@ class TopicsView extends React.Component {
 					},
 					borderWidth: 3
 				});
+
 				edges.push({
-					from: topic.id + "_USERS",
-					to: topic.id,
+					from: summary.topic.id + "_USERS",
+					to: summary.topic.id,
 					arrows: {
 						to: {
 							enabled: false
@@ -140,7 +165,7 @@ class TopicsView extends React.Component {
 	}
 	
 	render() {
-		if (this.state.topics === null) {
+		if (this.state.summaries === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -165,9 +190,11 @@ class TopicsView extends React.Component {
 	}
 	
 	handleClick(event) {
-		this.props.history.push("/topic/" + event.nodes);
+		if (event.nodex.indexOf("_USERS") === 0) {
+			this.props.history.push("/topic/" + event.nodes);
+		}
 	}
 }
 
 
-export default TopicsView;
+export default TeamLearningPath;

@@ -40,5 +40,17 @@ export const analysisService = {
 				})
 			}
 		).then(response => { return response.json(); });
+	},
+	async fetchTopicsTeam(supervisorId) {
+		return await fetch(
+			endPoints.analysisAPIBaseEndPoint + "/TeamTopics?supervisorId" + supervisorId,
+			{
+				method: 'get',
+				headers: new Headers({
+					"Authorization": "Bearer " + auth.getAccessToken(),
+					"Accept-Language": languageService.getLanguage()
+				})
+			}
+		).then(response => { return response.json(); });
 	}
 }

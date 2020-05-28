@@ -61,6 +61,7 @@ class UserLearningPath extends React.Component {
 		
 		this.handleClick = this.handleClick.bind(this);
 	}
+
 	async componentDidMount() {
 		this.getData();
 	}
@@ -82,7 +83,6 @@ class UserLearningPath extends React.Component {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
-
 
 	mapTopicsToGraph() {
 		
