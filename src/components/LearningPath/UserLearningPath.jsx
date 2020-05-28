@@ -1,6 +1,8 @@
 import React from 'react';
 import Graph from 'vis-react';
 import Layout from "../Layout";
+import Loading from "../../components/Loading";
+import { topicFormatHelpers } from "../../helpers/topicFormatHelpers.js";
 
 
 class TopicsView extends React.Component {
@@ -12,21 +14,7 @@ class TopicsView extends React.Component {
 		let style = window.getComputedStyle(document.documentElement);
 		
 		this.state = {
-			graph: {
-				nodes: [
-					{ id: 1, label: 'Task 1' },
-					{ id: 2, label: 'Task 2' },
-					{ id: 3, label: 'Task 3' },
-					{ id: 4, label: 'Task 4' },
-					{ id: 5, label: 'Task 5' }
-				],
-				edges: [
-					{ from: 1, to: 2 },
-					{ from: 1, to: 3 },
-					{ from: 2, to: 4 },
-					{ from: 2, to: 5 }
-				]
-			},
+			topics: null,
 			options: {
 				autoResize: true,
 				height: "100%",
@@ -58,26 +46,85 @@ class TopicsView extends React.Component {
 			},
 			events: {
 				selectNode: (event) => this.handleClick(event)
+			},
+			physics: {
+				barnesHut: {
+					springLength: 160,
+					centralGravity: 0.1,
+					avoidOverlap: 1,
+					damping: 0.05
+				},
+				minVelocity: 2
 			}
 		}
 		
 		this.handleClick = this.handleClick.bind(this);
 	}
 	
+	mapTopicsToGraph() {
+		
+		let style = window.getComputedStyle(document.documentElement);
+		
+		let edges = [];
+		
+		const nodes = this.state.topics.map( (topic) => {
+			
+			if (topic.parentId !== null) {
+				edges.push({ from: topic.id, to: topic.parentId });
+			}
+			
+			if (topic.learned) {
+				return {
+					id: topic.id,
+					label: topic.name,
+					color: {
+						background: style.getPropertyValue("--color-bg-primary"),
+						hover: style.getPropertyValue("--color-bg-primary-hover"),
+						highlight: style.getPropertyValue("--color-bg-primary-active")
+					},
+					font: {
+						color: style.getPropertyValue("--color-fg-primary"),
+						strokeWidth: 0.5
+					}
+				};
+			}
+			else {
+				return {
+					id: topic.id,
+					label: topic.name
+				};
+			}
+		});
+		
+		return {
+			nodes: nodes,
+			edges: edges
+		};
+	}
+	
 	render() {
-		return (
-			<Layout noScroll={true}>
-				
-				<div className="graph-container">
-					<Graph
-						graph={this.state.graph}
-						options={this.state.options}
-						events={this.state.events}
-					/>
-				</div>
-				
-			</Layout>
-		);
+		if (this.state.topics === null) {
+			return (
+				<Layout ref={this.notifRef}>
+					<Loading showText={true} />
+				</Layout>
+			);
+		}
+		else {
+			return (
+				<Layout noScroll={true}>
+					
+					<div className="graph-container">
+						<Graph
+							graph={this.mapTopicsToGraph()}
+							options={this.state.options}
+							events={this.state.events}
+						/>
+					</div>
+					
+				</Layout>
+			);
+		}
 	}
 	
 	handleClick(event) {
