@@ -34,7 +34,8 @@
     "DisableSuccessMessage": "User has been disabled.",
     "SuperVisor": "Supervisor",
     "6Analysis": "6 Analysis",
-    "Path": "Learning path"
+    "Path": "Learning path",
+    "LearningPlan": "Learning plan"
   },
   "ChangePassword": {
     "Title": "Change password",

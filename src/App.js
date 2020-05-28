@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import AuthRoute from "./components/AuthRoute";
-import User from "./components/User";
+import User from "./components/User/User";
 import Team from "./components/Team";
 import CalendarUserView from "./components/Calendar/CalendarUserView";
 import CalendarTeamView from "./components/Calendar/CalendarTeamView";
@@ -19,7 +19,7 @@ import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import AccessDenied from "./components/AccessDenied";
 import AddTeamMember from "./components/AddTeamMember";
-import EditUser from "./components/EditUser";
+import EditUser from "./components/User/EditUser";
 import ChangePassword from "./components/ChangePassword";
 import ChangeRole from "./components/ChangeRole";
 import AddTopic from "./components/AddTopic";
@@ -31,6 +31,7 @@ import ChangeLearningDayLimit from "./components/ChangeLearningDayLimit";
 import ChangeTeamLearningDayLimit from "./components/Team/ChangeTeamLearningDayLimit";
 import AddTeamObjective from "./components/Team/AddTeamObjective";
 import TeamLearningPlan from "./components/Topics/TeamLearningPlan";
+import UserLearningPlan from "./components/Topics/UserLearningPlan";
 import WhoLearnedTopicTeams from "./components/WhoLearnedTopicTeams";
 import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers";
 import About from "./components/About";
@@ -43,8 +44,6 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				
-				<AuthRoute path="/user/:id/team/learningplan" component={TeamLearningPlan} />
 				<AuthRoute path="/user/:id/team/wholearnedtopicteams" component={WhoLearnedTopicTeams} />
 				<AuthRoute path="/user/:id/wholearnedtopicteammembers" component={WhoLearnedTopicTeamMembers} />
 				
@@ -53,12 +52,14 @@ function App() {
 				<AuthRoute path="/user/:id/objectives/add" component={AddObjective} />
 				<AuthRoute path="/user/:id/objectives" component={Objectives} />
 				<AuthRoute path="/user/:id/learningpath" component={UserLearningPath} />
+				<AuthRoute path="/user/:id/learningplan" component={UserLearningPlan} />
 				<AuthRoute path="/user/:id/team/calendar" component={CalendarTeamView} />
 				<AuthRoute path="/user/:id/team/topics" component={TopicsView} />
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
 				<AuthRoute path="/user/:id/team/changelimit" component={ChangeTeamLearningDayLimit} />
 				<AuthRoute path="/user/:id/team/addobjective" component={AddTeamObjective} />
 				<AuthRoute path="/user/:id/team/learningpath" component={TeamLearningPath} />
+				<AuthRoute path="/user/:id/team/learningplan" component={TeamLearningPlan} />
 				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id/changerole" component={ChangeRole} />

@@ -1,14 +1,14 @@
 import React from 'react';
-import { auth } from "../services/auth.js";
-import Layout from "./Layout";
-import { userService } from "../services/userService.js";
-import Loading from "../components/Loading";
-import { responseHelpers } from "../helpers/responseHelpers.js";
+import { auth } from "../../services/auth.js";
+import Layout from "../Layout";
+import { userService } from "../../services/userService.js";
+import Loading from "../../components/Loading";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { languageService } from "../services/languageService.js";
-import ConcurrencyErrorModal from './ConcurrencyErrorModal';
+import { languageService } from "../../services/languageService.js";
+import ConcurrencyErrorModal from '../ConcurrencyErrorModal';
 
 class EditUser extends React.Component {
 
