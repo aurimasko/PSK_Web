@@ -25,6 +25,11 @@
 	--color-bg-danger-hover: #EE0000;
 	--color-bg-danger-active: #FF0000;
 	
+	--color-fg-success: #FAFAFA;
+	--color-bg-success: #009900;
+	--color-bg-success-hover: #00AA00;
+	--color-bg-success-active: #00BB00;
+	
 	
 	box-sizing: border-box;
 	line-height: 1.5;
@@ -209,6 +214,36 @@ p {
 	padding: 2px 8px;
 	margin-left: 8px;
 	height: 30px;
+}
+
+.floating-notification {
+	margin-top: 16px;
+	position: fixed;
+	width: 100%;
+	z-index: 100;
+}
+
+.notification {
+	border: 2px solid var(--color-fg-regular);
+	max-width: 720px;
+}
+
+.notification.success {
+	color: var(--color-bg-success);
+	border: 2px solid var(--color-bg-success);
+}
+
+.notification.success .notif-btn {
+	color: var(--color-bg-success);
+}
+
+.notification.danger {
+	color: var(--color-bg-danger);
+	border: 2px solid var(--color-bg-danger);
+}
+
+.notification.danger .notif-btn {
+	color: var(--color-bg-danger);
 }
 
 .small-btn-noborder {

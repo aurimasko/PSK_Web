@@ -13,7 +13,7 @@ class Notifications extends React.Component {
 		
 		this.state = {
 			notifications: [],
-			textColor: "black"
+			type: "regular"
 		};
 	}
 	
@@ -25,19 +25,25 @@ class Notifications extends React.Component {
 		else {
 			const notifications = this.state.notifications.map( (notifText, index) => {
 					if (notifText !== null) {
-						return <div key={index} className="flex-right container">
-							<p style={{ color: this.state.textColor }} dangerouslySetInnerHTML={{ __html: notifText}}/>
-							<div className="flex-spacer" />
-							<button className="notif-btn" onClick={() => {this.closeNotification(index)}}>
-								<FontAwesomeIcon icon={faTimes} />
-							</button>
-						</div>;
+						return (
+							<div key={index} className={"flex-right container notification " + this.state.type}>
+								<p dangerouslySetInnerHTML={{ __html: notifText}}/>
+								<div className="flex-spacer" />
+								<button className="notif-btn" onClick={() => {this.closeNotification(index)}}>
+									<FontAwesomeIcon icon={faTimes} />
+								</button>
+							</div>
+						);
 					}
 					else return "";
 				}
 			);
 			
-			return notifications;
+			return (
+				<div className="floating-notification">
+					{notifications}
+				</div>
+			);
 		}
 	}
 	
@@ -57,12 +63,12 @@ class Notifications extends React.Component {
 		if (!obj.isSuccess) {
 			this.setState({
 				notifications: newNotifs,
-				textColor: "red"
+				type: "danger"
 			});
 		} else {
 			this.setState({
 				notifications: newNotifs,
-				textColor: "green"
+				type: "success"
 			});
 		}
 	}
