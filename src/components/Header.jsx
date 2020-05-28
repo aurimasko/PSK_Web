@@ -71,11 +71,11 @@ class Header extends React.Component {
 				
 				<div className="flex-spacer"></div>
 				
+				{this.renderLanguageSelection()}
+				
 				<button className="primary collapse-menu" onClick={this.handleClick}>
 					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
 				</button>
-
-				{this.renderLanguageSelection()}
 				
 				<Link
 					className={
