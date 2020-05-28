@@ -18,7 +18,7 @@ import DayContentSidebar from "./DayContentSidebar";
 import UserListSidebar from "./UserListSidebar";
 import CalendarLegend from "./CalendarLegend";
 
-moment.locale(languageService.getLanguage());
+moment.locale(languageService.getLanguage() === "en" ? "en-UK" : languageService.getLanguage());
 const localizer = momentLocalizer(moment);
 
 
