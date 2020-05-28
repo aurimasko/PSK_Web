@@ -270,6 +270,10 @@
     "Title": "Pagalba",
     "HelpText": "Jei turite klausimų galite susisiekti su mumis elektroniniu paštu adresu"
   },
+  "TeamLearningPlan": {
+    "Learned": "Išmoktų temų sąrašas temos",
+    "Planned": "Planuojamos mokytis temos"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

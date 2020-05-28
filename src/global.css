@@ -148,6 +148,11 @@ p {
 	width: 100%;
 }
 
+.width-container.wide.xl, .container.wide.xl {
+	max-width: 1200px;
+	width: 100%;
+}
+
 .graph-container {
 	display: inline-block;
 	width: 100%;
@@ -187,8 +192,17 @@ p {
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-.grid.gaps {
+.grid-xl {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+}
+
+.grid.gaps, .grid-xl.gaps {
 	grid-gap: 16px;
+}
+
+.grid.gaps32, .grid-xl.gaps32 {
+	grid-gap: 32px;
 }
 
 .notif-btn {
@@ -815,6 +829,9 @@ canvas {
 
 /* Margins : */
 
+.margin-auto {
+	margin: auto;
+}
 
 .margin-16 {
 	margin: 16px;
