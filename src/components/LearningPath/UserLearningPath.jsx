@@ -3,9 +3,11 @@ import Graph from 'vis-react';
 import Layout from "../Layout";
 import Loading from "../../components/Loading";
 import { topicFormatHelpers } from "../../helpers/topicFormatHelpers.js";
+import { analysisService } from "../../services/analysisService.js";
+import { responseHelpers } from "../../helpers/responseHelpers.js";
+import { auth } from "../../services/auth.js";
 
-
-class TopicsView extends React.Component {
+class UserLearningPath extends React.Component {
 	
 	constructor(props) {
 		
@@ -14,12 +16,11 @@ class TopicsView extends React.Component {
 		let style = window.getComputedStyle(document.documentElement);
 		
 		this.state = {
-			topics: null,
+			summaries: null,
 			options: {
 				autoResize: true,
 				height: "100%",
 				width: "100%",
-				
 				layout: {
 					hierarchical: false
 				},
@@ -60,23 +61,45 @@ class TopicsView extends React.Component {
 		
 		this.handleClick = this.handleClick.bind(this);
 	}
-	
+	async componentDidMount() {
+		this.getData();
+	}
+
+	async componentDidUpdate(prevProps) {
+		if (prevProps.match.params.id !== this.props.match.params.id) {
+			this.getData();
+		}
+	}
+
+	async getData() {
+		let id = this.props.match.params.id === "me" ? auth.user.id : this.props.match.params.id;
+		let result = await analysisService.fetchTopicsUser(id);
+		if (result.isSuccess === true) {
+			this.setState({
+				summaries: result.content.learnedTopicsSummary
+			});
+		} else {
+			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
+		}
+	}
+
+
 	mapTopicsToGraph() {
 		
 		let style = window.getComputedStyle(document.documentElement);
 		
 		let edges = [];
 		
-		const nodes = this.state.topics.map( (topic) => {
+		const nodes = this.state.summaries.map( (summary) => {
 			
-			if (topic.parentId !== null) {
-				edges.push({ from: topic.id, to: topic.parentId });
+			if (summary.topic.parentId !== null) {
+				edges.push({ from: summary.topic.id, to: summary.topic.parentId });
 			}
-			
-			if (topic.learned) {
+
+			if (summary.learned) {
 				return {
-					id: topic.id,
-					label: topic.name,
+					id: summary.topic.id,
+					label: summary.topic.name,
 					color: {
 						background: style.getPropertyValue("--color-bg-primary"),
 						hover: style.getPropertyValue("--color-bg-primary-hover"),
@@ -90,8 +113,8 @@ class TopicsView extends React.Component {
 			}
 			else {
 				return {
-					id: topic.id,
-					label: topic.name
+					id: summary.topic.id,
+					label: summary.topic.name
 				};
 			}
 		});
@@ -103,7 +126,7 @@ class TopicsView extends React.Component {
 	}
 	
 	render() {
-		if (this.state.topics === null) {
+		if (this.state.summaries === null) {
 			return (
 				<Layout ref={this.notifRef}>
 					<Loading showText={true} />
@@ -133,4 +156,4 @@ class TopicsView extends React.Component {
 }
 
 
-export default TopicsView;
+export default UserLearningPath;
