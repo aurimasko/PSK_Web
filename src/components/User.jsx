@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck, faRemoveFormat, faCross, faWindowClose, faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
+import { faUnlockAlt, faPen, faUser, faCalendarAlt, faUsers, faTasks, faClipboardCheck, faRemoveFormat, faCross, faWindowClose, faProjectDiagram,faColumns } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import { auth } from "../services/auth.js";
 import { roleService } from "../services/roleService.js";
@@ -260,6 +260,11 @@ class User extends React.Component {
 					<Link className="button align-left" to={"/user/" + this.state.user.id + "/learningpath"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faProjectDiagram} />
 						{languageService.translate("User.Path")}
+					</Link>
+					
+					<Link className="button align-left" to={"/user/" + this.state.user.id + "/learningplan"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faColumns} />
+						{languageService.translate("User.LearningPlan")}
 					</Link>
 					
 				</div>

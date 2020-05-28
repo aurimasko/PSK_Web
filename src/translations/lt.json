@@ -34,7 +34,8 @@
     "DisableSuccessMessage": "Vartotojas deaktyvuotas.",
     "SuperVisor": "Komandos vadovas",
     "6Analysis": "6 pjūvis",
-    "Path": "Mokymosi kelias"
+    "Path": "Mokymosi kelias",
+    "LearningPlan": "Mokymosi planas"
   },
   "ChangePassword": {
     "Title": "Keisti slaptažodį",
