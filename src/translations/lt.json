@@ -260,6 +260,10 @@
     "SystemDescriptionContent2": "Ši sistema, centralizuotai rodanti, ką tiksliai kiekvienas darbuotojas mokėsi, padeda komandų vadovams lengviau užtikrinti žinių dalinimąsi tarp kolegų arba planuoti ateities darbus atsižvelgiant į darbuotojų įgūdžius.",
     "LegalTitle": "Atviro kodo licencijos"
   },
+  "Help": {
+    "Title": "Pagalba",
+    "HelpText": "Jei turite klausimų galite susisiekti su mumis elektroniniu paštu adresu"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",
