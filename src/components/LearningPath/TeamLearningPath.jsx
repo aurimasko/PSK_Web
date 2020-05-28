@@ -190,7 +190,7 @@ class TeamLearningPath extends React.Component {
 	}
 	
 	handleClick(event) {
-		if (event.nodex.indexOf("_USERS") === 0) {
+		if (event.nodes.indexOf("_USERS") === 0) {
 			this.props.history.push("/topic/" + event.nodes);
 		}
 	}
