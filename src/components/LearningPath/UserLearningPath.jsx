@@ -97,9 +97,13 @@ class UserLearningPath extends React.Component {
 			}
 
 			if (summary.learned) {
+				let name = summary.topic.name;
+				if (name.length > 38) {
+					name = name.slice(0, 35) + "...";
+				}
 				return {
 					id: summary.topic.id,
-					label: summary.topic.name,
+					label: name,
 					color: {
 						background: style.getPropertyValue("--color-bg-primary"),
 						hover: style.getPropertyValue("--color-bg-primary-hover"),
