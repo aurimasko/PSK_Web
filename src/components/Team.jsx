@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faStar, faUser, faCalendarAlt, faClipboardList, faProjectDiagram, faColumns } from '@fortawesome/free-solid-svg-icons'
+import { faUsersCog, faUserPlus, faNotesMedical, faUsers, faStar, faUser, faCalendarAlt, faClipboardList, faProjectDiagram, faColumns } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { teamService } from "../services/teamService.js";
@@ -91,8 +91,9 @@ class Team extends React.Component {
 	renderAddNewTeamMemberButton() {
 		if (this.state.leader.id === auth.user.id) {
 			return (
-				<Link className="button" to={"team/add"}>
-					{languageService.translate("Team.AddNewTeamMember")}
+				<Link className="unbold margin-right-16 margin-top-8" to={"team/add"}>
+					<FontAwesomeIcon className="margin-right-4" icon={faUserPlus} />
+					{languageService.translate("Add")}
 				</Link>
 			);
 		} else {
@@ -106,7 +107,14 @@ class Team extends React.Component {
 		}else if (this.state.listItems.length > 0) {
 			return (
 				<div>
-					<h3 className="margin-top-24">{languageService.translate("Team.Members")}:</h3>
+					
+					<div className="margin-bottom-16">
+						<h2 className="margin-top-24 margin-right-16 inline-block">{languageService.translate("Team.Members")}:</h2>
+						
+						{this.renderAddNewTeamMemberButton()}
+						{this.renderObjectiveAndLimitButtons()}
+					</div>
+					
 					<ul className="fa-ul">
 						{this.state.listItems}
 					</ul>
@@ -121,7 +129,7 @@ class Team extends React.Component {
 		if (this.state.teamMembers === null || (this.state.teamMembers !== null && this.state.teamMembers.length === 0)) {
 			return (
 				<div className="wide width-container">
-
+				
 					<div className="grid gaps">
 						<Link className="button disabled">
 							<div className="w100 margin-vertical-16">
@@ -129,58 +137,46 @@ class Team extends React.Component {
 							</div>
 							{languageService.translate("Team.Calendar")}
 						</Link>
-
+						
 						<Link className="button disabled">
 							<div className="w100 margin-vertical-16">
 								<FontAwesomeIcon icon={faClipboardList} size="4x" />
 							</div>
 							{languageService.translate("Team.LearnedTopics")}
 						</Link>
-
+						
 					</div>
 				</div>
 			);
 		} else {
 			return (
-				<div className="wide width-container">
-
-					<div className="grid gaps">
-						<Link className="button" to={"/user/" + this.state.leader.id + "/team/calendar"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faCalendarAlt} size="4x" />
-							</div>
-							{languageService.translate("Team.Calendar")}
-						</Link>
-
-						<Link className="button" to={"/user/" + this.state.leader.id + "/team/topics"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faClipboardList} size="4x" />
-							</div>
-							{languageService.translate("Team.LearnedTopics")}
-						</Link>
-
-						{this.props.match.params.id === auth.user.id ? <Link className="button" to={"/user/me/team/wholearnedtopicteams"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faClipboardList} size="4x" />
-							</div>
-							{languageService.translate("Team.7Analysis")}
-						</Link> : ""}
-						
-						<Link className="button" to={"/user/" + this.state.leader.id + "/team/learningpath"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faProjectDiagram} size="4x" />
-							</div>
-							{languageService.translate("Team.LearningPath")}
-						</Link>
-						
-						<Link className="button" to={"/user/" + this.state.leader.id + "/team/learningplan"}>
-							<div className="w100 margin-vertical-16">
-								<FontAwesomeIcon icon={faColumns} size="4x" />
-							</div>
-							{languageService.translate("Team.LearningPlan")}
-						</Link>
-						
-					</div>
+				<div className="grid gaps">
+					
+					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/calendar"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faCalendarAlt} />
+						{languageService.translate("Team.Calendar")}
+					</Link>
+					
+					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/topics"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faClipboardList} />
+						{languageService.translate("Team.LearnedTopics")}
+					</Link>
+					
+					{this.props.match.params.id === auth.user.id ? <Link className="button align-left" to={"/user/me/team/wholearnedtopicteams"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faClipboardList} />
+						{languageService.translate("Team.7Analysis")}
+					</Link> : ""}
+					
+					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/learningpath"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faProjectDiagram} />
+						{languageService.translate("Team.LearningPath")}
+					</Link>
+					
+					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/learningplan"}>
+						<FontAwesomeIcon className="margin-right-8" icon={faColumns} />
+						{languageService.translate("Team.LearningPlan")}
+					</Link>
+					
 				</div>
 			);
 		}
@@ -195,10 +191,12 @@ class Team extends React.Component {
 		if (this.state.teamMembers === null || (this.state.teamMembers !== null && this.state.teamMembers.length === 0)) {
 			return (
 				<>
-					<Link className="button disabled">
+					<Link className="unbold margin-right-16 margin-top-8 disabled">
+						<FontAwesomeIcon className="margin-right-4" icon={faNotesMedical} />
 						{languageService.translate("Team.AddObjective")}
 					</Link>
-					<Link className="button disabled">
+					<Link className="unbold margin-right-16 margin-top-8 disabled">
+						<FontAwesomeIcon className="margin-right-4" icon={faUsersCog} />
 						{languageService.translate("Team.ChangeLimit")}
 					</Link>
 				</>);
@@ -206,10 +204,12 @@ class Team extends React.Component {
 		} else {
 			return (
 				<>
-					<Link className="button" to={"team/addobjective"}>
+					<Link className="unbold margin-right-16 margin-top-8" to={"team/addobjective"}>
+						<FontAwesomeIcon className="margin-right-4" icon={faNotesMedical} />
 						{languageService.translate("Team.AddObjective")}
 					</Link>
-					<Link className="button" to={"team/changelimit"}>
+					<Link className="unbold margin-right-16 margin-top-8" to={"team/changelimit"}>
+						<FontAwesomeIcon className="margin-right-4" icon={faUsersCog} />
 						{languageService.translate("Team.ChangeLimit")}
 					</Link>
 				</>);
@@ -226,17 +226,17 @@ class Team extends React.Component {
 		} else {
 			return (
 				<Layout ref={this.notifRef}>
-					{this.renderButtons()}
+					
 					<div className="container wide">
-
+						
 						<div className="flex-right">
-
+							
 							<div className="flex-down margin-right-16 margin-left-8">
 								<div className="flex-spacer"></div>
 								<FontAwesomeIcon icon={faUsers} size="3x" />
 								<div className="flex-spacer"></div>
 							</div>
-
+							
 							<div>
 								<h1>
 									{languageService.translate("Team.Title")}
@@ -245,14 +245,15 @@ class Team extends React.Component {
 									{languageService.translate("Team.Leader")}: <Link to={"/user/" + this.state.leader.id}>{this.state.leader.firstName} {this.state.leader.lastName}</Link>
 								</h4>
 							</div>
-
+							
 						</div>
-
-						{this.renderAddNewTeamMemberButton()}
-						{this.renderObjectiveAndLimitButtons()}
-
+						
+						<hr />
+							{this.renderButtons()}
+						<hr />
+						
 						{this.renderTeamMembers()}
-
+						
 					</div>
 					
 				</Layout>
