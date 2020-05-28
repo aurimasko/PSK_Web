@@ -324,8 +324,7 @@ class CalendarUserView extends React.Component {
 			startDate: range.start,
 			endDate: range.end
 		});
-		this.getData(range.start, range.end)
-			.then(() => this.handleDaySelect({ start: this.state.day }));
+		this.getData(range.start, range.end);
 	}
 }
 
