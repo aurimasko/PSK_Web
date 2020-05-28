@@ -21,7 +21,8 @@ class Topic extends React.Component {
 			topic: null,
 			parentTopic: null,
 			topicChanges: null,
-			isTopicLearned: null
+			isTopicLearned: null,
+			learnedTopic: null
 		};
 
 		this.notifRef = React.createRef();
@@ -95,7 +96,8 @@ class Topic extends React.Component {
 				});
 			} else {
 				this.setState({
-					isTopicLearned: true
+					isTopicLearned: true,
+					learnedTopic: result.content[0]
 				});
 			}
 		} else {
@@ -239,13 +241,15 @@ class Topic extends React.Component {
 				if (data.isSuccess) {
 					this.getData();
 					this.notifRef.current.addNotification({ text: languageService.translate("Topic.LearnSuccessMessage"), isSuccess: true });
+					this.setState({
+						isTopicLearned: true
+					});
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					this.setState({
+						isTopicLearned: false
+					});
 				}
-
-				this.setState({
-					isTopicLearned: true
-				});
 			});
 	}
 
@@ -254,18 +258,20 @@ class Topic extends React.Component {
 			isTopicLearned: null
 		});
 
-		learnedTopicService.unlearnTopic(this.state.topic.id)
+		learnedTopicService.unlearnTopic(this.state.learnedTopic.id)
 			.then((data) => {
 				if (data.isSuccess) {
 					this.getData();
 					this.notifRef.current.addNotification({ text: languageService.translate("Topic.UnlearnSuccessMessage"), isSuccess: true });
+					this.setState({
+						isTopicLearned: false
+					});
 				} else {
 					this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(data) });
+					this.setState({
+						isTopicLearned: true
+					});
 				}
-
-				this.setState({
-					isTopicLearned: false
-				});
 			});
 	}
 }

@@ -39,12 +39,11 @@ export const learnedTopicService = {
 	},
 	async unlearnTopic(topicId) {
 		return await fetch(
-			endPoints.learnedTopicAPIBaseEndPoint + "?id=" + topicId,
+			endPoints.learnedTopicAPIBaseEndPoint + "/" + topicId,
 			{
 				method: 'delete',
 				headers: new Headers({
 					"Authorization": "Bearer " + auth.getAccessToken(),
-					"Content-Type": "application/json-patch+json",
 					"Accept-Language": languageService.getLanguage()
 				})
 			}
