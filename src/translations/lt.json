@@ -68,7 +68,8 @@
     "AddObjective": "Pridėti naują tikslą",
     "ChangeLimit": "Pakeisti mokymosi dienų limitą",
     "7Analysis": "7 pjūvis",
-    "LearningPath": "Mokymosi kelias"
+    "LearningPath": "Mokymosi kelias",
+    "LearningPlan": "Mokymosi planas"
   },
   "AddTeamMember": {
     "Title": "Pridėti naują komandos narį",
