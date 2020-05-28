@@ -169,9 +169,7 @@ class CalendarUserView extends React.Component {
 							<div className="flex-spacer" />
 							
 						</div>
-						
-						
-						
+
 						<div className="cal-side-panel flex-down">
 							<h1 className="center unbold">
 								{formatDate(this.state.day)}
