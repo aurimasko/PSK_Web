@@ -7,6 +7,8 @@ import { responseHelpers } from "../helpers/responseHelpers.js";
 import { languageService } from "../services/languageService.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLightbulb, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { topicFormatHelpers } from "../helpers/topicFormatHelpers.js";
+
 
 class TopicsView extends React.Component {
 	
@@ -32,43 +34,20 @@ class TopicsView extends React.Component {
 		let result = await topicService.fetchTopics();
 		if (result.isSuccess === true) {
 			let content = result.content;
-			content.forEach(topic => topic.children = []);
-			
-			let formattedContent = content.filter(topic => topic.parentId === null)
-			let unassignedTopics = content.filter(topic => topic.parentId !== null)
-			
-			for (let badDataGuard = 0; badDataGuard < content.length; badDataGuard++) {
-				for (let i = 0; i < formattedContent.length; i++) {
-					this.findTopicChildren(formattedContent[i], unassignedTopics, 0);
-				}
-			}
+			const nestedTopicObj = topicFormatHelpers.topicListNester(content);
 			
 			this.setState({
 				originalTopicData: content,
-				formattedTopicData: formattedContent,
-				unassignedTopicData: unassignedTopics
+				formattedTopicData: nestedTopicObj.formattedTopicData,
+				unassignedTopicData: nestedTopicObj.unassignedTopicData
 			});
-			
 		}
 		else {
 			this.notifRef.current.addNotification({ text: responseHelpers.convertErrorArrayToString(result) });
 		}
 	}
 	
-	findTopicChildren(thisTopic, unassignedTopics) {
-		for (let i = 0; i < unassignedTopics.length; i++) {
-			if (unassignedTopics[i].parentId === thisTopic.id) {
-				thisTopic.children.push(unassignedTopics[i]);
-				unassignedTopics.splice(i, 1);
-				i--;
-				break;
-			}
-		}
-		
-		if (unassignedTopics.length > 0) {
-			thisTopic.children.forEach(child => this.findTopicChildren(child, unassignedTopics));
-		}
-	}
+	
 	
 	render() {
 		if (this.state.originalTopicData == null) {
