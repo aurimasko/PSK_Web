@@ -250,6 +250,16 @@
     "Topic": "Tema",
     "TitleTopic": "7 pjūvis"
   },
+  "About": {
+    "Title": "Apie",
+    "TeamDescriptionTitle": "Apie komandą",
+    "TeamDescriptionContent1": "Komandos istorija prasideda 2018 metais, kai keturi tuometiniai Vilniaus Universiteto Matematikos ir Informatikos fakulteto Programų sistemų antrakursiai susibūrė į vieną komandą ‚‚K.A.L.E.N.D.O.R.I.U.S.‘‘. Nuo tada buvo sėkmingai įgyvendintas ne vienas projektinis darbas, o rezultatai pristatyti daugiau nei 10-yje prezentacijų.",
+    "TeamDescriptionContent2": "2020 metais komandos sudėtis išaugo iki penkių narių ir buvo išrinktas naujas komandos pavadinimas – Confiktūra. Pavadinimas kilo iš lotyniško žodžio ‚‚confictura‘‘, kuris išvertus reiškia ‚‚išradimas‘‘ ir reprezentuoja komandos siekį tobulėti ir ieškoti naujų bei inovatyvių problemų sprendimo būdų.",
+    "SystemDescriptionTitle": "Apie sistemą",
+    "SystemDescriptionContent1": "Kiekvienas DevBridge darbuotojas per metus gali panaudoti nustatytą kiekį dienų mokytis laisvai pasirenkamas temas. Sistemoje komandų vadovai gali matyti struktūrizuotą informaciją, rodančią atskiras temas, jų sąryšius, kiek žmonių mokėsi tas temas paskutiniu metu. Darbuotojai turi galimybę dėti nuorodas į naudotą medžiagą ir komentarus apie savo mokymosi dienas, tai leidžia atpažinti labiau pažengusius kolegas arba nustatyti žinių trūkumą tam tikrose temose ar komandose.",
+    "SystemDescriptionContent2": "Ši sistema, centralizuotai rodanti, ką tiksliai kiekvienas darbuotojas mokėsi, padeda komandų vadovams lengviau užtikrinti žinių dalinimąsi tarp kolegų arba planuoti ateities darbus atsižvelgiant į darbuotojų įgūdžius.",
+    "LegalTitle": "Atviro kodo licencijos"
+  },
   "Edit": "Redaguoti",
   "None": "Nėra",
   "Change": "Keisti",

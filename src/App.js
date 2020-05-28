@@ -33,6 +33,7 @@ import AddTeamObjective from "./components/Team/AddTeamObjective";
 import TeamTopicsLearnedAndPlanned from "./components/TeamTopicsLearnedAndPlanned";
 import WhoLearnedTopicTeams from "./components/WhoLearnedTopicTeams";
 import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers";
+import About from "./components/About";
 
 
 function App() {
@@ -66,6 +67,8 @@ function App() {
 				<AuthRoute path="/topic/add" component={AddTopic} />
 				<AuthRoute path="/topic/:id/edit" component={EditTopic} />
 				<AuthRoute path="/topic/:id" component={Topic} />
+				<AuthRoute path="/about" component={About} />
+				
 				<AuthRoute exact path="/denied" component={AccessDenied} />
 				
 				<Route path="/login" component={Login} />

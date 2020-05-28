@@ -250,6 +250,16 @@
     "Topic": "Topic",
     "TitleTopic": "7 analysis"
   },
+  "About": {
+    "Title": "About",
+    "TeamDescriptionTitle": "Description",
+    "TeamDescriptionContent1": "The history of the team begins in 2018, when the four then-sophomores in Software Engineering of Vilnius University, Faculty of Mathematics and Informatics, came together into one team, ‘K.A.L.E.N.D.O.R.I.U.S.’. Since then, more than one project work has been successfully implemented, and the results have been presented in more than 10 presentations.",
+    "TeamDescriptionContent2": "In 2020, the composition of the team increased to five members and a new name of the team was chosen - the Confiktūra. The name comes from the Latin word \"confictura\", which translates to \"invention\" and represents the team's desire to improve and find new and innovative ways to solve problems.",
+    "SystemDescriptionTitle": "Description",
+    "SystemDescriptionContent1": "Each DevBridge employee can spend a set number of days per year studying optional topics. In the system, team leaders can see structured information showing individual topics, their relationships, how many people have studied those topics recently. Employees have the opportunity to post links to material used and comments about their learning days, allowing  to identify more advanced colleagues or identify knowledge gaps in specific topics or teams.",
+    "SystemDescriptionContent2": "This system, which centrally shows exactly what each employee has learned, makes it easier for team leaders to ensure knowledge sharing among colleagues or to plan future work based on employee skills.",
+    "LegalTitle": "Open source licenses"
+  },
   "Edit": "Edit",
   "None": "None",
   "Change": "Change",
