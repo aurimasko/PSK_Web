@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from "./Layout";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faStar, faUser, faCalendarAlt, faClipboardList } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faStar, faUser, faCalendarAlt, faClipboardList, faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { teamService } from "../services/teamService.js";
@@ -165,7 +165,14 @@ class Team extends React.Component {
 							</div>
 							{languageService.translate("Team.7Analysis")}
 						</Link> : ""}
-
+						
+						<Link className="button" to={"/user/" + this.state.leader.id + "/team/learningpath"}>
+							<div className="w100 margin-vertical-16">
+								<FontAwesomeIcon icon={faProjectDiagram} size="4x" />
+							</div>
+							{languageService.translate("Team.LearningPath")}
+						</Link>
+						
 					</div>
 				</div>
 			);

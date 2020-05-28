@@ -36,6 +36,7 @@ import WhoLearnedTopicTeamMembers from "./components/WhoLearnedTopicTeamMembers"
 import About from "./components/About";
 import Help from "./components/Help";
 import UserLearningPath from "./components/LearningPath/UserLearningPath";
+import TeamLearningPath from "./components/LearningPath/TeamLearningPath";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
 				<AuthRoute path="/user/:id/team/add" component={AddTeamMember} />
 				<AuthRoute path="/user/:id/team/changelimit" component={ChangeTeamLearningDayLimit} />
 				<AuthRoute path="/user/:id/team/addobjective" component={AddTeamObjective} />
+				<AuthRoute path="/user/:id/team/learningpath" component={TeamLearningPath} />
 				<AuthRoute path="/user/:id/team" component={Team} />
 				<AuthRoute path="/user/:id/edit" component={EditUser} />
 				<AuthRoute path="/user/:id/changerole" component={ChangeRole} />
