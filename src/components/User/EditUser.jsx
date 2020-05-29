@@ -109,10 +109,10 @@ class EditUser extends React.Component {
 						<form className="flex-down" onSubmit={this.handleSubmit}>
 							
 							<label>
-								{languageService.translate("EditUser.EmailAddress")}
 								<div className="container" style={{color: "red"}}>
 									{languageService.translate("EditUser.ChangeEmailAddressWarning")}
 								</div>
+								{languageService.translate("EditUser.EmailAddress")}
 								<input required type="email" value={this.state.newEmail} onChange={this.handleEmailChange} />
 								{this.state.concurrencyEmail ?
 									<div style={{ color: "red" }}>
