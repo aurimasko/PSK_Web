@@ -78,7 +78,7 @@ class WhoLearnedTopicTeams extends React.Component {
 				<h3>
 					<button className="" onClick={() => this.handleClickTeam(index)}>
 						<FontAwesomeIcon className="margin-right-4" icon={faUsers} />
-						{team.superVisor.firstName} {team.superVisor.lastName}
+						{team.superVisor.firstName} {team.superVisor.lastName} {languageService.translate("WhoLearnedTopicTeams.Team")}
 					</button>
 				</h3>
 				

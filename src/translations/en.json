@@ -257,7 +257,8 @@
     "SelectTopic": "Please select a topic.",
     "NoUsersToShow": "No users found.",
     "Topic": "Topic",
-    "TitleTopic": "Teams overview"
+    "TitleTopic": "Teams overview",
+    "Team": "team"
   },
   "About": {
     "Title": "About",
