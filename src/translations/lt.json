@@ -51,7 +51,7 @@
     "FirstName": "Vardas",
     "LastName": "Pavardė",
     "ChangeEmailAddressWarning": "Keičiant el.pašto adresą bus pakeistas prisijungimo vardas ir jūs turėsite prisijungti iš naujo!",
-    "SendLearningDayByEmail": "Siųsti mokymosi dieną el.paštu",
+    "SendLearningDayByEmail": "Siųsti naujai sukurtas mokymosi dienas el. paštu",
     "SuccessMessage": "Pakeitimai išsaugoti."
   },
   "AccessDenied": {
@@ -154,8 +154,8 @@
     "Today": "Šiandien",
     "Back": "<",
     "Next": ">",
-    "Teammates": "Komandos nariai",
-    "TeamMembers": "Komandos nariai",
+    "Teammates": "Pasirinkite, kurio darbuotojo mokymosi dieną norite matyti:",
+    "TeamMembers": "Pasirinkite, kurių komandos narių kalendorius norite matyti:",
     "ToggleEveryone": "Pažymėti visus",
     "GoToTeamPage": "Eiti į šios komandos puslapį"
   },
@@ -172,7 +172,7 @@
   "Objectives": {
     "Title": "{name} tikslai",
     "Topic": "Tema",
-    "Date": "Data",
+    "Date": "Sukurtas",
     "Status": "Būsena",
     "AddNew": "Pridėti naują",
     "NoObjectives": "Nėra tikslų",
@@ -214,12 +214,12 @@
     "RemoveSuccessMessage": "Mokymosi limitas panaikintas."
   },
   "ChangeTeamLearningDayLimit": {
-    "Title": "Keisti savo komandos mokymosi dienų limitą",
+    "Title": "Keisti komandos narių mokymosi dienų limitą",
     "LearningDayLimit": "Naujas mokymosi dienų limitas",
     "SuccessMessage": "Mokymosi dienų limitas pakeistas."
   },
   "AddTeamObjective": {
-    "Title": "Pridėti naują tikslą komandai",
+    "Title": "Pridėti naują tikslą visiems komandos nariams",
     "Topic": "Tema",
     "SuccessMessage": "Tikslas pridėtas komandai.",
     "Deadline": "Pabaigos data",
