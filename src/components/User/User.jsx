@@ -94,7 +94,7 @@ class User extends React.Component {
 					{this.canChangeRole() ?
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							{languageService.translate("Edit")}
+							{languageService.translate("Change")}
 						</Link> :
 						""
 					}
@@ -108,7 +108,7 @@ class User extends React.Component {
 					{this.canChangeRole() ? 
 						<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changerole"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							{languageService.translate("Edit")}
+							{languageService.translate("Change")}
 						</Link>:
 						""
 					}
@@ -138,7 +138,7 @@ class User extends React.Component {
 					<strong>{languageService.translate("User.SuperVisor")}: {this.state.user.superVisor ? this.state.user.superVisor.firstName + " " + this.state.user.superVisor.lastName : ""}</strong>
 					<Link className="unbold margin-left-24" to={"/user/" + this.state.user.id + "/changesupervisor"}>
 						<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-						{languageService.translate("Edit")}
+						{languageService.translate("Change")}
 					</Link>
 				</div>
 			);
@@ -212,7 +212,7 @@ class User extends React.Component {
 					<>
 						<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							{languageService.translate("Edit")}
+							{languageService.translate("Change")}
 						</Link>
 						<Link className="unbold margin-right-32 margin-top-8" onClick={this.handleRemoveLearningDayLimitClicked}>
 							<FontAwesomeIcon className="margin-right-4" icon={faWindowClose} />
@@ -225,7 +225,7 @@ class User extends React.Component {
 					<>
 						<Link className="unbold margin-right-32 margin-top-8" to={"/user/" + this.state.user.id + "/changelearningdaylimit"}>
 							<FontAwesomeIcon className="margin-right-4" icon={faPen} />
-							{languageService.translate("Edit")}
+							{languageService.translate("Change")}
 						</Link>
 					</>
 				);
