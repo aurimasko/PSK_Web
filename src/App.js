@@ -38,14 +38,15 @@ import About from "./components/About";
 import Help from "./components/Help";
 import UserLearningPath from "./components/LearningPath/UserLearningPath";
 import TeamLearningPath from "./components/LearningPath/TeamLearningPath";
+import Overview from "./components/Overview";
 
 
 function App() {
 	return (
 		<Router>
 			<Switch>
-				<AuthRoute path="/user/:id/team/wholearnedtopicteams" component={WhoLearnedTopicTeams} />
-				<AuthRoute path="/user/:id/wholearnedtopicteammembers" component={WhoLearnedTopicTeamMembers} />
+				<AuthRoute path="/teamsoverview" component={WhoLearnedTopicTeams} />
+				<AuthRoute path="/usersoverview" component={WhoLearnedTopicTeamMembers} />
 				
 				<AuthRoute path="/user/:id/calendar" component={CalendarUserView} />
 				<AuthRoute path="/user/:id/topics" component={TopicsView} />
@@ -75,6 +76,7 @@ function App() {
 				<AuthRoute path="/topic/:id" component={Topic} />
 				<AuthRoute path="/about" component={About} />
 				<AuthRoute path="/help" component={Help} />
+				<AuthRoute path="/overview" component={Overview} />
 				
 				<AuthRoute exact path="/denied" component={AccessDenied} />
 				

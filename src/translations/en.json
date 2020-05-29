@@ -6,7 +6,8 @@
     "Logout": "Logout",
     "Back": "Back",
     "EnglishLanguage": "🇬🇧 EN",
-    "LithuanianLanguage": "🇱🇹 LT"
+    "LithuanianLanguage": "🇱🇹 LT",
+    "Overview": "Overview"
   },
   "Footer": {
     "About": "About",
@@ -249,14 +250,14 @@
     "SelectTopic": "Please select a topic.",
     "NoUsersToShow": "No users found.",
     "Topic": "Topic",
-    "TitleTopic": "6 analysis"
+    "TitleTopic": "Users overview"
   },
   "WhoLearnedTopicTeams": {
     "Title": "Teams who were learning {topicName}",
     "SelectTopic": "Please select a topic.",
     "NoUsersToShow": "No users found.",
     "Topic": "Topic",
-    "TitleTopic": "7 analysis"
+    "TitleTopic": "Teams overview"
   },
   "About": {
     "Title": "About",
@@ -275,6 +276,10 @@
   "TeamLearningPlan": {
     "Learned": "Learned topic list",
     "Planned": "Planned topics"
+  },
+  "Overview": {
+    "User": "Users overview",
+    "Team": "Teams overview"
   },
   "Edit": "Edit",
   "None": "None",

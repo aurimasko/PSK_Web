@@ -157,16 +157,6 @@ class Team extends React.Component {
 						{languageService.translate("Team.Calendar")}
 					</Link>
 					
-					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/topics"}>
-						<FontAwesomeIcon className="margin-right-8" icon={faClipboardList} />
-						{languageService.translate("Team.LearnedTopics")}
-					</Link>
-					
-					{this.props.match.params.id === auth.user.id ? <Link className="button align-left" to={"/user/me/team/wholearnedtopicteams"}>
-						<FontAwesomeIcon className="margin-right-8" icon={faClipboardList} />
-						{languageService.translate("Team.7Analysis")}
-					</Link> : ""}
-					
 					<Link className="button align-left" to={"/user/" + this.state.leader.id + "/team/learningpath"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faProjectDiagram} />
 						{languageService.translate("Team.LearningPath")}

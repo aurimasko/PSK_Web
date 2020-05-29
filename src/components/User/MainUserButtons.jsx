@@ -52,21 +52,10 @@ class MainUserButtons extends React.Component {
 						{languageService.translate("User.Objectives")}
 					</Link>
 					
-					<Link className="button align-left" to={"/user/" + this.props.user.id + "/topics"}>
-						<FontAwesomeIcon className="margin-right-8" icon={faClipboardCheck} />
-						{languageService.translate("User.LearnedTopics")}
-					</Link>
-					
 					<Link className="button align-left" to={"/user/" + this.props.user.id + "/team"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
 						{languageService.translate("User.Team")}
 					</Link>
-
-					{this.props.user.id === auth.user.id ?
-						<Link className="button align-left" to={"/user/me/wholearnedtopicteammembers"}>
-							<FontAwesomeIcon className="margin-right-8" icon={faUsers} />
-							{languageService.translate("User.6Analysis")}
-						</Link> : ""}
 					
 					<Link className="button align-left" to={"/user/" + this.props.user.id + "/learningpath"}>
 						<FontAwesomeIcon className="margin-right-8" icon={faProjectDiagram} />

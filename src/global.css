@@ -812,6 +812,22 @@ select:active {
 	background-color: var(--color-bg-surface-active);
 }
 
+select.header {
+	color: var(--color-bg-primary);
+	background-color: var(--color-bg-surface);
+	border: 0px solid var(--color-bg-primary);
+	background-image: url("/angle-down-solid-primary-colored.png");
+}
+
+select.header:hover {
+	color: var(--color-bg-primary);
+	background-color: var(--color-bg-surface-hover);
+}
+
+select.header:active {
+	color: var(--color-bg-primary);
+	background-color: var(--color-bg-surface-active);
+}
 
 select.primary {
 	color: var(--color-fg-primary);

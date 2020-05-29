@@ -6,7 +6,8 @@
     "Logout": "Atsijungti",
     "Back": "Grįžti",
     "EnglishLanguage": "🇬🇧 EN",
-    "LithuanianLanguage": "🇱🇹 LT"
+    "LithuanianLanguage": "🇱🇹 LT",
+    "Overview": "Apžvalga"
   },
   "Footer": {
     "About": "Apie",
@@ -249,14 +250,14 @@
     "SelectTopic": "Pasirinkite temą",
     "NoUsersToShow": "Nėra ką rodyti",
     "Topic": "Tema",
-    "TitleTopic": "6 pjūvis"
+    "TitleTopic": "Darbuotojų apžvalga"
   },
   "WhoLearnedTopicTeams": {
-    "Title": "Komandos kurios mokėsi {topicName}",
+    "Title": "Komandos, kurios mokėsi temą {topicName}",
     "SelectTopic": "Pasirinkite temą",
     "NoUsersToShow": "Nėra ką rodyti",
     "Topic": "Tema",
-    "TitleTopic": "7 pjūvis"
+    "TitleTopic": "Komandų apžvalga"
   },
   "About": {
     "Title": "Apie",
@@ -275,6 +276,10 @@
   "TeamLearningPlan": {
     "Learned": "Išmoktų temų sąrašas temos",
     "Planned": "Planuojamos mokytis temos"
+  },
+  "Overview": {
+    "User": "Darbuotojų apžvalga",
+    "Team": "Komandų apžvalga"
   },
   "Edit": "Redaguoti",
   "None": "Nėra",

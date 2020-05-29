@@ -1,7 +1,7 @@
 import React from 'react';
 import "../global.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faBars, faTimes, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faChartBar, faClipboardCheck, faArrowLeft, faBars, faTimes, faCalendarAlt, faUser, faTags, faClipboardList, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
@@ -71,8 +71,6 @@ class Header extends React.Component {
 				
 				<div className="flex-spacer"></div>
 				
-				{this.renderLanguageSelection()}
-				
 				<button className="primary collapse-menu" onClick={this.handleClick}>
 					<FontAwesomeIcon icon={this.state.hamburgerActive ? faTimes : faBars} />
 				</button>
@@ -89,6 +87,18 @@ class Header extends React.Component {
 					<FontAwesomeIcon icon={faCalendarAlt} /> {languageService.translate("Header.MyCalendar")}
 				</Link>
 				
+				<Link
+						className={
+							this.state.hamburgerActive ?
+								"button primary collapse uncollapse" :
+								"button primary collapse"
+						}
+						to={"/overview"}
+						onClick={this.handleUseOther}
+					>
+					<FontAwesomeIcon className="margin-right-8" icon={faChartBar} />
+					{languageService.translate("Header.Overview")}
+				</Link>
 				
 				<Link
 					className={
@@ -104,6 +114,7 @@ class Header extends React.Component {
 
 				{this.renderRolesButton()}
 				
+				{this.renderLanguageSelection()}
 				
 				<Link
 					className={
@@ -145,8 +156,8 @@ class Header extends React.Component {
 		return (
 			<select className={
 				this.state.hamburgerActive ?
-					"button primary collapse uncollapse" :
-					"button primary collapse"
+					"button header collapse uncollapse" :
+					"button header collapse"
 			} value={this.state.language} onChange={this.handleLanguageChange} style={{width: "auto"}}>
 				<option key="en" value="en">{languageService.translate("Header.EnglishLanguage")}</option>
 				<option key="lt" value="lt">{languageService.translate("Header.LithuanianLanguage")}</option>

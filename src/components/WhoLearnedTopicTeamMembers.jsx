@@ -108,7 +108,7 @@ class WhoLearnedTopicTeamMembers extends React.Component {
 
 							<div className="flex-down margin-right-16 margin-left-8">
 								<div className="flex-spacer"></div>
-								<Link className="button back-button" to={"/user/" + this.props.match.params.id}>
+								<Link className="button back-button" to={"/overview/"}>
 									<FontAwesomeIcon icon={faArrowLeft} />
 								</Link>
 								<div className="flex-spacer"></div>
