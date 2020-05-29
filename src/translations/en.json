@@ -51,7 +51,7 @@
     "FirstName": "First name",
     "LastName": "Last name",
     "ChangeEmailAddressWarning": "Changing email address will change username and cause a relogin!",
-    "SendLearningDayByEmail": "Send learning day as event by email",
+    "SendLearningDayByEmail": "Send newly created learning days by email",
     "SuccessMessage": "Changes have been saved."
   },
   "AccessDenied": {
@@ -154,8 +154,8 @@
     "Today": "Today",
     "Back": "<",
     "Next": ">",
-    "Teammates": "Teammates",
-    "TeamMembers": "Team members",
+    "Teammates": "Choose which member learning day you want to see:",
+    "TeamMembers": "Choose members whose calendars you want to see:",
     "ToggleEveryone": "Toggle everyone",
     "GoToTeamPage": "Go to this team's page"
   },
@@ -172,7 +172,7 @@
   "Objectives": {
     "Title": "{name}'s objectives",
     "Topic": "Topic",
-    "Date": "Date",
+    "Date": "Created",
     "Status": "Status",
     "AddNew": "Add new objective",
     "NoObjectives": "There are no objectives",
@@ -214,12 +214,12 @@
     "RemoveSuccessMessage": "Learning day limit removed."
   },
   "ChangeTeamLearningDayLimit": {
-    "Title": "Change your team learning day limit per quarter",
+    "Title": "Change learning day limit for your team members",
     "LearningDayLimit": "Learning day limit",
     "SuccessMessage": "Learning day limit has been changed successfully."
   },
   "AddTeamObjective": {
-    "Title": "Add new team objective",
+    "Title": "Add new objective for team members",
     "Topic": "Topic",
     "SuccessMessage": "Team objective added successfully.",
     "Deadline": "Deadline",
