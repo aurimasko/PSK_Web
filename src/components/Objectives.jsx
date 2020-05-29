@@ -156,10 +156,7 @@ class Objectives extends React.Component {
 						</Link>
 					</div>
 					
-					<div>
-						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
-						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD HH:mm:ss')}
-					</div>
+
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Status")}: </span>
 						{languageService.translate("Objectives." + objective.status)}
@@ -169,6 +166,10 @@ class Objectives extends React.Component {
 							<span className="bold">{languageService.translate("Objectives.Deadline")}: </span>
 							{moment.utc(objective.deadline).local().format('YYYY-MM-DD')}
 						</div> : ""}
+					<div>
+						<span className="bold">{languageService.translate("Objectives.Date")}: </span>
+						{moment.utc(objective.creationDate).local().format('YYYY-MM-DD HH:mm:ss')}
+					</div>
 					<div>
 						<span className="bold">{languageService.translate("Objectives.Creator")}: </span>
 						{objective.creator.firstName} {objective.creator.lastName}
